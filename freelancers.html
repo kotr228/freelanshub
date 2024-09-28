@@ -8,21 +8,27 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevents scrolling if the video is large */
+            overflow: hidden;
         }
         .video-background {
-            position: fixed; /* Keeps the video in the background */
+            position: fixed;
             right: 0;
             bottom: 0;
             min-width: 100%; 
             min-height: 100%;
             width: auto;
             height: auto;
-            z-index: -100; /* Ensures the video stays behind text and other elements */
+            z-index: -100;
         }
         .content {
             position: relative;
             z-index: 100;
+            width: 300px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         select {
             padding: 10px;
@@ -62,21 +68,57 @@
         Your browser does not support the video tag.
     </video>
 
+    <select id="language-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="uk" selected>Українська</option>
+        <option value="pl">Polski</option>
+    </select>
+
     <div class="content">
         <nav>
-            <a href="pricing.html" id="nav-pricing">Цінова політика</a>
-            <a href="privacy.html" id="nav-privacy">Політика конфіденційності</a>
-            <a href="about.html" id="nav-about">Про нас</a>
-            <a href="advertising.html" id="nav-advertising">Реклама</a>
-            <a href="support.html" id="nav-support">Служба підтримки</a>
+            <a href="pricing.html" data-key="pricing">Цінова політика</a>
+            <a href="privacy.html" data-key="privacy">Політика конфіденційності</a>
+            <a href="about.html" data-key="about">Про нас</a>
+            <a href="advertising.html" data-key="advertising">Реклама</a>
+            <a href="support.html" data-key="support">Служба підтримки</a>
+            <a href="registrfreelans.html" data-key="login">Реєстрація/Вхід в аккаунт</a>
         </nav>
-
-        <select id="language-select" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="uk" selected>Українська</option>
-            <option value="pl">Polski</option>
-        </select>
     </div>
-    
+
+    <script>
+        const translations = {
+            en: {
+                pricing: "Pricing",
+                privacy: "Privacy Policy",
+                about: "About Us",
+                advertising: "Advertising",
+                support: "Support",
+                login: "Register/Login"
+            },
+            uk: {
+                pricing: "Цінова політика",
+                privacy: "Політика конфіденційності",
+                about: "Про нас",
+                advertising: "Реклама",
+                support: "Служба підтримки",
+                login: "Реєстрація/Вхід в аккаунт"
+            },
+            pl: {
+                pricing: "Cennik",
+                privacy: "Polityka prywatności",
+                about: "O nas",
+                advertising: "Reklama",
+                support: "Wsparcie",
+                login: "Rejestracja/Logowanie"
+            }
+        };
+
+        function changeLanguage(language) {
+            document.querySelectorAll('nav a').forEach(link => {
+                const key = link.getAttribute('data-key');
+                link.textContent = translations[language][key];
+            });
+        }
+    </script>
 </body>
 </html>
