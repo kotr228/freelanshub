@@ -21,13 +21,35 @@
             z-index: -100;
         }
         .header {
-            position: absolute;
+            position: fixed;
             top: 0;
-            right: 0;
-            padding: 10px;
+            width: 100%;
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            padding-left: 20px; /* Додано відступ зліва */
+        }
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .nav a:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+        .login-area {
+            padding-right: 20px; /* Додано відступ справа */
         }
         .language-select, .login-button {
             padding: 10px;
@@ -36,42 +58,15 @@
             text-decoration: none;
             color: white;
             border: none;
-            background-color: #ff0000; /* Червоний колір фону */
+            background-color: #ff0000;
+            border-radius: 4px;
         }
         .language-select {
             background: none;
             color: #333;
         }
-        .login-button {
-            border-radius: 4px;
-            margin-left: 10px; /* Додана відстань між селектором мов і кнопкою входу */
-        }
         .login-button:hover {
             background-color: #e60000;
-        }
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #f0f0f0;
-            padding: 10px 0;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-        }
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 15px 20px;
-            margin: 0 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            transform: scale(1.1);
         }
     </style>
 </head>
@@ -82,56 +77,21 @@
     </video>
 
     <div class="header">
-        <select class="language-select" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="uk" selected>Українська</option>
-            <option value="pl">Polski</option>
-        </select>
-        <a href="registrfreelans.html" class="login-button">Реєстрація/Вхід в аккаунт</a>
+        <div class="nav">
+            <a href="pricing.html" data-key="pricing">Цінова політика</a>
+            <a href="privacy.html" data-key="privacy">Політика конфіденційності</a>
+            <a href="about.html" data-key="about">Про нас</a>
+            <a href="advertising.html" data-key="advertising">Реклама</a>
+            <a href="support.html" data-key="support">Служба підтримки</a>
+        </div>
+        <div class="login-area">
+            <select class="language-select" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="uk" selected>Українська</option>
+                <option value="pl">Polski</option>
+            </select>
+            <a href="registrfreelans.html" class="login-button">Реєстрація/Вхід в аккаунт</a>
+        </div>
     </div>
-
-    <nav>
-        <a href="pricing.html" data-key="pricing">Цінова політика</a>
-        <a href="privacy.html" data-key="privacy">Політика конфіденційності</a>
-        <a href="about.html" data-key="about">Про нас</a>
-        <a href="advertising.html" data-key="advertising">Реклама</a>
-        <a href="support.html" data-key="support">Служба підтримки</a>
-    </nav>
-
-    <script>
-        const translations = {
-            en: {
-                pricing: "Pricing",
-                privacy: "Privacy Policy",
-                about: "About Us",
-                advertising: "Advertising",
-                support: "Support",
-                login: "Register/Login"
-            },
-            uk: {
-                pricing: "Цінова політика",
-                privacy: "Політика конфіденційності",
-                about: "Про нас",
-                advertising: "Реклама",
-                support: "Служба підтримки",
-                login: "Реєстрація/Вхід в аккаунт"
-            },
-            pl: {
-                pricing: "Cennik",
-                privacy: "Polityka prywatności",
-                about: "O nas",
-                advertising: "Reklama",
-                support: "Wsparcie",
-                login: "Rejestracja/Logowanie"
-            }
-        };
-
-        function changeLanguage(language) {
-            document.querySelectorAll('nav a, .login-button').forEach(link => {
-                const key = link.getAttribute('data-key') || 'login';
-                link.textContent = translations[language][key];
-            });
-        }
-    </script>
 </body>
 </html>
