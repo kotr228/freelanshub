@@ -47,7 +47,7 @@
             align-items: center;
             justify-content: flex-start;
         }
-        nav a {
+        nav a, .login-button {
             text-decoration: none;
             color: #333;
             padding: 15px 20px;
@@ -56,9 +56,15 @@
             border-radius: 5px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        nav a:hover {
-            background-color: #ddd;
+        nav a:hover, .login-button:hover {
             transform: scale(1.1);
+        }
+        .login-button {
+            background-color: #ff0000; /* Червоний колір фону */
+            color: white; /* Білий колір тексту */
+            position: absolute;
+            top: 20px;
+            left: 20px; /* Позиціонування в лівому верхньому куті */
         }
     </style>
 </head>
@@ -74,6 +80,8 @@
         <option value="pl">Polski</option>
     </select>
 
+    <a href="login.html" class="login-button">Реєстрація/Вхід в аккаунт</a>
+
     <div class="content">
         <nav>
             <a href="pricing.html" data-key="pricing">Цінова політика</a>
@@ -81,7 +89,6 @@
             <a href="about.html" data-key="about">Про нас</a>
             <a href="advertising.html" data-key="advertising">Реклама</a>
             <a href="support.html" data-key="support">Служба підтримки</a>
-            <a href="registrfreelans.html" data-key="login">Реєстрація/Вхід в аккаунт</a>
         </nav>
     </div>
 
@@ -114,8 +121,8 @@
         };
 
         function changeLanguage(language) {
-            document.querySelectorAll('nav a').forEach(link => {
-                const key = link.getAttribute('data-key');
+            document.querySelectorAll('nav a, .login-button').forEach(link => {
+                const key = link.getAttribute('data-key') || 'login';
                 link.textContent = translations[language][key];
             });
         }
