@@ -121,10 +121,10 @@
             document.getElementById('nav-support').textContent = texts.support[language];
         }
 
-        // Hide buttons if on pricing.html
+        // Hide buttons if on privacy.html
         document.addEventListener('DOMContentLoaded', function() {
             var currentPage = window.location.pathname;
-            if (!currentPage.includes('pricing.html')) {
+            if (!currentPage.includes('privacy.html')) {
                 document.getElementById('buttons-container').style.display = 'block';
             }
         });
