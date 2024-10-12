@@ -79,12 +79,6 @@
             <a href="advertising.html" id="nav-advertising">Реклама</a>
             <a href="support.html" id="nav-support">Служба підтримки</a>
         </nav>
-
-        <div class="buttons">
-            <button id="freelancers-button">Фрілансерам</button>
-            <button id="clients-button">Замовникам</button>
-        </div>
-
         <select id="language-select" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
             <option value="uk" selected>Українська</option>
@@ -94,16 +88,7 @@
     <script>
         function changeLanguage(language) {
             var texts = {
-                freelancers: {
-                    en: 'For freelancers',
-                    uk: 'Фрілансерам',
-                    pl: 'Dla freelancerów'
-                },
-                clients: {
-                    en: 'For clients',
-                    uk: 'Замовникам',
-                    pl: 'Dla klientów'
-                },
+                
                 pricing: {
                     en: 'Pricing',
                     uk: 'Цінова політика',
