@@ -54,15 +54,6 @@
             background-color: #ddd;
             transform: scale(1.1);
         }
-        .buttons {
-            margin: 20px;
-        }
-        .buttons button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -79,6 +70,13 @@
             <a href="advertising.html" id="nav-advertising">Реклама</a>
             <a href="support.html" id="nav-support">Служба підтримки</a>
         </nav>
+
+        <!-- Freelancers and Clients buttons -->
+        <div>
+            <button id="freelancers-button">Фрілансерам</button>
+            <button id="clients-button">Замовникам</button>
+        </div>
+
         <select id="language-select" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
             <option value="uk" selected>Українська</option>
