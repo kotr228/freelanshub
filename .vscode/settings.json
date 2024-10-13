@@ -11,8 +11,8 @@
             "driver": "MySQL",
             "name": "freelans",
             "database": "freelans",
-            "username": "admin",
-            "password": "Sillver228"
+            "username": "root",
+            "password": "Sillver-228"
         }
     ]
 }
