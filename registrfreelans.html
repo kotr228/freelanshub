@@ -23,8 +23,8 @@
         .content {
             position: relative;
             z-index: 100;
-            width: 340px; /* Розширена ширина для контенту */
-            margin: 50px auto 0; /* Центрування блоку на сторінці та зміщення вниз */
+            width: 300px; /* Встановлено фіксовану ширину для контенту */
+            margin: 50px auto; /* Центрування блоку на сторінці */
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -72,7 +72,7 @@
     </select>
 
     <div class="content">
-        <form action="/register" method="post">
+        <form action="/freelancers.html" method="post">
             <h2 id="register-title">Реєстрація</h2>
             <div class="form-field">
                 <label for="name" id="label-name">Ім'я:</label>
@@ -106,79 +106,6 @@
                 <input type="submit" value="Зареєструватися" id="submit-register">
             </div>
         </form>
-
-        <form action="/login" method="post">
-            <h2 id="login-title">Вхід</h2>
-            <div class="form-field">
-                <label for="email-login" id="label-email-login">Електронна пошта:</label>
-                <input type="email" id="email-login" name="email" required>
-            </div>
-            <div class="form-field">
-                <label for="password-login" id="label-password-login">Пароль:</label>
-                <input type="password" id="password-login" name="password" required>
-            </div>
-            <div class="form-field">
-                <input type="submit" value="Увійти" id="submit-login">
-            </div>
-        </form>
     </div>
-
-    <script>
-        function changeLanguage(language) {
-            var translations = {
-                en: {
-                    registerTitle: 'Registration',
-                    loginTitle: 'Login',
-                    nameLabel: 'Name:',
-                    emailLabel: 'Email:',
-                    phoneLabel: 'Phone Number:',
-                    passwordLabel: 'Password:',
-                    telegramLabel: 'Telegram Nick:',
-                    specialtyLabel: 'Specialty:',
-                    bankCardLabel: 'Bank Card:',
-                    submitRegister: 'Register',
-                    submitLogin: 'Login'
-                },
-                uk: {
-                    registerTitle: 'Реєстрація',
-                    loginTitle: 'Вхід',
-                    nameLabel: 'Ім\'я:',
-                    emailLabel: 'Електронна пошта:',
-                    phoneLabel: 'Номер телефону:',
-                    passwordLabel: 'Пароль:',
-                    telegramLabel: 'Telegram нік:',
-                    specialtyLabel: 'Спеціальність:',
-                    bankCardLabel: 'Банківська картка:',
-                    submitRegister: 'Зареєструватися',
-                    submitLogin: 'Увійти'
-                },
-                pl: {
-                    registerTitle: 'Rejestracja',
-                    loginTitle: 'Logowanie',
-                    nameLabel: 'Imię:',
-                    emailLabel: 'Email:',
-                    phoneLabel: 'Numer telefonu:',
-                    passwordLabel: 'Hasło:',
-                    telegramLabel: 'Nick na Telegram:',
-                    specialtyLabel: 'Specjalność:',
-                    bankCardLabel: 'Numer karty bankowej:',
-                    submitRegister: 'Zarejestruj się',
-                    submitLogin: 'Zaloguj się'
-                }
-            };
-
-            document.getElementById('register-title').textContent = translations[language].registerTitle;
-            document.getElementById('login-title').textContent = translations[language].loginTitle;
-            document.getElementById('label-name').textContent = translations[language].nameLabel;
-            document.getElementById('label-email').textContent = translations[language].emailLabel;
-            document.getElementById('label-phone').textContent = translations[language].phoneLabel;
-            document.getElementById('label-password').textContent = translations[language].passwordLabel;
-            document.getElementById('label-telegram').textContent = translations[language].telegramLabel;
-            document.getElementById('label-specialty').textContent = translations[language].specialtyLabel;
-            document.getElementById('label-bank_card').textContent = translations[language].bankCardLabel;
-            document.getElementById('submit-register').value = translations[language].submitRegister;
-            document.getElementById('submit-login').value = translations[language].submitLogin;
-        }
-    </script>
 </body>
 </html>
