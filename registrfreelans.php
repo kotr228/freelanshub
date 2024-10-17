@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Сайт для фрілансерів</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Запобігає прокрутці, якщо відео велике */
+        }
+        .video-background {
+            position: fixed; /* Фіксує відео на фоні */
+            right: 0;
+            bottom: 0;
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100; /* Забезпечує, що відео залишається під текстом та іншими елементами */
+        }
+        .content {
+            position: relative;
+            z-index: 100;
+            width: 300px; /* Встановлено фіксовану ширину для контенту */
+            margin: 50px auto; /* Центрування блоку на сторінці */
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-field {
+            margin-bottom: 10px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-field input, .form-field select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .form-field input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-field input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .language-select {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted class="video-background" playsinline>
+        <source src="fon/Видео фон для сайта   Абстрактный черный.mp4" type="video/mp4">
+        Ваш браузер не підтримує відео тег.
+    </video>
+
+    <select class="language-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="uk" selected>Українська</option>
+        <option value="pl">Polski</option>
+    </select>
+
+    <div class="content">
+        <form action="register.php" method="post">
+            <h2 id="register-title">Реєстрація</h2>
+            <div class="form-field">
+                <label for="name" id="label-name">Ім'я:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-field">
+                <label for="email" id="label-email">Електронна пошта:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-field">
+                <label for="phone" id="label-phone">Номер телефону:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-field">
+                <label for="password" id="label-password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-field">
+                <label for="telegram" id="label-telegram">Telegram нік:</label>
+                <input type="text" id="telegram" name="telegram">
+            </div>
+            <div class="form-field">
+                <label for="specialty" id="label-specialty">Спеціальність:</label>
+                <input type="text" id="specialty" name="specialty" required>
+            </div>
+            <div class="form-field">
+                <label for="bank_card" id="label-bank_card">Банківська картка:</label>
+                <input type="text" id="bank_card" name="bank_card" required>
+            </div>
+            <div class="form-field">
+                <button type="submit">Зареєструватися</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
