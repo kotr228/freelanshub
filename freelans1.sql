@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `freelans`.`job` (
   `status` VARCHAR(45) NOT NULL,
   `price` DECIMAL(20,2) NOT NULL,
   PRIMARY KEY (`id_j`),
-  INDEX `freelanser_akks_idx` (`id_f` ASC) VISIBLE,
-  INDEX `cliants_akks_idx` (`id_c` ASC) VISIBLE,
+  INDEX `freelanser_akks_idx` (`id_f` ASC),
+  INDEX `cliants_akks_idx` (`id_c` ASC),
   CONSTRAINT `freelanser_akks`
     FOREIGN KEY (`id_f`)
     REFERENCES `freelans`.`freelanser_akks` (`id_f`)
