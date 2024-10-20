@@ -23,6 +23,9 @@
         .content {
             position: relative;
             z-index: 100;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between; /* Space between left and right content */
         }
         select {
             padding: 10px;
@@ -54,6 +57,18 @@
             background-color: #ddd;
             transform: scale(1.1);
         }
+        .info-box {
+            width: 48%; /* Make sure both boxes are side by side and equal width */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            overflow-y: auto; /* Adds scroll if content is too long */
+            max-height: 75vh; /* Ensures content fits within the viewport */
+        }
+        h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -71,18 +86,53 @@
             <a href="support.html" id="nav-support">Служба підтримки</a>
         </nav>
 
-        <!-- Display buttons only if not on about.html -->
-        <div id="buttons-container" style="display: none;">
-            <button id="freelancers-button">Фрілансерам</button>
-            <button id="clients-button">Замовникам</button>
+        <!-- Left content: About us -->
+        <div class="info-box" id="about-box">
+            <h2>Про нас</h2>
+            <p>
+                Ласкаво просимо на платформу [Назва компанії], де фрілансери з різних галузей знаходять клієнтів для співпраці. Ми створили цей сайт, щоб об'єднати талановитих професіоналів і тих, хто потребує їхніх послуг, забезпечуючи зручний і ефективний процес пошуку роботи та виконання завдань.
+            </p>
+            <p>
+                [Назва компанії] — це простір для всіх, хто прагне працювати вільно та незалежно. Ми підтримуємо професіоналів із різних напрямків: від програмування і дизайну до маркетингу і копірайтингу. Наша мета — надати вам інструменти для успішного ведення бізнесу, допомогти знайти клієнтів і побудувати стабільну кар'єру в світі фрілансу.
+            </p>
+            <h3>Наші переваги:</h3>
+            <ul>
+                <li>Простий процес — реєструйтеся на платформі, створюйте профіль і шукайте відповідні проєкти.</li>
+                <li>Прямий зв'язок — спілкуйтеся з клієнтами без посередників, обговорюйте умови та терміни виконання завдань.</li>
+                <li>Безпека транзакцій — ми забезпечуємо захист ваших фінансових операцій та конфіденційної інформації.</li>
+                <li>Гнучкі можливості — ви самі обираєте проєкти та керуєте своїм робочим графіком.</li>
+            </ul>
         </div>
 
-        <select id="language-select" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="uk" selected>Українська</option>
-            <option value="pl">Polski</option>
-        </select>
+        <!-- Right content: Privacy policy -->
+        <div class="info-box" id="privacy-box">
+            <h2>Політика конфіденційності</h2>
+            <p>
+                Ми серйозно ставимося до захисту ваших даних та інформації. Політика конфіденційності [Назва компанії] забезпечує прозорість у використанні вашої персональної інформації та гарантує захист від несанкціонованого доступу.
+            </p>
+            <h3>Збір даних</h3>
+            <p>
+                Ми збираємо лише ту інформацію, яку ви добровільно надаєте під час реєстрації, заповнення профілю або взаємодії на платформі. Це можуть бути ім'я, контактні дані, інформація про професійні навички тощо.
+            </p>
+            <h3>Використання даних</h3>
+            <p>
+                Зібрані дані використовуються виключно для поліпшення роботи нашої платформи, надання вам послуг, зручного пошуку клієнтів або виконання завдань. Ми не передаємо вашу інформацію третім особам без вашої згоди.
+            </p>
+            <h3>Захист даних</h3>
+            <p>
+                Ми застосовуємо сучасні технології для захисту ваших персональних даних від втрати, крадіжки чи несанкціонованого доступу. Ваша інформація зберігається на захищених серверах, і ми регулярно оновлюємо наші системи безпеки.
+            </p>
+            <h3>Ваші права</h3>
+            <p>
+                Ви маєте право у будь-який момент оновити або видалити ваші дані, а також отримати детальну інформацію щодо того, як ми використовуємо вашу інформацію. Зверніться до нас через службу підтримки для вирішення будь-яких питань.
+            </p>
+            <h3>Зміни в політиці</h3>
+            <p>
+                Ми залишаємо за собою право змінювати нашу політику конфіденційності. Про будь-які зміни ви будете повідомлені на цій сторінці або за допомогою електронної пошти.
+            </p>
+        </div>
     </div>
+
     <script>
         function changeLanguage(language) {
             var texts = {
@@ -120,14 +170,12 @@
             document.getElementById('nav-advertising').textContent = texts.advertising[language];
             document.getElementById('nav-support').textContent = texts.support[language];
         }
-
-        // Hide buttons if on about.html
-        document.addEventListener('DOMContentLoaded', function() {
-            var currentPage = window.location.pathname;
-            if (!currentPage.includes('about.html')) {
-                document.getElementById('buttons-container').style.display = 'block';
-            }
-        });
     </script>
+
+    <select onchange="changeLanguage(this.value)">
+        <option value="uk">Українська</option>
+        <option value="en">English</option>
+        <option value="pl">Polski</option>
+    </select>
 </body>
 </html>
