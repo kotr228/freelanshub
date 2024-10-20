@@ -8,24 +8,26 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevents scrolling if the video is large */
+            overflow: hidden;
         }
         .video-background {
-            position: fixed; /* Keeps the video in the background */
+            position: fixed;
             right: 0;
             bottom: 0;
             min-width: 100%; 
             min-height: 100%;
             width: auto;
             height: auto;
-            z-index: -100; /* Ensures the video stays behind text and other elements */
+            z-index: -100;
         }
         .content {
             position: relative;
             z-index: 100;
-            padding: 20px;
+            height: 100%;
             display: flex;
-            justify-content: space-between; /* Space between left and right content */
+            justify-content: center; /* Центрування блоків */
+            align-items: center; /* Вертикальне центрування */
+            gap: 20px; /* Відстань між блоками */
         }
         select {
             padding: 10px;
@@ -58,13 +60,13 @@
             transform: scale(1.1);
         }
         .info-box {
-            width: 48%; /* Make sure both boxes are side by side and equal width */
+            width: 40%; /* Зменшено ширину для кращого вигляду */
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            overflow-y: auto; /* Adds scroll if content is too long */
-            max-height: 75vh; /* Ensures content fits within the viewport */
+            max-height: 75vh;
+            overflow-y: auto;
         }
         h2 {
             margin-top: 0;
@@ -86,7 +88,7 @@
             <a href="support.html" id="nav-support">Служба підтримки</a>
         </nav>
 
-        <!-- Left content: About us -->
+        <!-- Лівий блок -->
         <div class="info-box" id="about-box">
             <h2>Про нас</h2>
             <p>
@@ -95,40 +97,16 @@
             <p>
                 [Назва компанії] — це простір для всіх, хто прагне працювати вільно та незалежно. Ми підтримуємо професіоналів із різних напрямків: від програмування і дизайну до маркетингу і копірайтингу. Наша мета — надати вам інструменти для успішного ведення бізнесу, допомогти знайти клієнтів і побудувати стабільну кар'єру в світі фрілансу.
             </p>
-            <h3>Наші переваги:</h3>
-            <ul>
-                <li>Простий процес — реєструйтеся на платформі, створюйте профіль і шукайте відповідні проєкти.</li>
-                <li>Прямий зв'язок — спілкуйтеся з клієнтами без посередників, обговорюйте умови та терміни виконання завдань.</li>
-                <li>Безпека транзакцій — ми забезпечуємо захист ваших фінансових операцій та конфіденційної інформації.</li>
-                <li>Гнучкі можливості — ви самі обираєте проєкти та керуєте своїм робочим графіком.</li>
-            </ul>
         </div>
 
-        <!-- Right content: Privacy policy -->
+        <!-- Правий блок -->
         <div class="info-box" id="privacy-box">
             <h2>Політика конфіденційності</h2>
             <p>
                 Ми серйозно ставимося до захисту ваших даних та інформації. Політика конфіденційності [Назва компанії] забезпечує прозорість у використанні вашої персональної інформації та гарантує захист від несанкціонованого доступу.
             </p>
-            <h3>Збір даних</h3>
             <p>
                 Ми збираємо лише ту інформацію, яку ви добровільно надаєте під час реєстрації, заповнення профілю або взаємодії на платформі. Це можуть бути ім'я, контактні дані, інформація про професійні навички тощо.
-            </p>
-            <h3>Використання даних</h3>
-            <p>
-                Зібрані дані використовуються виключно для поліпшення роботи нашої платформи, надання вам послуг, зручного пошуку клієнтів або виконання завдань. Ми не передаємо вашу інформацію третім особам без вашої згоди.
-            </p>
-            <h3>Захист даних</h3>
-            <p>
-                Ми застосовуємо сучасні технології для захисту ваших персональних даних від втрати, крадіжки чи несанкціонованого доступу. Ваша інформація зберігається на захищених серверах, і ми регулярно оновлюємо наші системи безпеки.
-            </p>
-            <h3>Ваші права</h3>
-            <p>
-                Ви маєте право у будь-який момент оновити або видалити ваші дані, а також отримати детальну інформацію щодо того, як ми використовуємо вашу інформацію. Зверніться до нас через службу підтримки для вирішення будь-яких питань.
-            </p>
-            <h3>Зміни в політиці</h3>
-            <p>
-                Ми залишаємо за собою право змінювати нашу політику конфіденційності. Про будь-які зміни ви будете повідомлені на цій сторінці або за допомогою електронної пошти.
             </p>
         </div>
     </div>
@@ -163,7 +141,7 @@
                 }
             };
 
-            // Update text for navigation links
+            // Оновлюємо текст для навігаційних посилань
             document.getElementById('nav-pricing').textContent = texts.pricing[language];
             document.getElementById('nav-privacy').textContent = texts.privacy[language];
             document.getElementById('nav-about').textContent = texts.about[language];
