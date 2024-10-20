@@ -8,32 +8,20 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevents scrolling if the video is large */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
         }
         .video-background {
-            position: fixed; /* Keeps the video in the background */
-            right: 0;
-            bottom: 0;
-            min-width: 100%; 
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -100; /* Ensures the video stays behind text and other elements */
-        }
-        .content {
-            position: relative;
-            z-index: 100;
-            padding: 20px;
-            display: flex;
-            justify-content: center; /* Центрування контенту */
-        }
-        select {
-            padding: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -100;
         }
         nav {
             background-color: #f0f0f0;
@@ -43,6 +31,9 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         nav a {
             text-decoration: none;
@@ -57,6 +48,14 @@
             background-color: #ddd;
             transform: scale(1.1);
         }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 60px; /* Для уникнення перекриття з навігацією */
+        }
         .info-box {
             width: 50%; /* Центрування прямокутника */
             padding: 20px;
@@ -69,6 +68,14 @@
         h2 {
             margin-top: 0;
         }
+        select {
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -77,16 +84,16 @@
         Your browser does not support the video tag.
     </video>
 
-    <div class="content">
-        <nav>
-            <a href="pricing.html" id="nav-pricing">Цінова політика</a>
-            <a href="privacy.html" id="nav-privacy">Політика конфіденційності</a>
-            <a href="about.html" id="nav-about">Про нас</a>
-            <a href="advertising.html" id="nav-advertising">Реклама</a>
-            <a href="support.html" id="nav-support">Служба підтримки</a>
-        </nav>
+    <nav>
+        <a href="pricing.html" id="nav-pricing">Цінова політика</a>
+        <a href="privacy.html" id="nav-privacy">Політика конфіденційності</a>
+        <a href="about.html" id="nav-about">Про нас</a>
+        <a href="advertising.html" id="nav-advertising">Реклама</a>
+        <a href="support.html" id="nav-support">Служба підтримки</a>
+    </nav>
 
-        <!-- Лівий контент: Про нас -->
+    <div class="content">
+        <!-- Центрований контент: Про нас -->
         <div class="info-box" id="about-box">
             <h2>Про нас</h2>
             <p>
