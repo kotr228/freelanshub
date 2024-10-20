@@ -43,13 +43,16 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .form-field .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
         .form-field button {
             width: 48%;
             padding: 10px;
             border-radius: 4px;
             border: none;
             cursor: pointer;
-            margin-right: 4%;
             color: white;
         }
         .form-field button[type="submit"] {
@@ -114,9 +117,9 @@
                 <label for="bank_card" id="label-bank_card">Банківська картка:</label>
                 <input type="text" id="bank_card" name="bank_card" required>
             </div>
-            <div class="form-field">
+            <div class="form-field buttons">
                 <button type="submit">Зареєструватися</button>
-                <button type="button" onclick="window.location.href='login.php'">Вхід</button>
+                <button type="button" onclick="window.location.href='loginfreelans.html'">Вхід</button>
             </div>
         </form>
     </div>
