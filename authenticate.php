@@ -1,33 +1,45 @@
 <?php
 session_start();
-include 'config.php';  // Assuming 'config.php' holds the database connection details
+$servername = "localhost";
+$username = "root";
+$password = "Sillver-228";
+$dbname = "freelans";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Capture the form data
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Створення з'єднання
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Database query to check if the freelancer exists
-    $sql = "SELECT * FROM freelancers WHERE username = ? LIMIT 1";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        // Verify the password
-        if (password_verify($password, $row['password'])) {
-            // Authentication successful, set session variables
-            $_SESSION['freelancer_id'] = $row['id'];
-            $_SESSION['username'] = $row['username'];
-            header("Location: dashboard.php");  // Redirect to the freelancer dashboard
-            exit();
-        } else {
-            echo "Невірний пароль.";
-        }
-    } else {
-        echo "Немає такого користувача.";
-    }
+// Перевірка з'єднання
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Отримання даних з POST запиту
+$email = $_POST['email'];
+$password = $_POST['password'];  // Password entered by the user
+
+// Пошук користувача за email
+$sql = "SELECT * FROM freelanser_akks WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    
+    // Перевірка паролю
+    if ($password === $row['password']) {
+        // Вхід успішний, створення сесії
+        $_SESSION['freelancer_id'] = $row['id'];
+        $_SESSION['name'] = $row['name'];
+        header("Location: dashboard.php");  // Перенаправлення на панель фрілансера
+        exit();
+    } else {
+        echo "Невірний пароль.";
+    }
+} else {
+    echo "Користувача з таким email не знайдено.";
+}
+
+$conn->close();
 ?>
