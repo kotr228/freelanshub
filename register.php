@@ -1,35 +1,55 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "Sillver-228";
-$dbname = "freelans";
-
-// Створення з'єднання
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Перевірка з'єднання
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Отримання даних з POST запиту
+// Отримання даних з форми
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
-$password = $_POST['password']; // Зверніть увагу на безпеку: використовуйте password_hash в реальних умовах!
 $telegram = $_POST['telegram'];
-$specialty = $_POST['specialty'];
-$bank_card = $_POST['bank_card'];
+$specialization = $_POST['specialization'];
+$password = $_POST['password'];
 
-// Підготовка SQL запиту
-$sql = "INSERT INTO freelanser_akks (name, email, password, telegram, phone, spacialty, bank_card)
-VALUES ('$name', '$email', '$password', '$telegram', '$phone', '$specialty', '$bank_card')";
+// Підключення до бази даних
+$db_conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
 
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
+if (mysqli_connect_errno()) {
+    echo 'Помилка підключення до бази даних: ' . mysqli_connect_error();
+    exit();
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo 'Підключення успішне';
 }
 
-$conn->close();
+// Встановлення кодування UTF-8
+mysqli_set_charset($db_conn, "utf8");
+
+// Захист від SQL-ін'єкцій
+$name = mysqli_real_escape_string($db_conn, $name);
+$email = mysqli_real_escape_string($db_conn, $email);
+$phone = mysqli_real_escape_string($db_conn, $phone);
+$telegram = mysqli_real_escape_string($db_conn, $telegram);
+$specialization = mysqli_real_escape_string($db_conn, $specialization);
+$password = password_hash($password, PASSWORD_DEFAULT); // Захист пароля
+
+// Перевірка, чи існує вже такий користувач
+$check_user = "SELECT email FROM freelanser_akks WHERE email='$email'";
+$result = mysqli_query($db_conn, $check_user);
+
+if (mysqli_num_rows($result) > 0) {
+    echo '<br>Користувач з такою електронною адресою вже існує.';
+} else {
+    // Додавання користувача до бази даних
+    $sql = "INSERT INTO freelanser_akks (name, email, phone, telegram, spacialty, password, rating, bank_card) 
+            VALUES ('$name', '$email', '$phone', '$telegram', '$specialization', '$password', 0, '')";
+    
+    if (mysqli_query($db_conn, $sql)) {
+        echo '<br>Реєстрація успішна!';
+    } else {
+        echo '<br>Помилка: ' . mysqli_error($db_conn);
+    }
+}
+
+// Закриття з'єднання
+$db_conn->close();
 ?>
+
+<form action="registrfreelans.html" method="POST">
+    <input name="submit" type="submit" value="Повернутись до реєстрації">
+</form>
