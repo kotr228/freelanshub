@@ -127,7 +127,7 @@ $db_conn->close();
   </div>
   </div>
   
-  <form action="" method="POST">
+  <form method="POST" action="">
       <!--Поле для імені-->
       <div>
          <label class="user" for="text">
