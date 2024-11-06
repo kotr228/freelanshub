@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS `freelans`.`job` (
   `price` DECIMAL(20,2) NOT NULL,
   `date` DATETIME NULL,
   PRIMARY KEY (`id_j`),
-  INDEX `freelanser_akks_idx` (`id_f` ASC) VISIBLE,
-  INDEX `cliants_akks_idx` (`id_c` ASC) VISIBLE,
+  INDEX `freelanser_akks_idx` (`id_f` ASC),
+  INDEX `cliants_akks_idx` (`id_c` ASC),
   CONSTRAINT `freelanser_akks`
     FOREIGN KEY (`id_f`)
     REFERENCES `freelans`.`freelanser_akks` (`id_f`)
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`freelanser_dod` (
   `rating` FLOAT NULL,
   `bank_cart` VARCHAR(45) NULL,
   PRIMARY KEY (`id_fd`),
-  INDEX `id_f_idx` (`id_f` ASC) VISIBLE,
+  INDEX `id_f_idx` (`id_f` ASC),
   CONSTRAINT `id_f`
     FOREIGN KEY (`id_f`)
     REFERENCES `freelans`.`freelanser_akks` (`id_f`)
@@ -106,8 +106,8 @@ CREATE TABLE IF NOT EXISTS `freelans`.`viplsts` (
   `bank_card` VARCHAR(45) NULL,
   `date` DATE NULL,
   PRIMARY KEY (`id_v`),
-  INDEX `id_f_idx` (`id_f` ASC) VISIBLE,
-  CONSTRAINT `id_f`
+  INDEX `id_f_idx` (`id_f` ASC),
+  CONSTRAINT `viplsts_id_f`
     FOREIGN KEY (`id_f`)
     REFERENCES `freelans`.`freelanser_akks` (`id_f`)
     ON DELETE NO ACTION
@@ -125,8 +125,8 @@ CREATE TABLE IF NOT EXISTS `freelans`.`otrimani kohti` (
   `price` DECIMAL(20,2) NULL,
   `date` DATETIME NULL,
   PRIMARY KEY (`id_k`),
-  INDEX `id_c_idx` (`id_c` ASC) VISIBLE,
-  INDEX `id_j_idx` (`id_j` ASC) VISIBLE,
+  INDEX `id_c_idx` (`id_c` ASC),
+  INDEX `id_j_idx` (`id_j` ASC),
   CONSTRAINT `id_c`
     FOREIGN KEY (`id_c`)
     REFERENCES `freelans`.`cliants_akks` (`id_c`)
