@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Отримання даних з форми
 $name = $_POST['name'];
 $email = $_POST['email'];
@@ -16,7 +17,7 @@ if (mysqli_connect_errno()) {
 } else {
     echo 'Підключення успішне';
 }
-
+$result = mysqli_query($db_conn, 'SELECT * FROM freelanser_akks');
 // Встановлення кодування UTF-8
 mysqli_set_charset($db_conn, "utf8");
 
@@ -25,7 +26,7 @@ $name = mysqli_real_escape_string($db_conn, $name);
 $email = mysqli_real_escape_string($db_conn, $email);
 $phone = mysqli_real_escape_string($db_conn, $phone);
 $telegram = mysqli_real_escape_string($db_conn, $telegram);
-$specialization = mysqli_real_escape_string($db_conn, $specialization);
+$spacialty = mysqli_real_escape_string($db_conn, $spacialty);
 $password = password_hash($password, PASSWORD_DEFAULT); // Захист пароля
 
 // Перевірка, чи існує вже такий користувач
