@@ -70,7 +70,7 @@
   $email = $_POST['email'];
   $phone = $_POST['phone'];
   $telegram = $_POST['telegram'];
-  $specialization = $_POST['spacialty'];
+  $spacialty = $_POST['spacialty'];
   $password = $_POST['password'];
   
   // Підключення до бази даних
@@ -128,7 +128,7 @@
   </div>
   </div>
   
-  <form action="register.php" method="POST">
+  <form action="" method="POST">
       <!--Поле для імені-->
       <div>
          <label class="user" for="text">
