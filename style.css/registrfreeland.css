@@ -15,12 +15,12 @@ html, body {
 }
 
 .wrapper {
-  display: flex; /* Вклаем Flexbox */
-  justify-content: center; /* Центрируем содержимое по горизонтали */
-  align-items: center; /* Центрируем содержимое по вертикали */
-  width: 700px; /* Ширина контейнера */
-  height: 100vh; /* Высота на весь экран */
-  margin: 0 auto; /* Ценрпртрируем контейнер по горизонтали */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  width: 700px;
+  height: 100vh;
+  margin: 0 auto;
 }
 
 #password{
