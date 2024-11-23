@@ -15,14 +15,27 @@ html, body {
 }
 
 .wrapper {
-  width: 600px;
-  margin: 5% auto;
+  display: flex; /* Вклаем Flexbox */
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  align-items: center; /* Центрируем содержимое по вертикали */
+  width: 700px; /* Ширина контейнера */
+  height: 100vh; /* Высота на весь экран */
+  margin: 0 auto; /* Ценрпртрируем контейнер по горизонтали */
+}
+
+#password{
+  font-size: 25px;
 }
 
 form {
   position: relative;
 }
 
+.content{
+  border: #d58512 solid 2px;
+  padding: 30px;
+  border-radius: 20px;
+}
 
 .sign-in {
   float: left;
