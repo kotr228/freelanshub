@@ -119,99 +119,102 @@
   
 
 <div class="wrapper">
-  <div class="header">
-    <h3 class="sign-in">Реєстрація</h3>
-    <div class="container">
-      <div class="button" role="button" tabindex="0" onclick="window.location.href='loginfreelans.html'">
-          Увійти в існуючий
-      </div>
-  </div>
-  </div>
+  <div class="content">
+    <div class="header">
+      <h3 class="sign-in">Реєстрація</h3>
+      <div class="container">
+        <div class="button" role="button" tabindex="0" onclick="window.location.href='loginfreelans.html'">
+            Увійти в існуючий
+        </div>
+    </div>
+    </div>
+    
+    <form action="" method="POST">
+        <!--Поле для імені-->
+        <div>
+           <label class="user" for="text">
+             <svg viewBox="0 0 32 32">
+                      <g filter="">
+                        <use xlink:href="#man-people-user"></use>
+                      </g>
+                    </svg>
+           </label>
+          <input class="user-input" type="text" name="name" id="name" placeholder="Введіть ім'я"  />
+        </div> 
   
-  <form action="" method="POST">
-      <!--Поле для імені-->
-      <div>
-         <label class="user" for="text">
-           <svg viewBox="0 0 32 32">
+        <!--Поле для ПОЧТИ-->
+        <div>
+          <label class="user" for="text">
+            <svg viewBox="0 0 32 32">
+                     <g filter="">
+                       <use xlink:href="#man-people-user"></use>
+                     </g>
+                   </svg>
+          </label>
+         <input class="user-input" type="email" name="email" id="email" placeholder="Пошта. example@gmail.com"  />
+       </div> 
+  
+       <!--Поле для номера-->
+        <div>
+          <label class="user" for="text">
+            <svg viewBox="0 0 32 32">
                     <g filter="">
                       <use xlink:href="#man-people-user"></use>
                     </g>
                   </svg>
-         </label>
-        <input class="user-input" type="text" name="name" id="name" placeholder="Введіть ім'я"  />
-      </div> 
-
-      <!--Поле для ПОЧТИ-->
-      <div>
-        <label class="user" for="text">
-          <svg viewBox="0 0 32 32">
-                   <g filter="">
-                     <use xlink:href="#man-people-user"></use>
-                   </g>
-                 </svg>
-        </label>
-       <input class="user-input" type="email" name="email" id="email" placeholder="Пошта. example@gmail.com"  />
-     </div> 
-
-     <!--Поле для номера-->
-      <div>
-        <label class="user" for="text">
-          <svg viewBox="0 0 32 32">
-                  <g filter="">
-                    <use xlink:href="#man-people-user"></use>
-                  </g>
-                </svg>
-        </label>
-        <input class="user-input" type="tel" name="phone" id="phone" placeholder="Номер телефону: +380ХХХХХХХХ"  />
-      </div>
-      <!--Поле для тг ніку-->
-      <div>
-        <label class="user" for="text">
-          <svg viewBox="0 0 32 32">
-                  <g filter="">
-                    <use xlink:href="#man-people-user"></use>
-                  </g>
-                </svg>
-        </label>
-        <input class="user-input" type="text" name="telegram" id="telegram" placeholder="Нік у телеграмі: @example"  />
-      </div>
-      <!--Поле для спеца-->
-      <div>
-        <label class="user" for="text">
-          <svg viewBox="0 0 32 32">
-                  <g filter="">
-                    <use xlink:href="#man-people-user"></use>
-                  </g>
-                </svg>
-        </label>
-        <input class="user-input" type="text" name="spacialty" id="spacialty" placeholder="Ваша спеціальність"  />
-      </div>  
-
-
-      <!--Поле для Паролю-->
-      <div>
-        <label class="lock" for="password">
-          <svg viewBox="0 0 32 32">
-             <g filter="">
-               <use xlink:href="#lock-locker"></use>
-              </g>
-            </svg>  
-        </label>
-        <input type="password" name="password" id="password" placeholder="" />
-      </div> 
-      
-      <div>
-        <input type="submit" value="Зареєструватися" />
-      </div>
-      <div class="radio-check">   
-        <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
-        <label for="no"><i class="fa fa-times"></i></label>  
-        <input type="radio" class="radio-yes" id="yes" name="remember" value="yes">
-        <label for="yes"><i class="fa fa-check"></i></label>
-        <span class="switch-selection"></span>
-      </div>
-      <span class="check-label">Запам'ятати мене</span>=
-    </form>  
+          </label>
+          <input class="user-input" type="tel" name="phone" id="phone" placeholder="Номер телефону: +380ХХХХХХХХ"  />
+        </div>
+        <!--Поле для тг ніку-->
+        <div>
+          <label class="user" for="text">
+            <svg viewBox="0 0 32 32">
+                    <g filter="">
+                      <use xlink:href="#man-people-user"></use>
+                    </g>
+                  </svg>
+          </label>
+          <input class="user-input" type="text" name="telegram" id="telegram" placeholder="Нік у телеграмі: @example"  />
+        </div>
+        <!--Поле для спеца-->
+        <div>
+          <label class="user" for="text">
+            <svg viewBox="0 0 32 32">
+                    <g filter="">
+                      <use xlink:href="#man-people-user"></use>
+                    </g>
+                  </svg>
+          </label>
+          <input class="user-input" type="text" name="spacialty" id="spacialty" placeholder="Ваша спеціальність"  />
+        </div>  
+  
+  
+        <!--Поле для Паролю-->
+        <div>
+          <label class="lock" for="password">
+            <svg viewBox="0 0 32 32">
+               <g filter="">
+                 <use xlink:href="#lock-locker"></use>
+                </g>
+              </svg>  
+          </label>
+          <input type="password" name="password" id="password" placeholder="" />
+        </div> 
+        
+        <div>
+          <input type="submit" value="Зареєструватися" />
+        </div>
+        <div class="radio-check">   
+          <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
+          <label for="no"><i class="fa fa-times"></i></label>  
+          <input type="radio" class="radio-yes" id="yes" name="remember" value="yes">
+          <label for="yes"><i class="fa fa-check"></i></label>
+          <span class="switch-selection"></span>
+        </div>
+        <span class="check-label">Запам'ятати мене</span>=
+      </form>  
+  </div>
+  
 </div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
