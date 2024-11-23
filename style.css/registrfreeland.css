@@ -15,14 +15,27 @@ html, body {
 }
 
 .wrapper {
-  width: 600px;
-  margin: 5% auto;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  width: 700px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+#password{
+  font-size: 25px;
 }
 
 form {
   position: relative;
 }
 
+.content{
+  border: #d58512 solid 2px;
+  padding: 30px;
+  border-radius: 20px;
+}
 
 .sign-in {
   float: left;
