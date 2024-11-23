@@ -198,7 +198,7 @@
                 </g>
               </svg>  
           </label>
-          <input type="password" name="password" id="password" placeholder="" />
+          <input type="password" name="password" id="password" placeholder="Пароль" />
         </div> 
         
         <div>
