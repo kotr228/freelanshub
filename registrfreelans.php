@@ -120,7 +120,7 @@
 
 <div class="wrapper">
   <div class="header">
-    <h3 class="sign-in">Зареєстуватися</h3>
+    <h3 class="sign-in">Реєстрація</h3>
     <div class="container">
       <div class="button" role="button" tabindex="0" onclick="window.location.href='loginfreelans.html'">
           Увійти в існуючий
@@ -150,7 +150,7 @@
                    </g>
                  </svg>
         </label>
-       <input class="user-input" type="email" name="email" id="email" placeholder="Почта. example@gmail.com"  />
+       <input class="user-input" type="email" name="email" id="email" placeholder="Пошта. example@gmail.com"  />
      </div> 
 
      <!--Поле для номера-->
