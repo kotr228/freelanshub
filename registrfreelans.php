@@ -201,7 +201,7 @@
       </div> 
       
       <div>
-        <input type="submit" value="Sign in" />
+        <input type="submit" value="Зареєструватися" />
       </div>
       <div class="radio-check">   
         <input type="radio" class="radio-no" id="no" name="remember" value="no" checked>
