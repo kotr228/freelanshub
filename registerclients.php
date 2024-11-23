@@ -126,7 +126,7 @@
   </div>
   </div>
   
-  <form action="clients.html" method="POST">
+  <form action="" method="POST">
       <!--Поле для імені-->
       <div>
          <label class="user" for="text">
