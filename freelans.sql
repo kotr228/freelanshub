@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`freelanser_akks` (
   `id_f` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(450) NOT NULL,
   `telegram` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `spacialty` VARCHAR(150) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`cliants_akks` (
   `id_c` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(450) NOT NULL,
   `telegram` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `rating` FLOAT NULL,
@@ -99,7 +99,7 @@ ENGINE = InnoDB;
 -- Table `freelans`.`viplsts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `freelans`.`viplsts` (
-  `id_v` INT NOT NULL,
+  `id_v` INT NOT NULL AUTO_INCREMENT,
   `id_f` INT NULL,
   `how_job` INT NULL,
   `how_money` DECIMAL(20,2) NULL,
@@ -119,7 +119,7 @@ ENGINE = InnoDB;
 -- Table `freelans`.`otrimani kohti`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `freelans`.`otrimani kohti` (
-  `id_k` INT NOT NULL,
+  `id_k` INT NOT NULL AUTO_INCREMENT,
   `id_c` INT NULL,
   `id_j` INT NULL,
   `price` DECIMAL(20,2) NULL,
