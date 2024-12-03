@@ -9,21 +9,71 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
+.site{
+  max-width: 2080px;
+}
+
 .header{
   font-size: 1.8em;
   margin: 15px 10px;
   padding: 13px 30px;
   display: flex;
-  border: #F0AD4E solid 6px;
+  border: #F5F5DC solid 6px;
   border-radius: 25px;
   justify-content: space-between;
 }
+
+.main-header{
+  font-size: 1.8em;
+  margin: 15px 0px;
+  padding: 13px 30px;
+  display: flex;
+  border-radius: 25px;
+  justify-content: space-between;
+}
+
 
 .logo-user{
   object-fit: cover;
   width: 60px;
   height: 60px;
 }
+
+
+.dropdown-menu {
+  display: none; 
+  position: absolute; 
+  top: 100%; 
+  right: 0; 
+  background-color: #F5F5DC;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; 
+  overflow: hidden; 
+  z-index: 100; 
+}
+
+.dropdown-item {
+  display: block; 
+  width: 100%; 
+  padding: 10px 15px; 
+  text-align: left;
+  color: #222831; 
+  background-color: #F5F5DC;
+  border: none; 
+  cursor: pointer; 
+  font-size: 1em; 
+}
+
+.dropdown-item:hover {
+  background-color: #f8c965; 
+  color: #000; 
+}
+
+
+.header_user-info:hover .dropdown-menu {
+  display: block; 
+}
+
 
 .header_item{
   display: flex;
@@ -32,8 +82,8 @@ html, body {
   height: 70px; 
   margin-right: 25px;
   border-radius: 15px;
-  color: #fff;
-  background-color: #F0AD4E;
+  color: #000;
+  background-color: #F5F5DC;
   padding: 10px 10px;
   flex-grow: 1; /* Позволяет элементу расширяться */
   text-align: center; /* Центрируем текст внутри элемента */
@@ -49,26 +99,38 @@ html, body {
   padding-right: 1px;
   padding-top: 3px;
   display: flex;
-  border:#F0AD4E solid 1px;
+  border:#F5F5DC solid 1px;
   align-items: center; 
   border-radius: 45px;
-  color: #F0AD4E;
+  color: #F5F5DC;
 }
 
 .header_user-name{
   margin-right: 223px;
 }
 .header_user-info{
+  position: relative;
+
   cursor: pointer;
   box-shadow: 1px 4px 16px 0 #e8e8f066;
 }
 
 .main{
+  gap: 33px;
   padding: 10px;
+  height: 650px;
   display: flex;
-  border: #F0AD4E solid 4px;
   border-radius: 25px;
   margin: 1px 50px;
+  align-items: flex-start;
+  background-color: #F5F5DC;
+}
+
+.data_price{
+  padding: 20px;
+  color: #222831;
+  border-radius: 25px;
+  background-color:#F5F5DC
 }
 
 .block-parametrs{
@@ -80,12 +142,24 @@ html, body {
   height: 17.7em;
 }
 
+
+
+.block_info{
+  padding: 15px 22px;
+  font-size: 36px;
+  line-height: 1.6;
+  width: 500px;
+  background-color: #222831;
+  color: #F5F5DC;
+  border-radius: 25px;
+}
+
 .style_pole{
   padding: 10px;
   margin-bottom: 2px;
   display: flex;
   flex-direction: column;
-  border: #F0AD4E solid 2px;
+  border: #F5F5DC solid 2px;
   border-radius: 10px;
 }
 .input{
@@ -107,7 +181,7 @@ html, body {
 
 .input-price{
   font-size: 30px;
-  color:#F0AD4E;
+  color:#F5F5DC;
   height: 40px;
   /* Оформление поля */
   background-color: black;
@@ -123,7 +197,7 @@ appearance: none; /* Убираем стандартное оформление 
   background-color: black;
   border-radius: 5px;
   padding: 5px 10px;
-  color:#F0AD4E ;
+  color:#F5F5DC ;
   padding-right: 40px; /* Оставляем место для изображения */
   background-image: url('/img/png-transparent-solar-calendar-symbol-computer-icons-encapsulated-postscript-calendar-icon-miscellaneous-text-calendar-thumbnail.png');
   background-repeat: no-repeat; /* Убираем повторение */
@@ -145,7 +219,7 @@ appearance: none; /* Убираем стандартное оформление 
   flex-wrap: nowrap; /* Предотвращаем перенос элементов */
   font-size: 1.8em;
   padding: 13px 30px;
-  border: #F0AD4E solid 6px;
+  border: #F5F5DC solid 6px;
   border-radius: 25px;
   justify-content: center; /* Центрируем элементы внутри футера */
   align-items: center;
@@ -177,8 +251,8 @@ appearance: none; /* Убираем стандартное оформление 
   height: 70px;
   margin-right: 25px;
   border-radius: 15px;
-  color: #fff;
-  background-color: #F0AD4E;
+  color: #222831;
+  background-color: #F5F5DC;
   padding: 20px;
 }
 
