@@ -1,0 +1,181 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  background: #222831;
+  font-family: 'Roboto', sans-serif;
+}
+
+.site{
+  max-width: 2080px;
+}
+
+.header{
+  font-size: 1.8em;
+  margin: 15px 10px;
+  padding: 13px 30px;
+  display: flex;
+  border: #F0AD4E solid 6px;
+  border-radius: 25px;
+  justify-content: space-between;
+}
+
+
+
+.header_item{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 70px; 
+  margin-right: 25px;
+  border-radius: 15px;
+  color: #fff;
+  background-color: #F0AD4E;
+  padding: 10px 10px;
+  flex-grow: 1; /* Позволяет элементу расширяться */
+  text-align: center; /* Центрируем текст внутри элемента */
+  min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
+}
+.header_item:hover{
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #e8e8f066;
+}
+
+.main {
+  display: flex;
+  justify-content: space-evenly; /* Равномерное распределение с одинаковыми отступами */
+  align-items: center; /* Центровка по вертикали */
+  height: 70vh; /* Высота контейнера */
+  padding: 10px; /* Внутренние отступы */
+  gap: 20px; /* Расстояние между кнопками */
+  padding: 0 50px;
+}
+
+.button {
+  text-decoration: none; /* Убираем подчёркивание (на всякий случай) */
+  flex-direction: column; /* Расположение элементов сверху вниз */
+  flex-grow: 1; /* Позволяет кнопкам расти равномерно */
+  flex-basis: 0; /* Задает базовую ширину кнопок */
+  max-width: 550px; /* Максимальная ширина кнопки */
+  height: 60vh !important;
+  overflow: hidden; /* Скрываем излишки картинки за границами */
+  border-radius: 25px; /* Закругленные углы */
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  display: flex; /* Центрирование текста внутри кнопок */
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для увеличения и тени */
+}
+
+.button div {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Убираем подчёркивание (на всякий случай) */
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; /* Убираем подчёркивание (на всякий случай) */
+}
+.img {
+  width: 100%; /* Занимает всю ширину контейнера */
+  height: auto; /* Сохраняет пропорции изображения */
+  display: block; /* Убирает возможные отступы */
+}
+
+.caption {
+  margin-top: 1ch; /* Отступ сверху от картинки */
+  font-size: 40px; /* Размер шрифта */
+  font-weight: bold; /* Полужирный текст */
+  color: #333; /* Цвет текста */
+  text-transform: uppercase; /* Преобразование текста в заглавные буквы */
+}
+
+.button:nth-child(1):hover {
+  transform: scale(1.05); /* Увеличение на 10% */
+  box-shadow: 0 15px 215px rgba(240, 173, 78); /* Добавление тени при наведении */
+}
+
+.button:nth-child(2):hover {
+  transform: scale(1.05); /* Увеличение на 10% */
+  box-shadow: 0 15px 215px rgba(254, 249, 214); /* Добавление тени при наведении */
+}
+
+.button:nth-child(1) {
+  background-color: orange;
+}
+
+.button:nth-child(2) {
+  background-color: rgb(254, 249, 214);
+}
+
+.button:nth-child(3) {
+  background-color: gray;
+}
+
+
+.footer {
+  display: inline-flex; /* Устанавливаем inline-flex для обтекания содержимого */
+  flex-wrap: nowrap; /* Предотвращаем перенос элементов */
+  font-size: 1.8em;
+  padding: 13px 30px;
+  border: rgb(240, 173, 78) solid 6px;
+  border-radius: 25px;
+  justify-content: center; /* Центрируем элементы внутри футера */
+  align-items: center;
+  background-color: #222831; /* Цвет фона футера */
+  margin: 20px auto; /* Центрируем футер относительно страницы */
+}
+
+.logo {
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+  margin-right: 30px;
+}
+
+.obolocka{
+  display: flex;
+  justify-content: center;
+}
+
+.logo:hover {
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #fff;
+}
+
+.footer-item {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 70px;
+  margin-right: 25px;
+  border-radius: 15px;
+  color: #fff;
+  background-color: #F0AD4E;
+  padding: 20px;
+}
+
+.footer-item:hover {
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #fff;
+}
+
+.footer-item:last-child {
+  margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
+.button{
+  height: 500px;
+  width: 100px;
+  background-color: #fff;
+}

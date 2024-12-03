@@ -1,80 +1,45 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="UK">
 <head>
-    <meta charset="UTF-8">
-    <title>Основний вхід</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ГОЛОВНА</title>
+  <link rel="stylesheet" href="index.css">
 </head>
-<body>
+<body class="body">
+<div class="site">
+  <header class="header">
+    <div class="header_item">Цінова політика</div>
+    <div class="header_item">Політика конфедеційності</div>
+    <div class="header_item">Служба підтримки</div>
+  </header>
+  <main class="main">
+    <a href="/freelancers/loginfreelans.html" class="button">
+      <div class="content">
+        <img src="free-icon-freelancer-5024208.png" alt="Freelancer Icon" class="img">
+        <p class="caption">Увійти як фрілансер</p>
+      </div>
+    </a>
     
+    <a href="/clients/loginclients.html" class="button">
+      <div class="content">
+        <img src="free-icon-computer-15557975.png" alt="Freelancer Icon" class="img">
+        <p class="caption">Увійти як замовник</p>
+      </div>
+    </a>
+    <div class="button">Рекламка</div>
+  </main>
 
-    <div class="content">
-        <nav>
-            <a href="pricing.html" id="nav-pricing">Цінова політика</a>
-            <a href="privacy.html" id="nav-privacy">Політика конфіденційності</a>
-            <a href="about.html" id="nav-about">Про нас</a>
-            <a href="advertising.html" id="nav-advertising">Реклама</a>
-            <a href="support.html" id="nav-support">Служба підтримки</a>
-        </nav>
+  <div class="obolocka">
+    <footer class="footer">
+      <img class="logo" src="img/Freelanshub (1).png" alt="logo">
+      <div class="footer-item">Реклама</div>
+      <div class="footer-item">Партнерство</div>
+      <div class="footer-item">Про нас</div>
+    </footer>
+  </div>
+</div>
 
-        <select id="language-select" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="uk" selected>Українська</option>
-            <option value="pl">Polski</option>
-        </select>
-
-        <a href="freelancers.html" class="button freelancers" id="freelancers-button">Фрілансерам</a>
-        <a href="clients.html" class="button clients" id="clients-button">Замовникам</a>
-    </div>
-
-    <script>
-        function changeLanguage(language) {
-            var texts = {
-                freelancers: {
-                    en: 'For freelancers',
-                    uk: 'Фрілансерам',
-                    pl: 'Dla freelancerów'
-                },
-                clients: {
-                    en: 'For clients',
-                    uk: 'Замовникам',
-                    pl: 'Dla klientów'
-                },
-                pricing: {
-                    en: 'Pricing',
-                    uk: 'Цінова політика',
-                    pl: 'Cennik'
-                },
-                privacy: {
-                    en: 'Privacy Policy',
-                    uk: 'Політика конфіденційності',
-                    pl: 'Polityka prywatności'
-                },
-                about: {
-                    en: 'About Us',
-                    uk: 'Про нас',
-                    pl: 'O nas'
-                },
-                advertising: {
-                    en: 'Advertising',
-                    uk: 'Реклама',
-                    pl: 'Reklama'
-                },
-                support: {
-                    en: 'Support',
-                    uk: 'Служба підтримки',
-                    pl: 'Wsparcie'
-                }
-            };
-
-            // Update text for buttons and links
-            document.getElementById('freelancers-button').textContent = texts.freelancers[language];
-            document.getElementById('clients-button').textContent = texts.clients[language];
-            document.getElementById('nav-pricing').textContent = texts.pricing[language];
-            document.getElementById('nav-privacy').textContent = texts.privacy[language];
-            document.getElementById('nav-about').textContent = texts.about[language];
-            document.getElementById('nav-advertising').textContent = texts.advertising[language];
-            document.getElementById('nav-support').textContent = texts.support[language];
-        }
-    </script>
+ 
 </body>
 </html>
