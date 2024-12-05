@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Пароль вірний!";
             // Успішний вхід
             $_SESSION['user_id'] = $row['id_f'];
-            header("Location: delat_zakazy.html");
+            header("Location: delat_zakazy.php");
             exit();
         } else {
             echo "<p>Неправильний пароль!</p>";
