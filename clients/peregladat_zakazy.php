@@ -1,3 +1,7 @@
+<?php
+include('db_connect.php');
+?>
+
 <!DOCTYPE html>
 <html lang="UK">
 <head>
@@ -14,7 +18,7 @@
     <div class="header_item">Служба підтримки</div>
     <div class="header_item">На головну</div>
     <div class="header_user-info">
-      <p class="header_user-name">User</p>
+      <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
         <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
