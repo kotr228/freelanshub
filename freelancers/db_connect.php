@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Підключення до бази даних
 $host = "localhost";
 $username = "root";
@@ -13,7 +17,7 @@ if ($conn->connect_error) {
 }
 
 // Перевірка, чи користувач увійшов у систему
-session_start();
+
 if (!isset($_SESSION['user_id'])) {
     // Якщо не увійшов, перенаправляємо на сторінку логіну
     header("Location: loginfreelans.html");
