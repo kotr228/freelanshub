@@ -1,0 +1,460 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*{
+  font-size: 36px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  background: #222831;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn-open-modal {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+.btn-open-modaltg {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+.modal {
+  display: none; /* Спочатку приховано */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modaltg {
+  display: none; /* Спочатку приховано */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Стилі для модального вікна */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Модальне вікно приховане за замовчуванням */
+  justify-content: center;
+  align-items: center;
+}
+
+#modaltg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Модальне вікно приховане за замовчуванням */
+  justify-content: center;
+  align-items: center;
+}
+
+#modal:target {
+  display: flex; /* Показуємо вікно при переході на #modal */
+}
+
+#modaltg:target {
+  display: flex; /* Показуємо вікно при переході на #modal */
+}
+
+.modal-content {
+  background-color: #222831;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
+.modal-contenttg {
+  background-color: #222831;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+}
+
+.modaltg h2 {
+  margin-bottom: 15px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modaltg input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between; /* Розміщує кнопки по боках */
+}
+
+.modaltg-buttons {
+  display: flex;
+  justify-content: space-between; /* Розміщує кнопки по боках */
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+}
+
+.modal-contenttg h3 {
+  margin-bottom: 20px;
+}
+
+.modal-content input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-contenttg input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modaltg-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-update, .btn-close {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-updatetg, .btn-closetg {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-update {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-updatetg {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-update:hover {
+  background-color: #218838;
+}
+
+.btn-updatetg:hover {
+  background-color: #218838;
+}
+
+.btn-close {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-closetg {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-close:hover {
+  background-color: #c82333;
+}
+
+.btn-closetg:hover {
+  background-color: #c82333;
+}
+
+
+.site{
+  max-width: 2080px;
+}
+
+.header{
+  margin: 15px 10px;
+  padding: 13px 30px;
+  padding-right: 0;
+  display: flex;
+  border: #F0AD4E solid 6px;
+  border-radius: 25px;
+  justify-content: space-between;
+}
+
+.logo-user{
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+}
+
+
+
+.header_item{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 70px; 
+  margin-right: 25px;
+  border-radius: 15px;
+  color: #fff;
+  background-color: #F0AD4E;
+  padding: 10px 10px;
+  flex-grow: 1; /* Позволяет элементу расширяться */
+  text-align: center; /* Центрируем текст внутри элемента */
+  min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
+}
+
+.header_item:hover{
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #e8e8f066;
+}
+
+.header_user-info{
+  padding-left: 29px;
+  padding-right: 1px;
+  padding-top: 3px;
+  display: flex;
+  border:#F0AD4E solid 1px;
+  align-items: center; 
+  border-radius: 45px;
+  color: #F0AD4E;
+}
+
+.header_user-name{
+  margin-right: 223px;
+}
+.header_user-info{
+  position: relative;
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #e8e8f066;
+}
+
+.main{
+  gap: 30px;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  border:#F0AD4E solid 6px;
+  border-radius: 25px;
+  margin: 0 40px;
+  padding: 30px;
+}
+
+
+.logo {
+  object-fit: cover;
+  width: 70px;
+  height: 70px;
+  margin-right: 30px;
+}
+
+
+/* Загальний контейнер */
+.block-container {
+  display:block;
+  flex-direction: column;
+  width: 650px;
+}
+
+.avatar{
+  display: flex;
+  flex-direction: column;
+}
+
+.ava{
+  width: 378px;
+  display: flex;
+  flex-direction: column;
+}
+
+.n1 p{
+  color: #e78c2a;
+}
+
+.n1{
+  width: 600px;
+  display: flex;
+  gap: 25px;
+  text-align: center;
+}
+/* Контейнер для рядка (надпис + кнопка) */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
+  width: 100%;
+  margin-bottom: 71px;
+}
+
+/* Текст */
+.row span {
+  color: #e78c2a;
+  margin-right: 5px; /* Отступ текста от кнопки */
+  max-width: calc(100% - 390px); /* Учитываем ширину кнопки и отступ */
+  word-break: break-word; /* Разрешаем перенос длинных слов */
+}
+
+/* Кнопки */
+.row button {
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+
+.n1 button{
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.n1 textarea{
+  border-radius: 15px;
+  padding: 20px;
+  height: 56vh;
+}
+/* Ефект при наведенні */
+.row button:hover , .n1 button:hover  {
+  background-color: #e78c2a; /* Темніший помаранчевий */
+}
+
+.block-container.ava {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff; /* Цвет текста */
+  justify-content: space-between;
+}
+
+.avatar{
+  gap: 30px;
+}
+
+.avatar img {
+  width: 270px; /* Ширина изображения */
+  height: 270px; /* Высота изображения */
+  border-radius: 50%; /* Сделать круг */
+  object-fit: cover; /* Обрезка изображения */
+  border: 3px solid #fff; /* Белая рамка */
+}
+
+.avatar button {
+  background-color: #f39c12; /* Оранжевый цвет кнопки */
+  color: #fff; /* Белый текст */
+  border: none;
+  padding: 10px 20px; /* Внутренние отступы */
+  border-radius: 5px; /* Скругление углов */
+  cursor: pointer; /* Курсор при наведении */
+  transition: 0.3s ease; /* Анимация при наведении */
+}
+
+.avatar button:hover {
+  background-color: #d87a06; /* Более темный оранжевый при наведении */
+}
+
+.block-container.ava > button {
+  background-color: #3498db; /* Синий цвет кнопки */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.block-container.ava > button:hover {
+  background-color: #2c81c7; /* Более темный синий при наведении */
+}
