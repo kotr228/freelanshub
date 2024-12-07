@@ -125,6 +125,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
   width: 100%;
   margin-bottom: 71px;
 }
@@ -132,11 +133,13 @@ html, body {
 /* Текст */
 .row span {
   color: #e78c2a;
+  margin-right: 5px; /* Отступ текста от кнопки */
+  max-width: calc(100% - 390px); /* Учитываем ширину кнопки и отступ */
+  word-break: break-word; /* Разрешаем перенос длинных слов */
 }
 
-
 /* Кнопки */
-.row button{
+.row button {
   display: flex; /* Flex-контейнер для центрирования */
   justify-content: center; /* Горизонтальное центрирование текста */
   align-items: center; /* Вертикальное центрирование текста */
@@ -150,6 +153,7 @@ html, body {
   width: 385px; /* Однакова ширина кнопок */
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
+
 
 .n1 button{
   background-color: #fca03d; /* Помаранчевий фон */
