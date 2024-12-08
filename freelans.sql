@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`freelanser_akks` (
   `phone` VARCHAR(45) NOT NULL,
   `spacialty` VARCHAR(150) NOT NULL,
   `avatar` VARCHAR(255) NULL,
+  `about` text NULL,
   PRIMARY KEY (`id_f`))
 ENGINE = InnoDB;
 
@@ -45,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`cliants_akks` (
   `phone` VARCHAR(45) NOT NULL,
   `rating` FLOAT NULL,
   `avatar` VARCHAR(255) NULL,
+  `about` text NULL,
   PRIMARY KEY (`id_c`))
 ENGINE = InnoDB;
 
