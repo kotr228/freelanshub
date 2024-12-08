@@ -3,6 +3,7 @@ include('db_connect.php');
 include('tg_info.php');
 include('email_info.php');
 include('phone_info.php');
+include('get_user.php');
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ include('phone_info.php');
 <body class="body">
 <div class="site">
   <header class="header">
-  <?php include('get_user.php'); ?>
+  
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
         <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
@@ -44,8 +45,8 @@ include('phone_info.php');
         </div>
       </div>
       </form>
-
       </div>
+
       <div class="row">
         <span><?php echo htmlspecialchars($user_tg); ?></span>
         <a href="#modaltg" class="btn-open-modaltg">Змінити телеграм</a>
@@ -69,23 +70,88 @@ include('phone_info.php');
       </div>
       <div class="row">
         <span><?php echo htmlspecialchars($user_email); ?></span>
-        <button>Змінити адресу електронної пошти</button>
+        <a href="#modalem" class="btn-open-modaltg">Змінити адресу електронної пошти</a>
+
+        <div id="modalem">
+      <div class="modal-contentem">
+      <h3>Оновлення пошти</h3>
+      <form action="update_em.php" method="POST">
+        <label for="new_em">Нова адреса електронної пошти:</label>
+          <input type="text" id="new_em" name="new_em" required>
+            <div class="modal-actions">
+               <button type="submit" class="btn-updateem">Оновити</button>
+              <a href="#" class="btn-closeem">Скасувати</a>
+            </div>
+          </form>
+        </div>
       </div>
+      </form>
+
+      </div>
+
       <div class="row">
         <span><?php echo htmlspecialchars($user_phone); ?></span>
-        <button>Змінити номер телефону</button>
+        <a href="#modalph" class="btn-open-modaltg">Змінити номер телефону</a>
+
+        <div id="modalph">
+      <div class="modal-contentph">
+      <h3>Оновлення номеру телефону</h3>
+      <form action="update_ph.php" method="POST">
+        <label for="new_ph">Новий номер телефону:</label>
+          <input type="text" id="new_ph" name="new_ph" required>
+            <div class="modal-actions">
+               <button type="submit" class="btn-updateph">Оновити</button>
+              <a href="#" class="btn-closeph">Скасувати</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      </form>
       </div>
     </div>
     <div class="block-container n1">
       <p>Про себе</p>
-      <textarea placeholder="Про себе" name="" id=""></textarea>
-      <button>Змінити інформацію про себе</button>
+      <textarea placeholder="Про себе" name="" id=""><?php echo htmlspecialchars($user_about); ?></textarea>
+      <a href="#modal-about" class="btn-open-modal-about">Змінити інформацію про себе</a>
+
+      <!-- Модальне вікно -->
+      <div id="modal-about">
+        <div class="modala-content">
+            <h3>Оновлення інформації про себе</h3>
+            <form action="update_about.php" method="POST">
+                <label for="new_about">Нова інформація:</label>
+                <textarea id="new_about" name="new_about" required><?php echo htmlspecialchars($user_about); ?></textarea>
+                <div class="modal-actions">
+                    <button type="submit">Оновити</button>
+                    <a href="#" class="btn-close">Скасувати</a>
+                </div>
+            </form>
+        </div>
+      </div>
+
     </div>
     <div class="block-container ava">
       <div class="avatar">
         <img src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
-        <button>Змінити аватар</button>
-      </div>
+        <a href="#modal-avatar-update" class="user-avatar-change-link">Змінити аватар</a>
+    </div>
+
+    <div id="modal-avatar-update" class="modal-avatar">
+        <div class="modal-avatar-content">
+            <h3>Оновлення аватару</h3>
+            <form action="update_avatar.php" method="POST" enctype="multipart/form-data">
+                <label for="new-avatar-input">Оберіть новий аватар:</label>
+                <input type="file" id="new-avatar-input" name="new_avatar" accept="image/*" required>
+                <div class="modal-avatar-actions">
+                    <button type="submit" class="btn-avatar-update">Оновити</button>
+                    <a href="#" class="btn-avatar-cancel">Скасувати</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <button type="button" class="user-order-button">Замовлення на виконанні</button>
+</div>
 
       <button>Замовлення на виконанні</button>
     </div>
