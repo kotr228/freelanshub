@@ -25,7 +25,7 @@ include('db_connect.php');
       <div class="dropdown-menu">
         <button class="dropdown-item">Змінити аккаунт</button>
         <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item">Налаштування аккаунту</button>
+        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
       </div>
     </div>
   </header>
