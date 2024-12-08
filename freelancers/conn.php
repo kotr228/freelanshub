@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Налаштування підключення до бази даних
 $host = "localhost";
 $user = "root";
-$password = ""; // Вкажіть свій пароль для MySQL, якщо є
+$password = "Sillver-228"; // Вкажіть свій пароль для MySQL, якщо є
 $dbname = "freelans";
 
 // Підключення до бази даних
