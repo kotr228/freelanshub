@@ -1,11 +1,11 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require 'conn.php'; // Підключення до бази даних
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
+  require 'conn.php'; // Підключення до бази даних
 
-// Перевірка, чи був відправлений файл
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_avatar'])) {
+  // Перевірка, чи був відправлений файл
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_avatar'])) {
     // Ідентифікатор користувача
     $userId = $_SESSION['user_id']; // Передбачено, що ID користувача зберігається в сесії
 
