@@ -150,8 +150,7 @@ include('get_user.php');
         </div>
     </div>
 
-    <button type="button" class="user-order-button">Замовлення на виконанні</button>
-</div>
+    
 
       <button>Замовлення на виконанні</button>
     </div>
