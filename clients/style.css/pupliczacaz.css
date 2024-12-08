@@ -23,16 +23,6 @@ html, body {
   justify-content: space-between;
 }
 
-.main-header{
-  font-size: 1.8em;
-  margin: 15px 0px;
-  padding: 13px 30px;
-  display: flex;
-  border-radius: 25px;
-  justify-content: space-between;
-}
-
-
 .logo-user{
   object-fit: cover;
   width: 60px;
@@ -82,7 +72,6 @@ html, body {
   height: 70px; 
   margin-right: 25px;
   border-radius: 15px;
-  color: #000;
   background-color: #F5F5DC;
   padding: 10px 10px;
   flex-grow: 1; /* Позволяет элементу расширяться */
@@ -118,19 +107,20 @@ html, body {
 .main{
   gap: 33px;
   padding: 10px;
-  height: 650px;
   display: flex;
+  border: #F5F5DC solid 4px;
   border-radius: 25px;
   margin: 1px 50px;
   align-items: flex-start;
-  background-color: #F5F5DC;
 }
 
 .data_price{
   padding: 20px;
-  color: #222831;
-  border-radius: 25px;
-  background-color:#F5F5DC
+  color: #fff;
+
+  border-radius: 10px;
+  background-color:#222831
+
 }
 
 .block-parametrs{
@@ -139,19 +129,41 @@ html, body {
   padding: 5px;
   display: flex;
   flex-direction: column;
-  height: 17.7em;
+  height: 100%;
 }
 
+.puplic{
+  transition: transform 0.3s ease;
+  width: 508px;
+  font-size: 36px;
+  padding: 20px;
+  height: 90px;
+  border-radius: 10px;
+  background-color:#F5F5DC;
+}
 
+.puplic:hover {
+  transform: scale(1.1); 
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #fff;
+}
+
+.opus-i-button{
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .block_info{
+  height: 500px;
   padding: 15px 22px;
   font-size: 36px;
   line-height: 1.6;
-  width: 500px;
-  background-color: #222831;
-  color: #F5F5DC;
-  border-radius: 25px;
+  background-color: #F5F5DC;
+  color: #222831;
+  border-radius: 10px;
 }
 
 .style_pole{
@@ -251,7 +263,6 @@ appearance: none; /* Убираем стандартное оформление 
   height: 70px;
   margin-right: 25px;
   border-radius: 15px;
-  color: #222831;
   background-color: #F5F5DC;
   padding: 20px;
 }
