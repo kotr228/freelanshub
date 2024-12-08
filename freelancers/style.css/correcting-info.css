@@ -10,7 +10,9 @@ html, body {
   font-family: 'Roboto', sans-serif;
 }
 
-.btn-open-modal {
+
+
+.btn-open-modal, .btn-open-modalph, .btn-open-modal-about {
   text-decoration: none;
   display: flex; /* Flex-контейнер для центрирования */
   justify-content: center; /* Горизонтальное центрирование текста */
@@ -42,7 +44,23 @@ html, body {
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
 
-.modal {
+.btn-open-modalem {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+.modal, .modalph, .modal-about, .modalavatar {
   display: none; /* Спочатку приховано */
   position: fixed;
   top: 0;
@@ -68,8 +86,21 @@ html, body {
   z-index: 9999;
 }
 
+.modalem {
+  display: none; /* Спочатку приховано */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
 /* Стилі для модального вікна */
-#modal {
+#modal, #modalph, #modal-about {
   position: fixed;
   top: 0;
   left: 0;
@@ -93,7 +124,19 @@ html, body {
   align-items: center;
 }
 
-#modal:target {
+#modalem {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Модальне вікно приховане за замовчуванням */
+  justify-content: center;
+  align-items: center;
+}
+
+#modal:target, #modalph:target, #modal-about:target {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
@@ -101,7 +144,11 @@ html, body {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content {
+#modalem:target {
+  display: flex; /* Показуємо вікно при переході на #modal */
+}
+
+.modal-content, .modal-contentph, .modala-content {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
@@ -121,7 +168,17 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
-.modal h2 {
+.modal-contentem {
+  background-color: #222831;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
+.modal h2, .modalph h2 {
   margin-bottom: 15px;
 }
 
@@ -129,7 +186,11 @@ html, body {
   margin-bottom: 15px;
 }
 
-.modal input {
+.modalem h2 {
+  margin-bottom: 15px;
+}
+
+.modal input, .modalph input {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
@@ -145,7 +206,15 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-buttons {
+.modalem input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-buttons, .modalph-buttons {
   display: flex;
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
@@ -155,7 +224,12 @@ html, body {
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
 
-.modal-content h3 {
+.modalem-buttons {
+  display: flex;
+  justify-content: space-between; /* Розміщує кнопки по боках */
+}
+
+.modal-content h3, .modal-contentph h3 {
   margin-bottom: 20px;
 }
 
@@ -163,7 +237,11 @@ html, body {
   margin-bottom: 20px;
 }
 
-.modal-content input[type="text"] {
+.modal-contentem h3 {
+  margin-bottom: 20px;
+}
+
+.modal-content input, .modal-contentph input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -179,7 +257,15 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-actions {
+.modal-contentem input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions, .modalph-actions {
   display: flex;
   justify-content: space-between;
 }
@@ -189,7 +275,12 @@ html, body {
   justify-content: space-between;
 }
 
-.btn-update, .btn-close {
+.modalem-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-update, .btn-close, .btn-updateph, .btn-closeph {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -209,7 +300,17 @@ html, body {
   text-align: center;
 }
 
-.btn-update {
+.btn-updateem, .btn-closeem {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-update, .btn-updateph {
   background-color: #28a745;
   color: #fff;
 }
@@ -218,8 +319,12 @@ html, body {
   background-color: #28a745;
   color: #fff;
 }
+.btn-updateem {
+  background-color: #28a745;
+  color: #fff;
+}
 
-.btn-update:hover {
+.btn-update:hover, .btn-updateph:hover {
   background-color: #218838;
 }
 
@@ -227,7 +332,11 @@ html, body {
   background-color: #218838;
 }
 
-.btn-close {
+.btn-updateem:hover {
+  background-color: #218838;
+}
+
+.btn-close, .btn-closeph {
   background-color: #dc3545;
   color: #fff;
 }
@@ -237,12 +346,103 @@ html, body {
   color: #fff;
 }
 
-.btn-close:hover {
+.btn-closeem {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-close:hover, .btn-closeph:hover {
   background-color: #c82333;
 }
 
 .btn-closetg:hover {
   background-color: #c82333;
+}
+
+.btn-closeem:hover {
+  background-color: #c82333;
+}
+
+.user-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-avatar img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.user-avatar-change-link {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+.modal-avatar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-avatar:target {
+  display: flex;
+}
+
+.modal-avatar-content {
+  background-color: #222831;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
+.modal-avatar-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-avatar-update,
+.btn-avatar-cancel {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-avatar-update {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-avatar-cancel {
+  background-color: #dc3545;
+  color: white;
+  text-decoration: none;
 }
 
 
