@@ -1,0 +1,266 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  background: #222831;
+  font-family: 'Roboto', sans-serif;
+}
+
+.site{
+  max-width: 2080px;
+}
+
+.header{
+  font-size: 1.8em;
+  margin: 15px 10px;
+  padding: 13px 30px;
+  display: flex;
+  border: #F5F5DC solid 6px;
+  border-radius: 25px;
+  justify-content: space-between;
+}
+
+.main-header{
+  font-size: 1.8em;
+  margin: 15px 0px;
+  padding: 13px 30px;
+  display: flex;
+  border-radius: 25px;
+  justify-content: space-between;
+}
+
+
+.logo-user{
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+}
+
+
+.dropdown-menu {
+  display: none; 
+  position: absolute; 
+  top: 100%; 
+  right: 0; 
+  background-color: #F5F5DC;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; 
+  overflow: hidden; 
+  z-index: 100; 
+}
+
+.dropdown-item {
+  display: block; 
+  width: 100%; 
+  padding: 10px 15px; 
+  text-align: left;
+  color: #222831; 
+  background-color: #F5F5DC;
+  border: none; 
+  cursor: pointer; 
+  font-size: 1em; 
+}
+
+.dropdown-item:hover {
+  background-color: #f8c965; 
+  color: #000; 
+}
+
+
+.header_user-info:hover .dropdown-menu {
+  display: block; 
+}
+
+
+.header_item{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 70px; 
+  margin-right: 25px;
+  border-radius: 15px;
+  color: #000;
+  background-color: #F5F5DC;
+  padding: 10px 10px;
+  flex-grow: 1; /* Позволяет элементу расширяться */
+  text-align: center; /* Центрируем текст внутри элемента */
+  min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
+}
+.header_item:hover{
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #e8e8f066;
+}
+
+.header_user-info{
+  padding-left: 29px;
+  padding-right: 1px;
+  padding-top: 3px;
+  display: flex;
+  border:#F5F5DC solid 1px;
+  align-items: center; 
+  border-radius: 45px;
+  color: #F5F5DC;
+}
+
+.header_user-name{
+  margin-right: 223px;
+}
+.header_user-info{
+  position: relative;
+
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #e8e8f066;
+}
+
+.main{
+  gap: 33px;
+  padding: 10px;
+  height: 650px;
+  display: flex;
+  border-radius: 25px;
+  margin: 1px 50px;
+  align-items: flex-start;
+  background-color: #F5F5DC;
+}
+
+.data_price{
+  padding: 20px;
+  color: #222831;
+  border-radius: 25px;
+  background-color:#F5F5DC
+}
+
+.block-parametrs{
+  font-size: 36px;
+  color: #fff;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 17.7em;
+}
+
+
+
+.block_info{
+  padding: 15px 22px;
+  font-size: 36px;
+  line-height: 1.6;
+  width: 500px;
+  background-color: #222831;
+  color: #F5F5DC;
+  border-radius: 25px;
+}
+
+.style_pole{
+  padding: 10px;
+  margin-bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  border: #F5F5DC solid 2px;
+  border-radius: 10px;
+}
+.input{
+  appearance: none; 
+  color: #fff;
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  background-color: black;
+  background-image: url('/img/Без\ имени.png');
+  background-repeat: no-repeat; /* Убилщдлщраем повторение */
+  background-position: right -15px bottom -20px; /* Расположение картинки */
+  background-size: 100px; /* Размер картинки */
+}
+.style_pole p {
+  margin: 0 0 10px 0; /* Убираем лишние отступы и добавляем нижний */
+  text-align: center; /* Центруем текст внутри блока */
+}
+
+.input-price{
+  font-size: 30px;
+  color:#F5F5DC;
+  height: 40px;
+  /* Оформление поля */
+  background-color: black;
+  border-radius: 5px;
+}
+
+.input-data{
+  
+appearance: none; /* Убираем стандартное оформление браузера */  -webkit-appearance: none; /* Для Safari */
+  -moz-appearance: none; /* Для Firefox */
+  height: 60px;
+  /* Оформление поля */
+  background-color: black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color:#F5F5DC ;
+  padding-right: 40px; /* Оставляем место для изображения */
+  background-image: url('/img/png-transparent-solar-calendar-symbol-computer-icons-encapsulated-postscript-calendar-icon-miscellaneous-text-calendar-thumbnail.png');
+  background-repeat: no-repeat; /* Убираем повторение */
+  background-position: right 10px center; /* Расположение картинки */
+  background-size: 40px; /* Размер картинки */
+}
+
+.input-data::before {
+  content: "Оберіть дату"; /* Ваш кастомный текст */
+  color: #999;
+}
+
+.input-data:focus::before {
+  content: ""; /* Убираем текст при фокусе */
+}
+
+.footer {
+  display: inline-flex; /* Устанавливаем inline-flex для обтекания содержимого */
+  flex-wrap: nowrap; /* Предотвращаем перенос элементов */
+  font-size: 1.8em;
+  padding: 13px 30px;
+  border: #F5F5DC solid 6px;
+  border-radius: 25px;
+  justify-content: center; /* Центрируем элементы внутри футера */
+  align-items: center;
+  background-color: #222831; /* Цвет фона футера */
+  margin: 20px auto; /* Центрируем футер относительно страницы */
+}
+
+.logo {
+  object-fit: cover;
+  width: 60px;
+  height: 60px;
+  margin-right: 30px;
+}
+
+.obolocka{
+  display: flex;
+  justify-content: center;
+}
+
+.logo:hover {
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #fff;
+}
+
+.footer-item {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 70px;
+  margin-right: 25px;
+  border-radius: 15px;
+  color: #222831;
+  background-color: #F5F5DC;
+  padding: 20px;
+}
+
+.footer-item:hover {
+  cursor: pointer;
+  box-shadow: 1px 4px 16px 0 #fff;
+}
+
+.footer-item:last-child {
+  margin-right: 0; /* Убираем отступ у последнего элемента */
+}
