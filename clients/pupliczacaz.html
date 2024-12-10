@@ -25,52 +25,56 @@
       </div>
     </div>
   </header>
-  <main class="main">
-    <div class="block-parametrs">
-      <div class="style_pole">
-        <label for="type">Тип:</label>
-        <select id="type" class="input">
-          <option value="" disabled selected></option>
-          <option value="type1">Тип 1</option>
-          <option value="type2">Тип 2</option>
-        </select>
+  
+  <form action="/submit" method="POST" class="form-main">
+    <main class="main">
+      <div class="block-parametrs">
+        <div class="style_pole">
+          <label for="type">Тип:</label>
+          <select id="type" class="input" name="type" required>
+            <option value="" disabled selected></option>
+            <option value="type1">Тип 1</option>
+            <option value="type2">Тип 2</option>
+          </select>
+        </div>
+  
+        <div class="style_pole">
+          <label for="specialty">Спеціальність:</label>
+          <select id="specialty" class="input" name="specialty" required>
+            <option value="" disabled selected></option>
+            <option value="spec1">Спеціальність 1</option>
+            <option value="spec2">Спеціальність 2</option>
+          </select>
+        </div>
+  
+        <div class="style_pole">
+          <label for="deadline">Дедлайн:</label>
+          <input class="input-data" type="date" id="deadline" name="deadline" required />
+        </div>
+  
+        <div class="style_pole">
+          <label for="price">Ціна:</label>
+          <input class="input-price" type="number" id="price" name="price" placeholder="0" required />
+        </div>
+  
+        <div class="style_pole">
+          <label for="name">Назва:</label>
+          <input class="input-price" type="text" id="name" name="name" placeholder="Зробити дизайн" required />
+        </div>
       </div>
-
-      <div class="style_pole">
-        <label for="specialty">Спеціальність:</label>
-        <select id="specialty" class="input">
-          <option value="" disabled selected></option>
-          <option value="spec1">Спеціальність 1</option>
-          <option value="spec2">Спеціальність 2</option>
-        </select>
+  
+      <div class="opus-i-button">
+        <div class="block_info">
+          <label class="textic" for="description">Опис замовлення:</label>
+          <textarea placeholder="Введіть ваш опис" class="poleopus" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="puplic">
+          Опублікувати замовлення
+        </button>
       </div>
-
-      <div class="style_pole">
-        <label for="deadline">Дедлайн:</label>
-        <input class="input-data" type="date" id="deadline" />
-      </div>
-      
-
-      <div class="style_pole">
-        <label for="price-from">Ціна:</label>
-        <input class="input-price" type="number" id="price-from" placeholder="0" />
- 
-      </div>
-      <div class="style_pole">
-        <label for="price-from">Назва:</label>
-        <input class="input-price" type="text" id="nazva" placeholder="Зробити дизайн" />
- 
-      </div>
-    </div>
-    <div class="opus-i-button">
-      <div class="block_info">
-        <p>Опис замовлення</p>
-      </div>
-      <div class="puplic">
-        Опублікувати замовлення
-      </div>
-    </div>
-  </main>
+    </main>
+  </form>
+  
 
   <div class="obolocka">
     <footer class="footer">
