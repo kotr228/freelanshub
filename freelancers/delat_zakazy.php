@@ -158,16 +158,15 @@ $conn->close();
     <div class="header_item">Політика конфіденційності</div>
     <div class="header_item">Служба підтримки</div>
     <div class="header_item">На головну</div>
-    <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p> <!-- Виведення імені користувача -->
       <a href="#">
-        <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
+        <img class="logo-user" src="img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
       <div class="dropdown-menu">
         <button class="dropdown-item">Змінити аккаунт</button>
         <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
+        <button class="dropdown-item">Налаштування аккаунту</button>
       </div>
     </div>
   </header>
