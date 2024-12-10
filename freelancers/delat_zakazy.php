@@ -1,5 +1,6 @@
 <?php
 include('db_connect.php');
+?>
 // Підключення до бази даних
 $conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
 if ($conn->connect_error) {
@@ -45,6 +46,7 @@ $result = $conn->query($query);
 
 $orders = [];
 if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
     while ($row = $result->fetch_assoc()) {<!DOCTYPE html>
 <html lang="UK">
 <head>
