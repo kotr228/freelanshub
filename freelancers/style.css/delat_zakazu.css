@@ -142,7 +142,9 @@ html, body {
   width: 500px;
   background-color: #F0AD4E;
   color: #222831;
-  border-radius: 10px;
+  border-radius: 15px;
+  
+  margin-bottom: 20px;
 }
 
 .style_pole{
@@ -254,4 +256,17 @@ appearance: none; /* Убираем стандартное оформление 
 
 .footer-item:last-child {
   margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
+.orders {
+  display: flex;
+  flex-wrap: wrap; /* Дозволяє плиткам переноситися на новий рядок */
+  gap: 20px; /* Відстань між плитками */
+}
+
+.order-item {
+  flex-wrap: nowrap;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
