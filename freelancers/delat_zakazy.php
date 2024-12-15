@@ -16,39 +16,9 @@ $price_from = $_GET['price-from'] ?? '';
 $price_to = $_GET['price-to'] ?? '';
 
 // Формування SQL-запиту з фільтрами
-$query = "SELECT lable, spacsalyty, tipe, status, price, DATE_FORMAT(date, '%d.%m.%Y') AS formatted_date 
-          FROM job WHERE status = 'open'";
 
-$conditions = [];
 
-if (!empty($type)) {
-    $conditions[] = "tipe = '" . $conn->real_escape_string($type) . "'";
-}
-if (!empty($specialty)) {
-    $conditions[] = "spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
-}
-if (!empty($deadline)) {
-    $conditions[] = "DATE(date) <= '" . $conn->real_escape_string($deadline) . "'";
-}
-if (!empty($price_from)) {
-    $conditions[] = "price >= " . (float)$price_from;
-}
-if (!empty($price_to)) {
-    $conditions[] = "price <= " . (float)$price_to;
-}
 
-if (count($conditions) > 0) {
-    $query .= " AND " . implode(" AND ", $conditions);
-}
-
-$result = $conn->query($query);
-
-$orders = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $orders[] = $row;
-    }
-}
 
 $conn->close();
 ?>
@@ -138,7 +108,7 @@ $conn->close();
         <?php endforeach; ?>
       <?php else: */?>
         <div class="block_info">
-      <?php include 'orders.php'; ?>
+      <?php include_once 'orders.php'; ?>
     </div>
       <?php /*endif;*/?>
       </div>
