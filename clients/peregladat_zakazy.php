@@ -55,7 +55,7 @@ include('db_connect.php');
       <div class="footer-item">Реклама</div>
       <div class="footer-item">Партнерство</div>
       <div class="footer-item">Про нас</div>
-      <div class="footer-item">Зробити замовлення</div>
+      <button class="footer-item" onclick="location.href='pupliczacaz.php'">Зробити замовлення</button>
     </footer>
   </div>
 </div>
