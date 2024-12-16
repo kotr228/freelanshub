@@ -54,9 +54,9 @@ include('order_detail_data.php');
           <p>Коментарі:</p>
           <textarea class="coment"></textarea>
         </div>
-        <div class="vzatysa">
-          Взятися <br>за замовлення
-        </div>
+        
+       <a class="vzatysa" href="take_order.php">Взятись <br>за замовлення</a>
+
       </div>
     </div>
     <div class="block_chat ch">
