@@ -7,6 +7,8 @@ include('db_connect.php');
 if (isset($_GET['id_j']) && is_numeric($_GET['id_j'])) {
     $order_id = $_GET['id_j'];
 
+    $_SESSION['order_id'] = $order_id;
+
     // Запит для отримання конкретного замовлення
     $conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
     if ($conn->connect_error) {
