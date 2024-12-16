@@ -5,7 +5,9 @@ $conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 $conn->set_charset("utf8");
 
 // Ініціалізація фільтрів
@@ -112,6 +114,7 @@ $conn->close();
     </div>
       <?php /*endif;*/?>
       </div>
+      
   </main>
   <div class="obolocka">
   <footer class="footer">
