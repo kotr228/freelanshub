@@ -66,6 +66,7 @@ html, body {
 
 
 .header_item{
+  text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center; 
@@ -80,6 +81,7 @@ html, body {
   min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
 }
 .header_item:hover{
+  text-decoration: none;
   cursor: pointer;
   box-shadow: 1px 4px 16px 0 #e8e8f066;
 }
