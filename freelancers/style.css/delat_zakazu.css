@@ -262,11 +262,13 @@ appearance: none; /* Убираем стандартное оформление 
   display: flex;
   flex-wrap: wrap; /* Дозволяє плиткам переноситися на новий рядок */
   gap: 20px; /* Відстань між плитками */
+  
 }
 
 .order-item {
   flex-wrap: nowrap;
   padding: 10px;
   margin-bottom: 10px;
+  display: flex;
   border-radius: 5px;
 }
