@@ -275,3 +275,23 @@ html, body {
 .footer-item:last-child {
   margin-right: 0; /* Убираем отступ у последнего элемента */
 }
+
+.vzatysa1 {
+  width: 100%;
+  color: #F5F5DC;
+  
+  margin-top: 1px;
+  border-radius: 5px;
+  background-color: #222831;
+  display: flex; /* Включаем Flexbox */
+  align-items: center; /* Вертикальное выравнивание */
+  text-align: center;
+  justify-content: center;
+  transition: transform 0.3s ease; /* Плавный переход при увеличении */
+}
+
+.vzatysa1:hover{
+  transform: scale(1.1);
+  box-shadow: 1px 4px 16px 0 #000;
+  cursor:pointer;
+}
