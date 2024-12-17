@@ -1,5 +1,6 @@
 <?php
 include('db_connect.php');
+include('orders.php'); // Підключення скрипта
 ?>
 
 <!DOCTYPE html>
@@ -30,23 +31,25 @@ include('db_connect.php');
     </div>
   </header>
   <div class="main-header">
-    <div class="header_item">Активні замовлення</div>
-    <div class="header_item">Неактивні замовлення</div>
-    <div class="header_item">Замовлення на виконанні</div>
-    <div class="header_item">Вільні замовлення</div>
+    <button class="header_item" onclick="location.href='?filter=active'">Активні замовлення</button>
+    <button class="header_item" onclick="location.href='?filter=inactive'">Неактивні замовлення</button>
+    <button class="header_item" onclick="location.href='?filter=in_progress'">Замовлення на виконанні</button>
+    <button class="header_item" onclick="location.href='?filter=free'">Вільні замовлення</button>
   </div>
   <main class="main">
+  <?php while ($row = $result->fetch_assoc()): ?>
     <div class="block_info">
-      <p>Назва: Label</p>
-      <p>Спеціальність</p>
-      <p>Spacsalyty</p>
+      <p>Назва: <?= htmlspecialchars($row['lable']) ?></p>
+      <p>Спеціальність: <?= htmlspecialchars($row['spacsalyty']) ?></p>
+      <p>Тип: <?= htmlspecialchars($row['tipe']) ?></p>
       <p>Тип: Tipe</p>
-      <p>Статус: Status</p>
+      <p>Статус: <?= htmlspecialchars($row['status']) ?></p>
       <div class="data_price">
-        <p>Срок до: data</p>
-        <p>Цена: price</p>
+        <p>Срок до: <?= htmlspecialchars($row['date']) ?></p>
+        <p>Ціна: <?= htmlspecialchars($row['price']) ?> грн</p>
       </div>
     </div>
+    <?php endwhile; ?>
   </main>
 
   <div class="obolocka">
