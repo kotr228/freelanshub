@@ -109,7 +109,7 @@ $conn->close();
           </div>
         <?php endforeach; ?>
       <?php else: */?>
-        <div class="block_info">
+        <div >
       <?php include_once 'orders.php'; ?>
     </div>
       <?php /*endif;*/?>
