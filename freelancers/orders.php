@@ -32,7 +32,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        echo "<div class='order-item'>";
+        echo "<div class='block_info'>";
         echo "<p>Назва: " . htmlspecialchars($row['lable']) . "</p>";
         echo "<p>Спеціальність: " . htmlspecialchars($row['spacsalyty']) . "</p>";
         echo "<p>Тип: " . htmlspecialchars($row['tipe']) . "</p>";
