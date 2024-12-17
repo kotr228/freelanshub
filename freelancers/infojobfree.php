@@ -1,6 +1,7 @@
 <?php
 include('db_connect.php');
 include('order_detail_data.php');
+include('chat.php');
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +11,39 @@ include('order_detail_data.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Делать заказы</title>
   <link rel="stylesheet" href="style.css/infojobfree.css">
+  <script>
+        // Функція для завантаження чату
+        function loadChat() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "load_chat.php?order_id=<?php echo $order_id; ?>", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById("chat-box").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+
+        // Запуск оновлення чату кожні 2 секунди
+        setInterval(loadChat, 2000);
+
+        // Надсилання повідомлення
+        function sendMessage() {
+            const message = document.getElementById("message").value;
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "send_message.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById("message").value = "";
+                    loadChat();
+                }
+            };
+            xhr.send("order_id=<?php echo $order_id; ?>&message=" + encodeURIComponent(message));
+        }
+    </script>
 </head>
-<body class="body">
+<body class="body" onload="loadChat()">
 <div class="site">
   <header class="header">
     <div class="header_item">Цінова політика</div>
@@ -61,7 +93,11 @@ include('order_detail_data.php');
     </div>
     <div class="block_chat ch">
       <p>Чат з замовником:</p>
-      <div class="chat_area"></div>
+      <div class="chat_area" id="chat-box"></div>
+
+      <!-- Форма для надсилання повідомлення -->
+      <textarea class="vzatysa1" id="message" rows="3" cols="50" placeholder="Введіть ваше повідомлення..."></textarea><br>
+      <button class="vzatysa1" onclick="sendMessage()">Надіслати</button>
     </div>
   </main>
   
