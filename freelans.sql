@@ -143,6 +143,58 @@ CREATE TABLE IF NOT EXISTS `freelans`.`otrimani kohti` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `freelans`.`chat`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `freelans`.`chat` (
+  `id_chat` INT NOT NULL AUTO_INCREMENT,
+  `id_j` INT NOT NULL,
+  `id_f` INT NOT NULL,
+  `id_c` INT NOT NULL,
+  `message` TEXT NOT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_chat`),
+  INDEX `id_jx` (`id_j` ASC),
+  INDEX `id_fx` (`id_f` ASC),
+  INDEX `id_cx` (`id_c` ASC),
+  CONSTRAINT `chat_order_fk`
+    FOREIGN KEY (`id_j`)
+    REFERENCES `freelans`.`job` (`id_j`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `chat_sender_fk`
+    FOREIGN KEY (`id_f`)
+    REFERENCES `freelans`.`freelanser_akks` (`id_f`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `chat_receiver_fk`
+    FOREIGN KEY (`id_c`)
+    REFERENCES `freelans`.`cliants_akks` (`id_c`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `freelans`.`files`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `freelans`.`files` (
+  `id_file` INT NOT NULL AUTO_INCREMENT,
+  `id_j` INT NOT NULL,
+  `file_name` VARCHAR(255) NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
+  `uploaded_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_file`),
+  INDEX `job_files_fk_idx` (`id_j` ASC),
+  CONSTRAINT `job_files_fk`
+    FOREIGN KEY (`id_j`)
+    REFERENCES `freelans`.`job` (`id_j`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
