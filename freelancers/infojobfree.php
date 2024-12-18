@@ -2,6 +2,8 @@
 include('db_connect.php');
 include('order_detail_data.php');
 include('chat.php');
+include('coments.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -78,13 +80,19 @@ include('chat.php');
         </div>
         <div class="block_files ch">
           <p>Вкладені файли:</p>
-          <div class="files_area"></div>
+          <div class="files_area">
+          <form  action="upload_file.php" method="post" enctype="multipart/form-data">
+          <input class="vzatysa1" type="file" name="file" id="file">
+          <button class="vzatysa1" type="submit">Завантажити</button>
+          </form>
+          </div>
         </div>
       </div>
       <div class="block_comments">
         <div class="com">
           <p>Коментарі:</p>
-          <textarea class="coment"></textarea>
+          <textarea class="coment" rows="5" cols="50" readonly><?php echo $description; ?></textarea>
+
         </div>
         
        <a class="vzatysa" href="take_order.php">Взятись <br>за замовлення</a>
