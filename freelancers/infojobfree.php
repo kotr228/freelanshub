@@ -17,7 +17,7 @@ include('coments.php');
         // Функція для завантаження чату
         function loadChat() {
             const xhr = new XMLHttpRequest();
-            xhr.open("GET", "load_chat.php?order_id=<?php echo $order_id; ?>", true);
+            xhr.open("GET", "load_chat.php?id_j=<?php echo $order_id; ?>", true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     document.getElementById("chat-box").innerHTML = xhr.responseText;
@@ -31,18 +31,31 @@ include('coments.php');
 
         // Надсилання повідомлення
         function sendMessage() {
-            const message = document.getElementById("message").value;
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "send_message.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    document.getElementById("message").value = "";
-                    loadChat();
-                }
-            };
-            xhr.send("order_id=<?php echo $order_id; ?>&message=" + encodeURIComponent(message));
-        }
+    const message = document.getElementById("message").value.trim();
+    if (message) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "send_massage.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function () {
+            console.log("Статус сервера:", xhr.status);
+            console.log("Відповідь сервера:", xhr.responseText);
+            if (xhr.status === 200) {
+                document.getElementById("message").value = "";
+                loadChat();
+            } else {
+                alert("Помилка: " + xhr.responseText);
+            }
+        };
+        xhr.onerror = function () {
+            alert("Помилка з'єднання із сервером.");
+        };
+        xhr.send("id_j=<?php echo $order_id; ?>&message=" + encodeURIComponent(message));
+    } else {
+        alert("Введіть повідомлення перед надсиланням.");
+    }
+}
+
+
     </script>
 </head>
 <body class="body" onload="loadChat()">
@@ -107,7 +120,7 @@ include('coments.php');
 
       <!-- Форма для надсилання повідомлення -->
       <textarea class="vzatysa1" id="message" rows="3" cols="50" placeholder="Введіть ваше повідомлення..."></textarea><br>
-      <button class="vzatysa1" onclick="sendMessage()">Надіслати</button>
+      <button class="vzatysa1" onclick="sendMessage()" id="send-btn">Надіслати</button>
     </div>
   </main>
   
