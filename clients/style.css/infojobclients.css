@@ -128,6 +128,11 @@ html, body {
   background-color: beige;
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+
 }
 
 .block_chat{
@@ -167,6 +172,7 @@ html, body {
   border-radius: 25px;
   margin: 1px 50px;
   align-items: flex-start;
+  
 }
 
 .data_price{
@@ -247,4 +253,58 @@ html, body {
 
 .footer-item:last-child {
   margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
+
+/*.chat_area {
+  height: 300px;
+  overflow-y: scroll;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}*/
+
+.chat_input_area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat_input {
+  flex-grow: 1;
+  height: 40px;
+  resize: none;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.file_input {
+  border: none;
+}
+
+.send_button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send_button:hover {
+  background-color: #0056b3;
+}
+
+.chat_message {
+  margin-bottom: 10px;
+}
+
+.chat_message p {
+  margin: 0;
+}
+
+.chat_message small {
+  color: #888;
 }
