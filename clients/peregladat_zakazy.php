@@ -47,6 +47,7 @@ include('orders.php'); // Підключення скрипта
       <div class="data_price">
         <p>Срок до: <?= htmlspecialchars($row['date']) ?></p>
         <p>Ціна: <?= htmlspecialchars($row['price']) ?> грн</p>
+        <?php echo "<a href='infojobclients.php?id_j=" . htmlspecialchars($row['id_j']) . "' class='header_item'>Детальніше</a>"; ?>
       </div>
     </div>
     <?php endwhile; ?>
