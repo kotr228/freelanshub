@@ -112,6 +112,8 @@ html, body {
   border-radius: 10px;
   display: flex;
   background-color:#F5F5DC;
+  max-width: 360px;
+  word-wrap: break-word;
 }
 
 .block_comments{
@@ -157,6 +159,8 @@ html, body {
   background-color:#222831;
   height: 100%;
   width: 100%;
+  flex-wrap: wrap;
+
 }
 
 .ch{
@@ -307,4 +311,13 @@ html, body {
 
 .chat_message small {
   color: #888;
+}
+
+.files_area1{
+  border-radius: 10px;
+  background-color:#222831;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
