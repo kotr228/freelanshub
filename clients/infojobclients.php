@@ -1,5 +1,7 @@
 <?php
 include('db_connect.php');
+include('order_detail_data.php');
+include('coments.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +20,7 @@ include('db_connect.php');
     <div class="header_item">Політика конфедеційності</div>
     <div class="header_item">Служба підтримки</div>
     <div class="header_item">На головну</div>
+    <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
@@ -34,18 +37,25 @@ include('db_connect.php');
     <div class="block_main ch">
       <div class="block-info-file">
         <div class="block_info ch">
-          <p>Назва: Label</p>
-          <p>Спеціальність: Spacsalyty</p>
-          <p>Тип: Tipe</p>
-          <p>Статус: Status</p>
+          <p>Назва: <?php echo htmlspecialchars($order['lable']); ?></p>
+          <p>Спеціальність: <?php echo htmlspecialchars($order['spacsalyty']); ?></p>
+          <p>Тип: <?php echo htmlspecialchars($order['tipe']); ?></p>
+          <p>Статус: <?php echo htmlspecialchars($order['status']); ?></p>
           <div class="data_price">
-            <p>Срок до: date</p>
-            <p>Ціна: price</p>
+            <p>Срок до: <?php echo htmlspecialchars($order['date']); ?></p>
+            <p>Ціна: <?php echo htmlspecialchars($order['price']); ?> грн</p>
           </div>
         </div>
         <div class="block_files ch">
           <p>Вкладені файли:</p>
-          <div class="files_area"></div>
+          <div class="files_area">
+          <form action="upload_file.php" method="post" enctype="multipart/form-data">
+            <input class="vzatysa1" type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
+            <input class="vzatysa1" type="file" name="file" id="file" required>
+            <button class="vzatysa1" type="submit">Завантажити файл</button>
+          </form>
+          <?php include_once 'visible_file.php'; ?>
+          </div>
         </div>
       </div>
       <div class="block_comments">
