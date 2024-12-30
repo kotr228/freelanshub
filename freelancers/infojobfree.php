@@ -3,6 +3,8 @@ include('db_connect.php');
 include('order_detail_data.php');
 include('chat.php');
 include('coments.php');
+$order_id = $_GET['id_j'];
+$_SESSION['order_id'] = $order_id;
 
 ?>
 
