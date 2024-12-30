@@ -2,37 +2,46 @@
 include('db_connect.php');
 include('order_detail_data.php');
 include('coments.php');
-
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-
-// Перевірка, чи встановлено user_id у сесії
-if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
-  die("Error: user_id не встановлено або порожній.");
-}
-
-$id_c = $_SESSION['user_id']; // Встановлюємо $id_c як user_id із сесії
-
-// Обробка форми для вставки повідомлення
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['id_j'], $_POST['message'], $_POST['id_f'])) {
-      $id_j = intval($_POST['id_j']);
-      $id_f = intval($_POST['id_f']);
-      $message = trim($_POST['message']);
+  // Перевірка, чи сесія активна
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
 
-      // Перевірка значень
-      var_dump($id_j, $id_f, $message);
+  // Перевірка авторизації клієнта
+  if (!isset($_SESSION['client_id'])) {
 
-      // Запит до бази даних
+
+  $id_c = $_SESSION['client_id']; // Отримання ID клієнта із сесії
+  $id_j = intval($_POST['id_j'] ?? 0);
+  $message = trim($_POST['message'] ?? '');
+
+  if ($id_j <= 0 || empty($message)) {
+      die("Error: Неправильні або порожні дані.");
+  }
+}
+  try {
+      // SQL-запит на додавання повідомлення
       $query = "INSERT INTO chat (id_j, id_c, id_f, message, created_at) VALUES (?, ?, ?, ?, NOW())";
       $stmt = $conn->prepare($query);
-      $stmt->bind_param("iiis", $id_j, $id_c, $id_f, $message);
-      $stmt->execute();
 
-      echo "Повідомлення успішно збережено.";
-  } 
+      if (!$stmt) {
+          throw new Exception("Error preparing statement: " . $conn->error);
+      }
+
+      $id_f = 123; // Замінити на відповідне значення або витягувати з сесії
+      $stmt->bind_param("iiis", $id_j, $id_c, $id_f, $message);
+
+      if (!$stmt->execute()) {
+          throw new Exception("Error executing statement: " . $stmt->error);
+      }
+
+      echo "Повідомлення успішно додано.";
+  } catch (Exception $e) {
+      die("Error: " . $e->getMessage());
+  }
 }
+
 
 // Отримання історії чату
 function fetchChatHistory($id_j) {
@@ -100,9 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   var_dump($_POST);
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="UK">
 <head>
