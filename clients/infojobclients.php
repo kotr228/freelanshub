@@ -87,22 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 die("Error: Не вдалося завантажити файл.");
             }
         }
-
-        // Додавання повідомлення до БД
-        $query = "INSERT INTO chat (id_j, id_c, message, created_at) VALUES (?, ?, ?, NOW())";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iis", $id_j, $id_c, $message);
-        $stmt->execute();
-
-        if ($filePath) {
-            $chatId = $conn->insert_id;
-            $query = "INSERT INTO chat_files (id_chat, file_name, file_path) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("iss", $chatId, basename($filePath), $filePath);
-            $stmt->execute();
-        }
-
-        echo json_encode(['success' => true]);
         exit;
     }
 
