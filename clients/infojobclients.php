@@ -48,7 +48,7 @@ function fetchChatHistory($id_j) {
     global $conn;
     $query = "SELECT c.*, cf.file_path FROM chat c LEFT JOIN chat_files cf ON c.id_chat = cf.id_chat WHERE c.id_j = ? AND c.id_c = ? ORDER BY c.created_at ASC";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $id_j, $_SESSION['client_id']);
+    $stmt->bind_param("ii", $id_j, $_SESSION['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $chatHistory = [];
