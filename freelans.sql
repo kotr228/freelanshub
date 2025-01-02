@@ -191,9 +191,6 @@ CREATE TABLE IF NOT EXISTS `freelans`.`files` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-INSERT INTO freelanser_akks (id_f, name, email, password, telegram, phone, spacialty)
-VALUES (123, 'Test Freelancer', 'test@example.com', 'password', '@freelancer', '1234567890', 'Test Specialty');
-
 
 CREATE TABLE IF NOT EXISTS `chat_files` (
   `id_chat_file` INT NOT NULL AUTO_INCREMENT,
