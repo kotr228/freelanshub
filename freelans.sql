@@ -192,6 +192,36 @@ CREATE TABLE IF NOT EXISTS `freelans`.`files` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `chat_files` (
+  `id_chat_file` INT NOT NULL AUTO_INCREMENT,
+  `id_chat` INT NOT NULL,
+  `file_name` VARCHAR(255) NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
+  `uploaded_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_chat_file`),
+  INDEX `chat_files_fk_idx` (`id_chat` ASC),
+  CONSTRAINT `chat_files_fk`
+    FOREIGN KEY (`id_chat`)
+    REFERENCES `chat` (`id_chat`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
+
+
+-- Таблиця для статусу повідомлень
+CREATE TABLE IF NOT EXISTS `freelans`.`message_status` (
+  `id_status` INT NOT NULL AUTO_INCREMENT,
+  `id_chat` INT NOT NULL,
+  `is_read` BOOLEAN DEFAULT FALSE,
+  `read_at` DATETIME NULL,
+  PRIMARY KEY (`id_status`),
+  INDEX `message_status_fk_idx` (`id_chat` ASC),
+  CONSTRAINT `message_status_fk`
+    FOREIGN KEY (`id_chat`)
+    REFERENCES `freelans`.`chat` (`id_chat`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 
 
