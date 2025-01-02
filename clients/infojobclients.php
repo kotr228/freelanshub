@@ -1,126 +1,12 @@
+
 <?php
 include('db_connect.php');
 include('order_detail_data.php');
 include('coments.php');
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Перевірка, чи сесія активна
-  if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-  }
-
-  // Перевірка авторизації клієнта
-  if (!isset($_SESSION['client_id'])) {
-
-
-  $id_c = $_SESSION['client_id']; // Отримання ID клієнта із сесії
-  $id_j = intval($_POST['id_j'] ?? 0);
-  $message = trim($_POST['message'] ?? '');
-
-  if ($id_j <= 0 || empty($message)) {
-      die("Error: Неправильні або порожні дані.");
-  }
-}
-  try {
-      // SQL-запит на додавання повідомлення
-      $query = "INSERT INTO chat (id_j, id_c, id_f, message, created_at) VALUES (?, ?, ?, ?, NOW())";
-      $stmt = $conn->prepare($query);
-
-      if (!$stmt) {
-          throw new Exception("Error preparing statement: " . $conn->error);
-      }
-
-      $id_f = 123; // Замінити на відповідне значення або витягувати з сесії
-      $stmt->bind_param("iiis", $id_j, $id_c, $id_f, $message);
-
-      if (!$stmt->execute()) {
-          throw new Exception("Error executing statement: " . $stmt->error);
-      }
-
-      echo "Повідомлення успішно додано.";
-  } catch (Exception $e) {
-      die("Error: " . $e->getMessage());
-  }
-}
-
-
-// Отримання історії чату
-function fetchChatHistory($id_j) {
-    global $conn;
-    $query = "SELECT c.*, cf.file_path FROM chat c LEFT JOIN chat_files cf ON c.id_chat = cf.id_chat WHERE c.id_j = ? AND c.id_c = ? ORDER BY c.created_at ASC";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $id_j, $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $chatHistory = [];
-    while ($row = $result->fetch_assoc()) {
-        $chatHistory[] = $row;
-    }
-    return $chatHistory;
-}
-
-// Збереження нового повідомлення
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['message'], $_POST['id_j'])) {
-        $id_j = intval($_POST['id_j']);
-        $message = $_POST['message'];
-        $filePath = null;
-
-        // Перевірка наявності файлу
-        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-            if (!is_dir('uploads')) {
-                mkdir('uploads', 0777, true);
-            }
-
-            $uploadDir = 'uploads/';
-            $fileName = time() . '-' . basename($_FILES['file']['name']);
-
-            // Перевірка дозволених форматів файлів
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'docx'];
-            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-            if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
-                die("Error: Заборонений формат файлу.");
-            }
-
-            $filePath = $uploadDir . $fileName;
-            if (!move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-                die("Error: Не вдалося завантажити файл.");
-            }
-        }
-
-        // Додавання повідомлення до БД
-        $query = "INSERT INTO chat (id_j, id_c, message, created_at) VALUES (?, ?, ?, NOW())";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iis", $id_j, $id_c, $message);
-        $stmt->execute();
-
-        if ($filePath) {
-            $chatId = $conn->insert_id;
-            $query = "INSERT INTO chat_files (id_chat, file_name, file_path) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("iss", $chatId, basename($filePath), $filePath);
-            $stmt->execute();
-        }
-
-        echo json_encode(['success' => true]);
-        exit;
-    }
-
-}if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  var_dump($_POST);
-}
 ?>
+
 <!DOCTYPE html>
-<html lang="UK">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Смотреть заказіь</title>
-  <link rel="stylesheet" href="style.css/infojobclients.css">
-</head>
-<body class="body">
-<div class="site">
-  <header class="header">
-    <div class="header_item">Цінова політика</div>
+include('db_connect.php');
     <div class="header_item">Політика конфедеційності</div>
     <div class="header_item">Служба підтримки</div>
     <div class="header_item">На головну</div>
@@ -128,31 +14,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
-        <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
-      </a>
-      <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
-      </div>
-    </div>
-  </header>
-  <main class="main">
     <div class="block_main ch">
       <div class="block-info-file">
         <div class="block_info ch">
+          <p>Назва: Label</p>
+          <p>Спеціальність: Spacsalyty</p>
+          <p>Тип: Tipe</p>
+          <p>Статус: Status</p>
           <p>Назва: <?php echo htmlspecialchars($order['lable']); ?></p>
           <p>Спеціальність: <?php echo htmlspecialchars($order['spacsalyty']); ?></p>
           <p>Тип: <?php echo htmlspecialchars($order['tipe']); ?></p>
           <p>Статус: <?php echo htmlspecialchars($order['status']); ?></p>
           <div class="data_price">
+            <p>Срок до: date</p>
+            <p>Ціна: price</p>
             <p>Срок до: <?php echo htmlspecialchars($order['date']); ?></p>
             <p>Ціна: <?php echo htmlspecialchars($order['price']); ?> грн</p>
           </div>
         </div>
         <div class="block_files ch">
           <p>Вкладені файли:</p>
-          <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
+          <div class="files_area"></div>
           <div class="files_area">
           <form action="upload_file.php" method="post" enctype="multipart/form-data">
             <input class="vzatysa1" type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
@@ -170,27 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="block_chat ch">
       <p>Чат з замовником:</p>
-      <div class="chat_area" id="chatArea">
-      <?php
-$chatHistory = fetchChatHistory($order['id_j']);
-foreach ($chatHistory as $message) {
-    echo "<div class='chat_message'>";
-    echo "<p>" . nl2br(htmlspecialchars($message['message'])) . "</p>"; // Підтримка нових рядків
-    if (!empty($message['file_path'])) {
-        echo "<p><strong>Файл:</strong> <a href='" . htmlspecialchars($message['file_path']) . "' target='_blank' download>" . htmlspecialchars(basename($message['file_path'])) . "</a></p>"; // Додано атрибут download
-    }
-    echo "<small>" . htmlspecialchars($message['created_at']) . "</small>";
-    echo "</div>";
-}
-?>
-      </div>
+      <div class="chat_area" id="chatArea"></div>
       <div class="chat_input_area">
-        <form id="chatForm" action="" method="POST" enctype="multipart/form-data">
-          <textarea class="chat_input" name="message" id="messageInput" placeholder="Напишіть повідомлення..."></textarea>
-          <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
-          <input type="file" name="file" id="fileInput" class="file_input">
-          <button class="send_button" type="submit">Надіслати</button>
-        </form>
+        <textarea class="chat_input" id="messageInput" placeholder="Напишіть повідомлення..."></textarea>
+        <input type="file" id="fileInput" class="file_input">
+        <button class="send_button" id="sendButton">Надіслати</button>
       </div>
     </div>
   </main>
@@ -205,5 +71,54 @@ foreach ($chatHistory as $message) {
     </footer>
   </div>
 </div>
+
+<script>
+  document.getElementById('sendButton').addEventListener('click', () => {
+    const messageInput = document.getElementById('messageInput');
+    const fileInput = document.getElementById('fileInput');
+    const chatArea = document.getElementById('chatArea');
+
+    // Отримуємо текст повідомлення
+    const message = messageInput.value.trim();
+    if (!message && !fileInput.files.length) {
+      alert('Введіть повідомлення або прикріпіть файл!');
+      return;
+    }
+
+    // Відображаємо повідомлення
+    const newMessage = document.createElement('div');
+    newMessage.classList.add('chat_message');
+    newMessage.innerHTML = `
+      <p>${message || "Файл прикріплено"}</p>
+      <small>${new Date().toLocaleString()}</small>
+    `;
+
+    // Якщо прикріплений файл, додаємо посилання і кнопку для відкриття
+    if (fileInput.files.length) {
+      const file = fileInput.files[0];
+      const fileUrl = URL.createObjectURL(file);
+      newMessage.innerHTML += `
+        <p><strong>Файл:</strong> ${file.name}</p>
+        <button onclick="window.open('${fileUrl}', '_blank')">Відкрити файл</button>
+      `;
+    }
+
+    chatArea.appendChild(newMessage);
+    chatArea.scrollTop = chatArea.scrollHeight;
+
+    // Очищуємо поле вводу
+    messageInput.value = '';
+    fileInput.value = '';
+
+    // Відправляємо дані на сервер (за потреби)
+    /*
+    fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify({ message, file: fileInput.files[0] }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    */
+  });
+</script>
 </body>
 </html>
