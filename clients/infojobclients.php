@@ -119,7 +119,7 @@ include('db_connect.php');
             <p>Срок до: date</p>
             <p>Ціна: price</p>
             <p>Срок до: <?php echo htmlspecialchars($order['date']); ?></p>
-            <p>Ціна: <?php echo htmlspecialchars($order['price']); ?> грн</p>
+            <p>Ціна за замовлення: <?php echo htmlspecialchars($order['price']); ?> грн</p>
           </div>
         </div>
         <div class="block_files ch">
