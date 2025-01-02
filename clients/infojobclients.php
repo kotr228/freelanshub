@@ -1,98 +1,32 @@
-
 <?php
 include('db_connect.php');
 include('order_detail_data.php');
 include('coments.php');
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Перевірка, чи сесія активна
-  if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-  }
 
-  // Перевірка авторизації клієнта
-  if (!isset($_SESSION['user_id'])) {
-
-
-  $id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії
-  $id_j = intval($_GET['id_j'] ?? 0);
-  $message = trim($_POST['message'] ?? '');
-
-  if ($id_j <= 0 || empty($message)) {
-      die("Error: Неправильні або порожні дані.");
-  }
-}
-  try {
-      // SQL-запит на додавання повідомлення
-      $query = "INSERT INTO chat (id_j, id_c, id_f, message, created_at) VALUES (?, ?, ?, ?, NOW())";
-      $stmt = $conn->prepare($query);
-
-      if (!$stmt) {
-          throw new Exception("Error preparing statement: " . $conn->error);
-      }
-
-      $id_f = 123; // Замінити на відповідне значення або витягувати з сесії
-      $stmt->bind_param("iiis", $id_j, $id_c, $id_f, $message);
-
-      if (!$stmt->execute()) {
-          throw new Exception("Error executing statement: " . $stmt->error);
-      }
-
-      echo "Повідомлення успішно додано.";
-  } catch (Exception $e) {
-      die("Error: " . $e->getMessage());
-  }
+// Перевірка, чи сесія активна
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-
-// Отримання історії чату
-function fetchChatHistory($id_j) {
-    global $conn;
-    $query = "SELECT c.*, cf.file_path FROM chat c LEFT JOIN chat_files cf ON c.id_chat = cf.id_chat WHERE c.id_j = ? AND c.id_c = ? ORDER BY c.created_at ASC";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $id_j, $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $chatHistory = [];
-    while ($row = $result->fetch_assoc()) {
-        $chatHistory[] = $row;
-    }
-    return $chatHistory;
+// Перевірка авторизації клієнта
+if (!isset($_SESSION['user_id'])) {
+    die("Error: Ви не авторизовані.");
 }
 
-// Збереження нового повідомлення
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['message'], $_POST['id_j'])) {
-        $id_j = intval($_POST['id_j']);
-        $message = $_POST['message'];
-        $filePath = null;
+$id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії
+$id_j = intval($_GET['id_j'] ?? 0);
 
-        // Перевірка наявності файлу
-        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-            if (!is_dir('uploads')) {
-                mkdir('uploads', 0777, true);
-            }
-
-            $uploadDir = 'uploads/';
-            $fileName = time() . '-' . basename($_FILES['file']['name']);
-
-            // Перевірка дозволених форматів файлів
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'docx'];
-            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-            if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
-                die("Error: Заборонений формат файлу.");
-            }
-
-            $filePath = $uploadDir . $fileName;
-            if (!move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-                die("Error: Не вдалося завантажити файл.");
-            }
-        }
-        exit;
-    }
-
-}if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  var_dump($_POST);
+if ($id_j <= 0) {
+    die("Error: Неправильний ID замовлення.");
 }
+
+// Отримання історії чату (для першого завантаження сторінки)
+$stmt = $conn->prepare("SELECT message, created_at FROM chat WHERE id_j = ? AND id_c = ? ORDER BY created_at ASC");
+$stmt->bind_param("ii", $id_j, $id_c);
+$stmt->execute();
+$result = $stmt->get_result();
+$chatHistory = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Смотреть заказіь</title>
+  <title>Смотреть закази</title>
   <link rel="stylesheet" href="style.css/infojobclients.css">
 </head>
 <body class="body">
@@ -150,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <div class="block_comments">
         <p>Коментарі:</p>
-        <textarea class="coment"><?php echo $description; ?></textarea>
+        <textarea class="coment"></textarea>
       </div>
     </div>
     <div class="block_chat ch">
@@ -178,52 +112,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 //Додавання повідомлення в чаи в баззу даних далі на реакті 
 <script>
-  document.getElementById('sendButton').addEventListener('click', () => {
-    const messageInput = document.getElementById('messageInput');
-    const fileInput = document.getElementById('fileInput');
-    const chatArea = document.getElementById('chatArea');
+document.getElementById('sendButton').addEventListener('click', () => {
+  const messageInput = document.getElementById('messageInput');
+  const fileInput = document.getElementById('fileInput');
+  const chatArea = document.getElementById('chatArea');
 
-    // Отримуємо текст повідомлення
-    const message = messageInput.value.trim();
-    if (!message && !fileInput.files.length) {
-      alert('Введіть повідомлення або прикріпіть файл!');
-      return;
-    }
+  const message = messageInput.value.trim();
+  if (!message && !fileInput.files.length) {
+    alert('Введіть повідомлення або прикріпіть файл!');
+    return;
+  }
 
-    // Відображаємо повідомлення
-    const newMessage = document.createElement('div');
-    newMessage.classList.add('chat_message');
-    newMessage.innerHTML = `
-      <p>${message || "Файл прикріплено"}</p>
-      <small>${new Date().toLocaleString()}</small>
-    `;
+  const formData = new FormData();
+  formData.append('message', message);
+  if (fileInput.files.length) {
+    formData.append('file', fileInput.files[0]);
+  }
+  formData.append('id_j', <?php echo $id_j; ?>);
 
-    // Якщо прикріплений файл, додаємо посилання і кнопку для відкриття
-    if (fileInput.files.length) {
-      const file = fileInput.files[0];
-      const fileUrl = URL.createObjectURL(file);
-      newMessage.innerHTML += `
-        <p><strong>Файл:</strong> ${file.name}</p>
-        <button onclick="window.open('${fileUrl}', '_blank')">Відкрити файл</button>
+  fetch('add_message.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const newMessage = document.createElement('div');
+      newMessage.classList.add('chat_message');
+      newMessage.innerHTML = `
+        <span class="chat_time">${new Date().toLocaleString()}</span>
+        <p class="chat_text">${message}</p>
       `;
+      chatArea.appendChild(newMessage);
+      chatArea.scrollTop = chatArea.scrollHeight;
+      messageInput.value = '';
+      fileInput.value = '';
+    } else {
+      alert(data.error || 'Не вдалося надіслати повідомлення');
     }
+  })
+  .catch(error => console.error('Error:', error));
+});
 
-    chatArea.appendChild(newMessage);
-    chatArea.scrollTop = chatArea.scrollHeight;
-
-    // Очищуємо поле вводу
-    messageInput.value = '';
-    fileInput.value = '';
-
-    // Відправляємо дані на сервер (за потреби)
-    /*
-    fetch('/api/messages', {
-      method: 'POST',
-      body: JSON.stringify({ message, file: fileInput.files[0] }),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    */
-  });
+// Автоматичне оновлення чату
+setInterval(() => {
+  fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
+    .then(response => response.json())
+    .then(data => {
+      const chatArea = document.getElementById('chatArea');
+      chatArea.innerHTML = ''; // Очищуємо попередній вміст
+      data.messages.forEach(chat => {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('chat_message');
+        newMessage.innerHTML = `
+          <span class="chat_time">${chat.created_at}</span>
+          <p class="chat_text">${chat.message}</p>
+        `;
+        chatArea.appendChild(newMessage);
+      });
+      chatArea.scrollTop = chatArea.scrollHeight; // Прокручуємо до останнього повідомлення
+    })
+    .catch(error => console.error('Error:', error));
+}, 1500); // Оновлюємо чат кожні 5 секунд
 </script>
+
 </body>
 </html>
