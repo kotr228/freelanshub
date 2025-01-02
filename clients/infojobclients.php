@@ -58,46 +58,27 @@ $stmt->close();
     </div>
   </header>
   <main class="main">
-    <div class="block_main ch">
-      <div class="block-info-file">
-        <div class="block_info ch">
-        <p>Назва: <?php echo htmlspecialchars($order['lable']); ?></p>
-          <p>Спеціальність: <?php echo htmlspecialchars($order['spacsalyty']); ?></p>
-          <p>Тип: <?php echo htmlspecialchars($order['tipe']); ?></p>
-          <p>Статус: <?php echo htmlspecialchars($order['status']); ?></p>
-          <div class="data_price">
-          <p>Срок до: <?php echo htmlspecialchars($order['date']); ?></p>
-          <p>Ціна: <?php echo htmlspecialchars($order['price']); ?> грн</p>
-          </div>
+        <div class="block_chat ch">
+            <p>Чат з замовником:</p>
+            <div class="chat_area" id="chatArea">
+    <?php if (empty($chatHistory)): ?>
+        <p>Напишіть ваше перше повідомлення</p>
+    <?php else: ?>
+        <?php foreach ($chatHistory as $chat): ?>
+            <div class="chat_message">
+                <span class="chat_time"><?php echo htmlspecialchars($chat['created_at']); ?></span>
+                <p class="chat_text"><?php echo htmlspecialchars($chat['message']); ?></p>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+            <div class="chat_input_area">
+                <textarea class="chat_input" id="messageInput" placeholder="Напишіть повідомлення..."></textarea>
+                <input type="file" id="fileInput" class="file_input">
+                <button class="send_button" id="sendButton">Надіслати</button>
+            </div>
         </div>
-        <div class="block_files ch">
-          <p>Вкладені файли:</p>
-          <div class="files_area">
-          <form action="upload_file.php" method="post" enctype="multipart/form-data">
-            <input class="vzatysa1" type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
-            <input class="vzatysa1" type="file" name="file" id="file" required>
-            <button class="vzatysa1" type="submit">Завантажити файл</button>
-          </form>
-          <?php include_once 'visible_file.php'; ?>
-          </div>
-        </div>
-      </div>
-      <div class="block_comments">
-        <p>Коментарі:</p>
-        <textarea class="coment"></textarea>
-      </div>
-    </div>
-    <div class="block_chat ch">
-      <p>Чат з замовником:</p>
-      
-      <div class="chat_area" id="chatArea"></div>
-      <div class="chat_input_area">
-        <textarea class="chat_input" id="messageInput" placeholder="Напишіть повідомлення..."></textarea>
-        <input type="file" id="fileInput" class="file_input">
-        <button class="send_button" id="sendButton">Надіслати</button>
-      </div>
-    </div>
-  </main>
+    </main>
   
 
   <div class="obolocka">
