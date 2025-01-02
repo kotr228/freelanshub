@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`files` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `freelans`.`chat_files` (
+CREATE TABLE IF NOT EXISTS `chat_files` (
   `id_chat_file` INT NOT NULL AUTO_INCREMENT,
   `id_chat` INT NOT NULL,
   `file_name` VARCHAR(255) NOT NULL,
