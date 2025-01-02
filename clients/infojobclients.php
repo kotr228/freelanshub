@@ -9,11 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   // Перевірка авторизації клієнта
-  if (!isset($_SESSION['client_id'])) {
+  if (!isset($_SESSION['user_id'])) {
 
 
-  $id_c = $_SESSION['client_id']; // Отримання ID клієнта із сесії
-  $id_j = intval($_POST['id_j'] ?? 0);
+  $id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії
+  $id_j = intval($_GET['id_j'] ?? 0);
   $message = trim($_POST['message'] ?? '');
 
   if ($id_j <= 0 || empty($message)) {
