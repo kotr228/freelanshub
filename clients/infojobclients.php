@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <div class="block_comments">
         <p>Коментарі:</p>
-        <textarea class="coment"></textarea>
+        <textarea class="coment"><?php echo $description; ?></textarea>
       </div>
     </div>
     <div class="block_chat ch">
