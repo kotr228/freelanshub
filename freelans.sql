@@ -173,7 +173,6 @@ CREATE TABLE IF NOT EXISTS `freelans`.`chat` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 -- -----------------------------------------------------
 -- Table `freelans`.`files`
 -- -----------------------------------------------------
