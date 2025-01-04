@@ -5,7 +5,30 @@ include('chat.php');
 include('coments.php');
 $order_id = $_GET['id_j'];
 $_SESSION['order_id'] = $order_id;
+// Перевірка, чи сесія активна
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
+// Перевірка авторизації клієнта
+if (!isset($_SESSION['user_id'])) {
+  die("Error: Ви не авторизовані.");
+}
+
+$id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії
+$id_j = intval($_GET['id_j'] ?? 0);
+
+if ($id_j <= 0) {
+  die("Error: Неправильний ID замовлення.");
+}
+
+// Отримання історії чату (для першого завантаження сторінки)
+$stmt = $conn->prepare("SELECT message, created_at FROM chat WHERE id_j = ? AND id_c = ? ORDER BY created_at ASC");
+$stmt->bind_param("ii", $id_j, $id_c);
+$stmt->execute();
+$result = $stmt->get_result();
+$chatHistory = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -118,12 +141,24 @@ $_SESSION['order_id'] = $order_id;
     </div>
     <div class="block_chat ch">
       <p>Чат з замовником:</p>
-      <div class="chat_area" id="chat-box"></div>
-
-      <!-- Форма для надсилання повідомлення -->
-      <textarea class="vzatysa1" id="message" rows="3" cols="50" placeholder="Введіть ваше повідомлення..."></textarea><br>
-      <button class="vzatysa1" onclick="sendMessage()" id="send-btn">Надіслати</button>
-    </div>
+      <div class="chat_area" id="chatArea">
+    <?php if (empty($chatHistory)): ?>
+        <p>Напишіть ваше перше повідомлення</p>
+    <?php else: ?>
+        <?php foreach ($chatHistory as $chat): ?>
+            <div class="chat_message">
+                <span class="chat_time"><?php echo htmlspecialchars($chat['created_at']); ?></span>
+                <p class="chat_text"><?php echo htmlspecialchars($chat['message']); ?></p>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+            <div class="chat_input_area">
+                <textarea class="chat_input" id="messageInput" placeholder="Напишіть повідомлення..."></textarea>
+                <input type="file" id="fileInput" class="file_input">
+                <button class="send_button" id="sendButton">Надіслати</button>
+            </div>
+        </div>
   </main>
   
 
@@ -136,7 +171,71 @@ $_SESSION['order_id'] = $order_id;
     </footer>
   </div>
 </div>
+//Додавання повідомлення в чаи в баззу даних далі на реакті 
+<script>
+document.getElementById('sendButton').addEventListener('click', () => {
+  const messageInput = document.getElementById('messageInput');
+  const fileInput = document.getElementById('fileInput');
+  const chatArea = document.getElementById('chatArea');
 
+  const message = messageInput.value.trim();
+  if (!message && !fileInput.files.length) {
+    alert('Введіть повідомлення або прикріпіть файл!');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('message', message);
+  if (fileInput.files.length) {
+    formData.append('file', fileInput.files[0]);
+  }
+  formData.append('id_j', <?php echo $id_j; ?>);
+
+  fetch('add_message.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const newMessage = document.createElement('div');
+      newMessage.classList.add('chat_message');
+      newMessage.innerHTML = `
+        <span class="chat_time">${new Date().toLocaleString()}</span>
+        <p class="chat_text">${message}</p>
+      `;
+      chatArea.appendChild(newMessage);
+      chatArea.scrollTop = chatArea.scrollHeight;
+      messageInput.value = '';
+      fileInput.value = '';
+    } else {
+      alert(data.error || 'Не вдалося надіслати повідомлення');
+    }
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+// Автоматичне оновлення чату
+setInterval(() => {
+  fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
+    .then(response => response.json())
+    .then(data => {
+      const chatArea = document.getElementById('chatArea');
+      chatArea.innerHTML = ''; // Очищуємо попередній вміст
+      data.messages.forEach(chat => {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('chat_message');
+        newMessage.innerHTML = `
+          <span class="chat_time">${chat.created_at}</span>
+          <p class="chat_text">${chat.message}</p>
+        `;
+        chatArea.appendChild(newMessage);
+      });
+      chatArea.scrollTop = chatArea.scrollHeight; // Прокручуємо до останнього повідомлення
+    })
+    .catch(error => console.error('Error:', error));
+}, 1500); // Оновлюємо чат кожні 5 секунд
+</script>
  
 </body>
 </html>
