@@ -2,7 +2,8 @@
 include('db_connect.php');
 include('order_detail_data.php');
 include('coments.php');
-
+$order_id = $_GET['id_j'];
+$_SESSION['order_id'] = $order_id;
 // Перевірка, чи сесія активна
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -34,21 +35,103 @@ $stmt->close();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Смотреть закази</title>
+  <title>Делать заказы</title>
   <link rel="stylesheet" href="style.css/infojobclients.css">
+  <script>
+        // Функція для завантаження чату
+        function loadChat() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "load_chat.php?id_j=<?php echo $order_id; ?>", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById("chat-box").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+
+        // Запуск оновлення чату кожні 2 секунди
+        setInterval(loadChat, 2000);
+
+        // Надсилання повідомлення
+        function sendMessage() {
+    const message = document.getElementById("message").value.trim();
+    if (message) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "send_massage.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function () {
+            console.log("Статус сервера:", xhr.status);
+            console.log("Відповідь сервера:", xhr.responseText);
+            if (xhr.status === 200) {
+                document.getElementById("message").value = "";
+                loadChat();
+            } else {
+                alert("Помилка: " + xhr.responseText);
+            }
+        };
+        xhr.onerror = function () {
+            alert("Помилка з'єднання із сервером.");
+        };
+        xhr.send("id_j=<?php echo $order_id; ?>&message=" + encodeURIComponent(message));
+    } else {
+        alert("Введіть повідомлення перед надсиланням.");
+    }
+}
+
+
+    </script>
 </head>
-<body class="body">
+<body class="body" onload="loadChat()">
 <div class="site">
   <header class="header">
-    <div class="header_item">Цінова політика</div>
-    <div class="header_item">Політика конфедеційності</div>
+  <div class="header_item"><a href="#modal" class="btn-open-modal">Цінова політика</a>
+
+<!-- Модальне вікно -->
+<div id="modal">
+  <div class="modal-content">
+    <h3>Цінова політика</h3>
+     <h6>Платформа забирає певну частину платежу на утримання хостингу сайту. Для різних типів замовлень різні відсотки, також відсоток залежить від ціни.</h6>
+     <br><h4>Залежність відсотку від ціни замовлення:</h4>
+     <h6>До 1000 грн/25 usd - 5%</h6>
+     <h6>Від 1000 грн/25 usd до 42000 грн/1000 usd - 10%</h6>
+     <h6>Від 42000 грн/1000 usd до 84000 грн/2000 usd - 12%</h6>
+     <h6>Від 84000 грн/2000 usd - 15%</h6>
+     <br><h4>УВАГА!</h4>
+     <h6>Платформа робить платіж автоматично після сплати замовлення клієнтом, а клієнт може сплатити гроші за замовлення тільки після того, як виконавець повідомить про виконану роботу</h6><br>
+    <div class="modal-actions">
+     <a href="#" class="btn-close">Закрити</a>
+   </div>
+  </div>
+</div>
+</div>
+
+
+<div class="header_item"><a href="#modalph" class="btn-open-modal">Політика конфеденційності</a>
+
+  <div id="modalph">
+    <div class="modal-contentph">
+      <h3>Політика конфеденційності</h3>
+       <h6>Платформа не збирає ваші персональні данні окрім пошти, номеру телефону та інших засобів зв'язку, також нам необхідна банківська картка виконавця. Також модератори не можуть змінити ваші паролі, оскільки у нас немає до них доступу, пізніше з'явиться можливість зміни паролю користувачем.</h6>
+       <br><h4>Файли:</h4>
+       <h6>Ми зберігаємо файли, які ви прикріплюєте до обмінників файлів, але ми не використовуємо їх. Також ми можемо надати ваші файли при необхідності, якщо ви втратите доступ до них.</h6>
+       <h6>Якщо є необхідність передати не файл, а проект, необхідно архівувати його.</h6>
+       <br><h4>УВАГА!</h4>
+       <h6>Платформа з часом видаляє старі файли, тобто вони можуть зберігатися рік, як і всі замовлення, тобто через рік після створення замовлення, система видаляє замовлення з бази даних, а також всі файли, які пов'язані з цим замовленням.</h6><br>
+      <div class="modalph-actions">
+       <a href="#" class="btn-closeph">Закрити</a>
+     </div>
+    </div>
+  </div>
+
+</div>
     <div class="header_item">Служба підтримки</div>
-    <div class="header_item">На головну</div>
+    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
     <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
-        <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
+        <img class="logo-user" src="img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
       <div class="dropdown-menu">
         <button class="dropdown-item">Змінити аккаунт</button>
@@ -58,7 +141,41 @@ $stmt->close();
     </div>
   </header>
   <main class="main">
-        <div class="block_chat ch">
+    <div class="block_main ch">
+      <div class="block-info-file">
+        <div class="block_info ch">
+          <p>Назва: <?php echo htmlspecialchars($order['lable']); ?></p>
+          <p>Спеціальність: <?php echo htmlspecialchars($order['spacsalyty']); ?></p>
+          <p>Тип: <?php echo htmlspecialchars($order['tipe']); ?></p>
+          <p>Статус: <?php echo htmlspecialchars($order['status']); ?></p>
+          <div class="data_price">
+            <p>Срок до: <?php echo htmlspecialchars($order['date']); ?></p>
+            <p>Ціна: <?php echo htmlspecialchars($order['price']); ?> грн</p>
+          </div>
+        </div>
+        <div class="block_files ch">
+          <p>Вкладені файли:</p>
+          <div class="files_area">
+          <form action="upload_file.php" method="post" enctype="multipart/form-data">
+            <input class="vzatysa1" type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
+            <input class="vzatysa1" type="file" name="file" id="file" required>
+            <button class="vzatysa1" type="submit">Завантажити файл</button>
+          </form>
+          <?php include_once 'visible_file.php'; ?>
+          </div>
+        </div>
+      </div>
+      <div class="block_comments">
+        <div class="com">
+          <p>Коментарі:</p>
+          <textarea class="coment" rows="5" cols="50" readonly><?php echo $description; ?></textarea>
+        </div>
+        
+       
+
+      </div>
+    </div>
+    <div class="block_chat ch">
             <p>Чат з замовником:</p>
             <div class="chat_area" id="chatArea">
     <?php if (empty($chatHistory)): ?>
@@ -78,16 +195,15 @@ $stmt->close();
                 <button class="send_button" id="sendButton">Надіслати</button>
             </div>
         </div>
-    </main>
+  </main>
   
 
   <div class="obolocka">
     <footer class="footer">
-      <img class="logo" src="/img/Freelanshub (1).png" alt="logo">
+      <img class="logo" src="img/Freelanshub (1).png" alt="logo">
       <div class="footer-item">Реклама</div>
       <div class="footer-item">Партнерство</div>
       <div class="footer-item">Про нас</div>
-      <div class="footer-item">Зробити замовлення</div>
     </footer>
   </div>
 </div>
