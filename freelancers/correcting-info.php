@@ -152,7 +152,7 @@ include('get_user.php');
 
     
 
-      <button>Замовлення на виконанні</button>
+      <button onclick="location.href='my_orders.php'">Замовлення на виконанні</button>
     </div>
   </main>
 </div>
