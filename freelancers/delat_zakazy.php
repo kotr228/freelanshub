@@ -94,7 +94,7 @@ $conn->close();
 
   <main class="main">
     <div class="block-parametrs">
-      <form method="GET" action="orders.php">
+      <form id="filter-form" method="GET" action="orders.php">
         <div class="style_pole">
           <label for="type">Тип:</label>
           <select id="type" name="type" class="input">
@@ -128,30 +128,15 @@ $conn->close();
           <input class="input-price" type="number" id="price-to" name="price-to" value="<?= htmlspecialchars($price_to) ?>" placeholder="1000" />
         </div>
 
-        <!-- <button class="header_item" type="submit">Фільтрувати</button> -->
+        <button class="header_item" type="button" id="filter-button">Фільтрувати</button>
       </form>
+
+      <div id="results"></div>
     </div>
 
     <div class="orders">
-      <?php /*if (count($orders) > 0): ?>
-        <?php foreach ($orders as $order): ?>
-          <div class="block_info">
-            <p>Назва: <?= htmlspecialchars($order['lable']) ?></p>
-            <p>Спеціальність: <?= htmlspecialchars($order['spacsalyty']) ?></p>
-            <p>Тип: <?= htmlspecialchars($order['tipe']) ?></p>
-            <p>Статус: <?= htmlspecialchars($order['status']) ?></p>
-            <div class="data_price">
-              <p>Срок до: <?= $order['formatted_date'] ?></p>
-              <p>Ціна: <?= $order['price'] ?> грн</p>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      <?php else: */?>
-        <div >
-      <?php include_once 'orders.php'; ?>
+      <?php include_once 'orders.php'; ?>    
     </div>
-      <?php /*endif;*/?>
-      </div>
       
   </main>
   <div class="obolocka">
@@ -163,5 +148,25 @@ $conn->close();
   </footer>
 </div>
 </div>
+
+<script>
+document.getElementById("filter-button").addEventListener("click", function() {
+    const form = document.getElementById("filter-form");
+    const formData = new FormData(form);
+
+    fetch("orders.php", {
+        method: "GET",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("results").innerHTML = data; // Відображення результатів
+    })
+    .catch(error => {
+        console.error("Помилка:", error);
+    });
+});
+</script>
+
 </body>
 </html>

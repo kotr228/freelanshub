@@ -28,6 +28,10 @@ if (!empty($deadline)) {
     $sql .= " AND date <= '$deadline'";
 }
 
+if (!empty($status)) {
+    $sql .= " AND status != 'Активне'";
+}
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
