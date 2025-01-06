@@ -321,3 +321,115 @@ html, body {
   flex-wrap: wrap;
   overflow-y: scroll;
 }
+
+.btn-open-modal, .btn-open-modalph, .btn-open-modal-about {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #F5F5DC; /* Помаранчевий фон */
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
+.modal, .modalph, .modal-about {
+  display: none; /* Спочатку приховано */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#modal, #modalph, #modal-about {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Модальне вікно приховане за замовчуванням */
+  justify-content: center;
+  align-items: center;
+}
+
+#modal:target, #modalph:target, #modal-about:target {
+  display: flex; /* Показуємо вікно при переході на #modal */
+}
+
+.modal-content, .modal-contentph, .modala-content {
+  background-color: #F5F5DC;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
+.modal h2, .modalph h2 {
+  margin-bottom: 15px;
+}
+
+.modal input, .modalph input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-buttons, .modalph-buttons {
+  display: flex;
+  justify-content: space-between; /* Розміщує кнопки по боках */
+}
+
+.modal-content h3, .modal-contentph h3 {
+  margin-bottom: 20px;
+}
+
+.modal-content input, .modal-contentph input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions, .modalph-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-update, .btn-close, .btn-updateph, .btn-closeph {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-update, .btn-updateph {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-update:hover, .btn-updateph:hover {
+  background-color: #218838;
+}
+
+.btn-close, .btn-closeph {
+  background-color: #dc3545;
+  color: #fff;
+}
