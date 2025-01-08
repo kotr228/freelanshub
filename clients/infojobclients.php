@@ -126,7 +126,7 @@ $stmt->close();
 
 </div>
     <div class="header_item">Служба підтримки</div>
-    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
+    <button class="header_item" onclick="location.href='peregladat_zakazy.php'">На головну</button>
     <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
