@@ -19,7 +19,6 @@ $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
 if (!empty($type)) {
     $sql .= " AND tipe = '$type'";
 }
-
 if (!empty($specialty)) {
     $sql .= " AND spacsalyty = '$specialty'";
 }
