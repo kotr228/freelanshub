@@ -142,6 +142,42 @@ html, body {
   height: 17.7em;
 }
 
+.modal {
+  display: none; /* Спочатку приховане */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-actions {
+  text-align: right;
+}
+
+.btn-close {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-close:hover {
+  background-color: #d32f2f;
+}
 
 
 .block_info{
