@@ -61,10 +61,27 @@ include('orders.php'); // Підключення скрипта
         <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
       <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
-      </div>
+    <button class="dropdown-item">Змінити аккаунт</button>
+    <button class="dropdown-item">Вийти з аккаунту</button>
+    <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
+    <button class="dropdown-item btn-open-modal-notifications">Сповіщення</button>
+</div>
+
+<!-- Модальне вікно для сповіщень -->
+<div id="modal-notifications" class="modal">
+  <div class="modal-content">
+    <h3>Сповіщення</h3>
+    <div class="notifications-list">
+      <!-- Тут будуть відображатися сповіщення -->
+      <p>Нове повідомлення: Замовлення №123 оновлено.</p>
+      <p>Сповіщення: Ваше замовлення прийнято.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-close">Закрити</button>
+    </div>
+  </div>
+</div>
+
     </div>
   </header>
   <div class="main-header">
@@ -104,3 +121,27 @@ include('orders.php'); // Підключення скрипта
  
 </body>
 </html>
+<script>
+  // Отримання елементів
+const btnOpenModalNotifications = document.querySelector('.btn-open-modal-notifications');
+const modalNotifications = document.getElementById('modal-notifications');
+const btnCloseModal = modalNotifications.querySelector('.btn-close');
+
+// Відкриття модального вікна
+btnOpenModalNotifications.addEventListener('click', () => {
+  modalNotifications.style.display = 'block';
+});
+
+// Закриття модального вікна
+btnCloseModal.addEventListener('click', () => {
+  modalNotifications.style.display = 'none';
+});
+
+// Закриття модального вікна при кліку поза ним
+window.addEventListener('click', (event) => {
+  if (event.target === modalNotifications) {
+    modalNotifications.style.display = 'none';
+  }
+});
+
+</script>
