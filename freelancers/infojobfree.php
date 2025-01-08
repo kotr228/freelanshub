@@ -209,7 +209,6 @@ $stmt->close();
     </footer>
   </div>
 </div>
-//Додавання повідомлення в чаи в баззу даних далі на реакті 
 <script>
 document.getElementById('sendButton').addEventListener('click', () => {
   const messageInput = document.getElementById('messageInput');
@@ -254,12 +253,16 @@ document.getElementById('sendButton').addEventListener('click', () => {
 });
 
 // Автоматичне оновлення чату
+let lastMessageCount = 0; // Для збереження кількості попередніх повідомлень
+
 setInterval(() => {
   fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
     .then(response => response.json())
     .then(data => {
       const chatArea = document.getElementById('chatArea');
       chatArea.innerHTML = ''; // Очищуємо попередній вміст
+
+      // Оновлюємо вміст чату
       data.messages.forEach(chat => {
         const newMessage = document.createElement('div');
         newMessage.classList.add('chat_message');
@@ -269,10 +272,24 @@ setInterval(() => {
         `;
         chatArea.appendChild(newMessage);
       });
-      chatArea.scrollTop = chatArea.scrollHeight; // Прокручуємо до останнього повідомлення
+
+      // Прокручуємо до останнього повідомлення
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // Перевірка на нові повідомлення
+      const currentMessageCount = data.messages.length;
+      if (currentMessageCount > lastMessageCount) {
+        const newMessages = currentMessageCount - lastMessageCount;
+
+        // Виводимо сповіщення
+        alert(`У вас ${newMessages} нове(их) повідомлення!`);
+      }
+
+      // Оновлюємо кількість повідомлень
+      lastMessageCount = currentMessageCount;
     })
     .catch(error => console.error('Error:', error));
-}, 1500); // Оновлюємо чат кожні 5 секунд
+}, 1500); // Оновлюємо чат кожні 1.5 секунди
 </script>
  
 </body>
