@@ -54,15 +54,15 @@ include('orders.php'); // Підключення скрипта
 
   </div>
     <div class="header_item">Служба підтримки</div>
-    <div class="header_item">На головну</div>
+    <button class="header_item" onclick="location.href='../../index.html'">На головну</button>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
         <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
       <div class="dropdown-menu">
-    <button class="dropdown-item">Змінити аккаунт</button>
-    <button class="dropdown-item">Вийти з аккаунту</button>
+    <button class="dropdown-item" onclick="location.href='loginclients.html'">Змінити аккаунт</button>
+    <button class="dropdown-item" onclick="location.href='registerclients.html'">Вийти з аккаунту</button>
     <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
     <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
   <!-- Модальне вікно для сповіщень -->

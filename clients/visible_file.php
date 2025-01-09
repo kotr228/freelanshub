@@ -1,4 +1,6 @@
 <?php
+// Підключення до бази даних
+include('db_connect.php');
 // Перевірка параметра 'id_j' у URL
 $id_j = intval($_GET['id_j'] ?? 0);
 

@@ -157,7 +157,7 @@ $stmt->close();
         <div class="block_files ch">
           <p>Вкладені файли:</p>
           <div class="files_area">
-          <form action="upload_file.php" method="post" enctype="multipart/form-data">
+          <form action="upload_file1.php" method="post" enctype="multipart/form-data">
             <input class="vzatysa1" type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
             <input class="vzatysa1" type="file" name="file" id="file" required>
             <button class="vzatysa1" type="submit">Завантажити файл</button>

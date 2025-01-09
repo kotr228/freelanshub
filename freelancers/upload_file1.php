@@ -31,7 +31,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK && isse
         $stmt = $conn->prepare($query);
         $stmt->bind_param('iss', $id_j, $fileName, $destination);
         if ($stmt->execute()) {
-            header("Location: infojobfree.php?id_j=" . htmlspecialchars($_SESSION['id_j']));
+            header("Location: infojobmake.php?id_j=" . htmlspecialchars($_SESSION['id_j']));
         } else {
             echo "Помилка при збереженні файлу в базу даних.";
         }

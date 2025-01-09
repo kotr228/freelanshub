@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
   // Отримання даних з форми
   $name = $_POST['name'];
   $email = $_POST['email'];

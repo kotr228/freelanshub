@@ -29,13 +29,13 @@ if (isset($_GET['id_j']) && is_numeric($_GET['id_j'])) {
     $stmt->close();
     $conn->close();
 } else {
-    echo "Передане значення ID: " . htmlspecialchars($_GET['id_j']);
-    if (!is_numeric($_GET['id_j'])) {
+    echo "Передане значення ID: " . htmlspecialchars($_SESSION['id_j']);
+    if (!is_numeric($_SESSION['id_j'])) {
         die("ID некоректне.");
     }
     
-    if (isset($_GET['id_j'])) {
-        echo "ID замовлення: " . htmlspecialchars($_GET['id_j']);
+    if (isset($_SESSION['id_j'])) {
+        echo "ID замовлення: " . htmlspecialchars($_SESSION['id_j']);
     } else {
         die("ID не передано або воно некоректне.");
     }
