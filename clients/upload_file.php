@@ -13,7 +13,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK && isse
     $fileType = $_FILES['file']['type'];
 
     // Перевірка дозволених типів файлів
-    $allowedExtensions = ['jpg', 'png', 'pdf', 'docx', 'txt'];
+    $allowedExtensions = ['jpg', 'png', 'pdf', 'docx', 'txt', 'html', 'css', 'cpp', 'psd', 'zip', 'rar', 'py', 'h', 'php', 'js', 'ch', 'md', 'mp3'];
     $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
     if (!in_array($fileExtension, $allowedExtensions)) {

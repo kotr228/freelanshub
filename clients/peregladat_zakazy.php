@@ -75,7 +75,7 @@ include('orders.php'); // Підключення скрипта
           <p>Сповіщення: Ваше замовлення прийнято.</p>
         </div>
         <div class="modaln-actions">
-        <a href="#" class="btnn-closeph">Закрити</a>
+        <a href="#" class="btnn-close">Закрити</a>
       </div>
   </div>
   </div> 
