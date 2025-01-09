@@ -64,25 +64,25 @@ include('orders.php'); // Підключення скрипта
     <button class="dropdown-item">Змінити аккаунт</button>
     <button class="dropdown-item">Вийти з аккаунту</button>
     <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
-    <button class="dropdown-item btn-open-modal-notifications">Сповіщення</button>
-</div>
-
-<!-- Модальне вікно для сповіщень -->
-<div id="modal-notifications" class="modal">
-  <div class="modal-content">
-    <h3>Сповіщення</h3>
-    <div class="notifications-list">
-      <!-- Тут будуть відображатися сповіщення -->
-      <p>Нове повідомлення: Замовлення №123 оновлено.</p>
-      <p>Сповіщення: Ваше замовлення прийнято.</p>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-close">Закрити</button>
-    </div>
+    <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
+  <!-- Модальне вікно для сповіщень -->
+      <div id="modaln" class="modaln">
+        <div class="modaln-content">
+        <h3>Сповіщення</h3>
+        <div class="notifications-list">
+          <!-- Тут будуть відображатися сповіщення -->
+          <p>Нове повідомлення: Замовлення №123 оновлено.</p>
+          <p>Сповіщення: Ваше замовлення прийнято.</p>
+        </div>
+        <div class="modaln-actions">
+        <a href="#" class="btnn-closeph">Закрити</a>
+      </div>
   </div>
+  </div> 
+  </div>   
 </div>
 
-    </div>
+</div>
   </header>
   <div class="main-header">
     <button class="header_item" onclick="location.href='?filter=active'">Активні замовлення</button>
