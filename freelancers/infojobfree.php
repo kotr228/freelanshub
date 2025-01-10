@@ -252,78 +252,44 @@ document.getElementById('sendButton').addEventListener('click', () => {
   .catch(error => console.error('Error:', error));
 });
 
-let lastMessageTime = null; // Ініціалізація змінної для збереження часу останнього повідомлення
+// Автоматичне оновлення чату
+let lastMessageCount = 0; // Для збереження кількості попередніх повідомлень
 
-function loadChat() {
-    fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
-        .then(response => response.json())
-        .then(data => {
-            const chatArea = document.getElementById('chatArea');
-            chatArea.innerHTML = ''; // Очищуємо попередній вміст
-
-            // Оновлюємо вміст чату
-            data.messages.forEach(chat => {
-                const newMessage = document.createElement('div');
-                newMessage.classList.add('chat_message');
-                newMessage.innerHTML = `
-                    <span class="chat_time">${chat.created_at}</span>
-                    <p class="chat_text">${chat.message}</p>
-                `;
-                chatArea.appendChild(newMessage);
-            });
-
-            // Прокручуємо до останнього повідомлення
-            chatArea.scrollTop = chatArea.scrollHeight;
-
-            // Якщо це перше завантаження, ініціалізуємо lastMessageTime
-            if (data.messages.length > 0 && lastMessageTime === null) {
-                lastMessageTime = data.messages[data.messages.length - 1].created_at;
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-// Запуск завантаження чату
-loadChat();
-
-// Оновлення чату та перевірка нових повідомлень кожні 1.5 секунди
 setInterval(() => {
-    fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
-        .then(response => response.json())
-        .then(data => {
-            const chatArea = document.getElementById('chatArea');
-            chatArea.innerHTML = ''; // Очищуємо попередній вміст
+  fetch('get_messages.php?id_j=<?php echo $id_j; ?>')
+    .then(response => response.json())
+    .then(data => {
+      const chatArea = document.getElementById('chatArea');
+      chatArea.innerHTML = ''; // Очищуємо попередній вміст
 
-            // Оновлюємо вміст чату
-            data.messages.forEach(chat => {
-                const newMessage = document.createElement('div');
-                newMessage.classList.add('chat_message');
-                newMessage.innerHTML = `
-                    <span class="chat_time">${chat.created_at}</span>
-                    <p class="chat_text">${chat.message}</p>
-                `;
-                chatArea.appendChild(newMessage);
-            });
+      // Оновлюємо вміст чату
+      data.messages.forEach(chat => {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('chat_message');
+        newMessage.innerHTML = `
+          <span class="chat_time">${chat.created_at}</span>
+          <p class="chat_text">${chat.message}</p>
+        `;
+        chatArea.appendChild(newMessage);
+      });
 
-            // Прокручуємо до останнього повідомлення
-            chatArea.scrollTop = chatArea.scrollHeight;
+      // Прокручуємо до останнього повідомлення
+      chatArea.scrollTop = chatArea.scrollHeight;
 
-            // Перевірка нових повідомлень
-            const newMessages = data.messages.filter(chat => {
-                return new Date(chat.created_at) > new Date(lastMessageTime);
-            }).length;
+      // Перевірка на нові повідомлення
+      const currentMessageCount = data.messages.length;
+      if (currentMessageCount > lastMessageCount) {
+        const newMessages = currentMessageCount - lastMessageCount;
 
-            if (newMessages > 0) {
-                alert(`У вас ${newMessages} нове(их) повідомлення!`);
-            }
+        // Виводимо сповіщення
+        alert(`У вас ${newMessages} нове(их) повідомлення!`);
+      }
 
-            // Оновлення часу останнього повідомлення
-            if (data.messages.length > 0) {
-                lastMessageTime = data.messages[data.messages.length - 1].created_at;
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}, 1500);
+      // Оновлюємо кількість повідомлень
+      lastMessageCount = currentMessageCount;
+    })
+    .catch(error => console.error('Error:', error));
+}, 1500); // Оновлюємо чат кожні 1.5 секунди
 </script>
  
 </body>
