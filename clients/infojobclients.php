@@ -170,7 +170,18 @@ $stmt->close();
           <p>Коментарі:</p>
           <textarea class="coment" rows="5" cols="50" readonly><?php echo $description; ?></textarea>
         </div>
-        
+        <?php
+// Отримуємо статус замовлення
+$status = $order['status'] ?? '';
+
+// Перевіряємо, чи статус "Виконане"
+if ($status === 'Виконане'): ?>
+    <form action="pay_order.php" method="post">
+        <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
+        <button type="submit" class="vzatysa">Сплатити замовлення</button>
+    </form>
+<?php endif; ?>
+
        
 
       </div>
