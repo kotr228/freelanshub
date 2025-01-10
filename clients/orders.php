@@ -29,6 +29,9 @@ switch ($filter) {
     case 'free':
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне' AND id_f IS NULL";
         break;
+    case 'done':
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Виконане' AND id_f IS NOT NULL";
+        break;
     default:
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне'";
         break;
