@@ -10,26 +10,22 @@ if ($conn->connect_error) {
 $type = $_GET['type'] ?? '';
 $specialty = $_GET['specialty'] ?? '';
 $deadline = $_GET['deadline'] ?? '';
-$price_from = $_GET['price_from'] ?? 0;
-$price_to = $_GET['price_to'] ?? 1000;
+$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : 0;
+$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 10000;
 
 // Формування SQL-запиту з умовами фільтрації
 $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
 
 if (!empty($type)) {
-    $sql .= " AND tipe = '$type'";
+    $sql .= " AND tipe = '" . $conn->real_escape_string($type) . "'";
 }
 
 if (!empty($specialty)) {
-    $sql .= " AND spacsalyty = '$specialty'";
+    $sql .= " AND spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
 }
 
 if (!empty($deadline)) {
-    $sql .= " AND date <= '$deadline'";
-}
-
-if (!empty($status)) {
-    $sql .= " AND status != 'Активне'";
+    $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
 }
 
 $result = $conn->query($sql);

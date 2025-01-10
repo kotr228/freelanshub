@@ -143,7 +143,7 @@ html, body {
   background-color: #F0AD4E;
   color: #222831;
   border-radius: 15px;
-  
+  display: block; /* або 'flex' для більш гнучкого управління */
   margin-bottom: 20px;
 }
 

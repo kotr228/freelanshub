@@ -94,48 +94,47 @@ $conn->close();
 
   <main class="main">
     <div class="block-parametrs">
-      <form id="filter-form" method="GET" action="orders.php">
-        <div class="style_pole">
-          <label for="type">Тип:</label>
-          <select id="type" name="type" class="input">
+    <form id="filter-form" method="GET" action="orders.php">
+    <div class="style_pole">
+        <label for="type">Тип:</label>
+        <select id="type" name="type" class="input">
             <option value="" disabled selected></option>
             <option value="type1" <?= $type == 'type1' ? 'selected' : '' ?>>Одноразова робота</option>
             <option value="type2" <?= $type == 'type2' ? 'selected' : '' ?>>Робота на певний період</option>
-            <option value="type2" <?= $type == 'type2' ? 'selected' : '' ?>>Робота на довгий період часу</option>
-          </select>
-        </div>
+            <option value="type3" <?= $type == 'type3' ? 'selected' : '' ?>>Робота на довгий період часу</option>
+        </select>
+    </div>
 
-        <div class="style_pole">
-          <label for="specialty">Спеціальність:</label>
-          <select id="specialty" name="specialty" class="input">
+    <div class="style_pole">
+        <label for="specialty">Спеціальність:</label>
+        <select id="specialty" name="specialty" class="input">
             <option value="" disabled selected></option>
             <option value="spec1" <?= $specialty == 'spec1' ? 'selected' : '' ?>>Програмування</option>
             <option value="spec2" <?= $specialty == 'spec2' ? 'selected' : '' ?>>Студентські роботи</option>
-          </select>
-        </div>
+        </select>
+    </div>
 
-        <div class="style_pole">
-          <label for="deadline">Дедлайн:</label>
-          <input class="input-data" type="date" id="deadline" name="deadline" value="<?= htmlspecialchars($deadline) ?>" />
-        </div>
+    <div class="style_pole">
+        <label for="deadline">Дедлайн:</label>
+        <input class="input-data" type="date" id="deadline" name="deadline" value="<?= htmlspecialchars($deadline) ?>" />
+    </div>
 
-        <div class="style_pole">
-          <p>Ціна</p>
-          <label for="price-from">Від:</label>
-          <input class="input-price" type="number" id="price-from" name="price-from" value="<?= htmlspecialchars($price_from) ?>" placeholder="0" />
-      
-          <label for="price-to">До:</label>
-          <input class="input-price" type="number" id="price-to" name="price-to" value="<?= htmlspecialchars($price_to) ?>" placeholder="1000" />
-        </div>
+    <div class="style_pole">
+        <p>Ціна</p>
+        <label for="price-from">Від:</label>
+        <input class="input-price" type="number" id="price-from" name="price-from" value="<?= htmlspecialchars($price_from) ?>" placeholder="0" />
+    
+        <label for="price-to">До:</label>
+        <input class="input-price" type="number" id="price-to" name="price-to" value="<?= htmlspecialchars($price_to) ?>" placeholder="1000" />
+    </div>
+</form>
 
-        <button class="header_item" type="button" id="filter-button">Фільтрувати</button>
-      </form>
-
-      <div id="results"></div>
+     
     </div>
 
     <div class="orders">
-      <?php include_once 'orders.php'; ?>    
+          
+      <div id="results"></div>
     </div>
       
   </main>
@@ -150,21 +149,30 @@ $conn->close();
 </div>
 
 <script>
-document.getElementById("filter-button").addEventListener("click", function() {
-    const form = document.getElementById("filter-form");
-    const formData = new FormData(form);
 
-    fetch("orders.php", {
-        method: "GET",
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("results").innerHTML = data; // Відображення результатів
-    })
-    .catch(error => {
-        console.error("Помилка:", error);
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("filter-form");
+    const formElements = form.querySelectorAll("input, select");
+
+    formElements.forEach(element => {
+        element.addEventListener("input", sendFilterRequest);
+        element.addEventListener("change", sendFilterRequest);
     });
+
+    function sendFilterRequest() {
+        const formData = new FormData(form);
+
+        fetch("orders.php?" + new URLSearchParams(formData), {
+            method: "GET"
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("results").innerHTML = data; // Відображення результатів
+        })
+        .catch(error => {
+            console.error("Помилка:", error);
+        });
+    }
 });
 </script>
 
