@@ -173,13 +173,6 @@ CREATE TABLE IF NOT EXISTS `freelans`.`chat` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-CREATE TABLE `freelans`.`chat_read_status` (
-    `id_j` INT NOT NULL,
-    `id_c` INT NOT NULL,
-    `last_read_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id_j`, `id_c`)
-);
-
 -- -----------------------------------------------------
 -- Table `freelans`.`files`
 -- -----------------------------------------------------
@@ -197,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `freelans`.`files` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_j INT NOT NULL, -- ID замовлення
