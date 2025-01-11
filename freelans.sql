@@ -191,14 +191,6 @@ CREATE TABLE IF NOT EXISTS `freelans`.`files` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE TABLE files (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_j INT NOT NULL, -- ID замовлення
-    file_name VARCHAR(255) NOT NULL, -- Ім'я файлу
-    file_path VARCHAR(255) NOT NULL, -- Шлях до файлу
-    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP -- Дата завантаження
-);
-
 CREATE TABLE IF NOT EXISTS `chat_files` (
   `id_chat_file` INT NOT NULL AUTO_INCREMENT,
   `id_chat` INT NOT NULL,
