@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Закриття модального вікна при натисканні кнопки
   btnCloseModal.addEventListener('click', () => {
     modalNotifications.style.display = 'none';
+  });
 
   // Закриття модального вікна при кліку поза ним
   window.addEventListener('click', (event) => {
