@@ -1,6 +1,7 @@
 <?php
 include('db_connect.php');
 include('orders.php'); // Підключення скрипта
+include('get_user.php');
 ?>
 
 <!DOCTYPE html>
