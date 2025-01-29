@@ -14,7 +14,7 @@ $avatar_path = "img/default-avatar.png"; // Шлях до стандартног
 
 if ($user_id) {
     // Отримання даних користувача з бази даних
-    $query = "SELECT name, avatar FROM freelans.freelanser_akks WHERE id_f = ?";
+    $query = "SELECT name, avatar FROM nkloqzcz_freelans.freelanser_akks WHERE id_f = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -27,7 +27,7 @@ if ($user_id) {
     }
     $stmt->close();
     // Припускаємо, що $user_id вже доступний
-    $query = "SELECT about FROM freelans.freelanser_akks WHERE id_f = ?";
+    $query = "SELECT about FROM nkloqzcz_freelans.freelanser_akks WHERE id_f = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
