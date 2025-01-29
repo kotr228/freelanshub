@@ -10,7 +10,7 @@
   $password = $_POST['password'];
   
   // Підключення до бази даних 
-  $db_conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
+  $db_conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
   
   if (mysqli_connect_errno()) {
       echo 'Помилка підключення до бази даних: ' . mysqli_connect_error();
