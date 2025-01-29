@@ -10,7 +10,7 @@ $dbPassword = "Sillver-228";
 $dbName = "freelans";
 
 // Встановлення з'єднання з базою даних
-$conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
 // Перевірка з'єднання
 if ($conn->connect_error) {

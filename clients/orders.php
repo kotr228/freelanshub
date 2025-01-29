@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $filter = $_GET['filter'] ?? 'active'; // За замовчуванням "активні замовлення"
 
-$conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
 }

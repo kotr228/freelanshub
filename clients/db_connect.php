@@ -8,7 +8,7 @@ $username = "root";
 $password = "Sillver-228";
 $dbname = "freelans";
 
-$conn = new mysqli($host, $username, $password, $dbname);
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
 // Перевірка з'єднання
 if ($conn->connect_error) {

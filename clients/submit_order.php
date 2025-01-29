@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
 // Перевірка підключення
 if ($conn->connect_error) {

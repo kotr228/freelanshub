@@ -10,7 +10,7 @@ $password = "Sillver-228"; // Вкажіть свій пароль для MySQL,
 $dbname = "freelans";
 
 // Підключення до бази даних
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
 // Перевірка підключення
 if ($conn->connect_error) {
