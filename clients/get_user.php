@@ -22,7 +22,7 @@ if ($user_id) {
     
     if ($stmt->fetch()) {
         $user_name = $name;
-        $avatar_path = $avatar ? "uploads/avatars/$avatar" : $avatar_path;
+        $avatar_path = $avatar ? "$avatar" : $avatar_path;
        
     }
     $stmt->close();
