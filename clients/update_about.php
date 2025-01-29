@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
 
     // Оновлення в базі даних
-    $query = "UPDATE freelans.cliants_akks SET about = ? WHERE id_c = ?";
+    $query = "UPDATE nkloqzcz_freelans.cliants_akks SET about = ? WHERE id_c = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("si", $new_about, $user_id);
     

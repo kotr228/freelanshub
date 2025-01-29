@@ -5,9 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Підключення до бази даних
 $host = "localhost";
-$username = "root";
+$username = "nkloqzcz_root";
 $password = "Sillver-228";
-$dbname = "freelans";
+$dbname = "nkloqzcz_freelans";
 
 $conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
