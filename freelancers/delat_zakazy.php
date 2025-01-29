@@ -1,29 +1,4 @@
-<?php
-include('db_connect.php');
-// Підключення до бази даних
-$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-$conn->set_charset("utf8");
 
-// Ініціалізація фільтрів
-$type = $_GET['type'] ?? '';
-$specialty = $_GET['specialty'] ?? '';
-$deadline = $_GET['deadline'] ?? '';
-$price_from = $_GET['price-from'] ?? '';
-$price_to = $_GET['price-to'] ?? '';
-
-// Формування SQL-запиту з фільтрами
-
-
-
-
-$conn->close();
-?>
 
 <!DOCTYPE html>
 <html lang="uk">
