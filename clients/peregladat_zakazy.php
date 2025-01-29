@@ -58,7 +58,7 @@ include('orders.php'); // Підключення скрипта
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
-        <img class="logo-user" src="/img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
+      <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
       </a>
       <div class="dropdown-menu">
     <button class="dropdown-item" onclick="location.href='loginclients.html'">Змінити аккаунт</button>
