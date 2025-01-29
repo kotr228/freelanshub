@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_about = $_POST['new_about'];
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id_f'];
 
     // Оновлення в базі даних
     $query = "UPDATE nkloqzcz_freelans.freelanser_akks SET about = ? WHERE id_f = ?";

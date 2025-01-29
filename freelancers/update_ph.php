@@ -2,13 +2,13 @@
 include('db_connect.php');
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id_f'])) {
     die("Користувач не авторизований.");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_ph = trim($_POST['new_ph']);
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id_f'];
 
     if (empty($new_ph)) {
         die("Телеграм не може бути порожнім.");

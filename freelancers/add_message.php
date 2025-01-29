@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $id_c = $_SESSION['user_id'];
+    $id_c = $_SESSION['user_id_f'];
     $id_j = intval($_POST['id_j'] ?? 0);
     $message = trim($_POST['message'] ?? '');
 

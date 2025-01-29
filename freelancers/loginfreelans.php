@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             echo "Пароль вірний!";
             // Успішний вхід
-            $_SESSION['user_id'] = $row['id_f'];
+            $_SESSION['user_id_f'] = $row['id_f'];
             header("Location: delat_zakazy.php");
             exit();
         } else {

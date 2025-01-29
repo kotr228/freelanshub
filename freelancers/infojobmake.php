@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Перевірка авторизації клієнта
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id_f'])) {
   die("Error: Ви не авторизовані!");
 }
 

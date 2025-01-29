@@ -7,7 +7,7 @@ include('db_connect.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_j'], $_POST['message'])) {
     $order_id = (int)$_POST['id_j'];
     $message = trim($_POST['message']);
-    $user_id = $_SESSION['user_id'] ?? null;
+    $user_id = $_SESSION['user_id_f'] ?? null;
 
     if (!empty($message) && $user_id) {
         $stmt = $conn->prepare("INSERT INTO chat (id_j, id_f, message) VALUES (?, ?, ?)");

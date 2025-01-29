@@ -7,7 +7,7 @@
   // Перевірка, чи був відправлений файл
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_avatar'])) {
     // Ідентифікатор користувача
-    $userId = $_SESSION['user_id']; // Передбачено, що ID користувача зберігається в сесії
+    $userId = $_SESSION['user_id_f']; // Передбачено, що ID користувача зберігається в сесії
 
     // Директорія для збереження аватарів
     $uploadDir = 'uploads/avatars/';

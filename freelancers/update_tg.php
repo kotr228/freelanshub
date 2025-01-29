@@ -4,13 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id_f'])) {
     die("Користувач не авторизований.");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_tg = trim($_POST['new_tg']);
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id_f'];
 
     if (empty($new_tg)) {
         die("Телеграм не може бути порожнім.");

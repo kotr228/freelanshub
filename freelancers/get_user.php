@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include('db_connect.php'); // Підключення до бази даних
 
 // Отримання ID користувача із сесії
-$user_id = $_SESSION['user_id'] ?? null;
+$user_id = $_SESSION['user_id_f'] ?? null;
 
 // Ініціалізація змінних
 $user_name = "User";

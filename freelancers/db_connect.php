@@ -18,14 +18,14 @@ if ($conn->connect_error) {
 
 // Перевірка, чи користувач увійшов у систему
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id_f'])) {
     // Якщо не увійшов, перенаправляємо на сторінку логіну
     header("Location: loginfreelans.html");
     exit();
 }
 
 // Отримання імені користувача за його ID
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id_f'];
 $query = "SELECT name FROM freelanser_akks WHERE id_f = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
