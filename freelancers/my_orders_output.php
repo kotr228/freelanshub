@@ -1,6 +1,6 @@
 <?php
 // Підключення до бази даних
-$conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 
 if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);

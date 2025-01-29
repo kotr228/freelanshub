@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Ім'я не може бути порожнім.");
     }
 
-    $query = "UPDATE freelans.freelanser_akks SET name = ? WHERE id_f = ?";
+    $query = "UPDATE nkloqzcz_freelans.freelanser_akks SET name = ? WHERE id_f = ?";
     $stmt = $conn->prepare($query);
 
     if (!$stmt) {

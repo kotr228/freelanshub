@@ -16,7 +16,7 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
     $id_f = $_SESSION['user_id'];
 
     // Підключення до бази даних
-    $conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
+    $conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
     if ($conn->connect_error) {
         die("Помилка підключення до бази даних: " . $conn->connect_error);
     }

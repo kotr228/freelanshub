@@ -10,7 +10,7 @@ if (isset($_GET['id_j']) && is_numeric($_GET['id_j'])) {
     $_SESSION['id_j'] = $order_id;
 
     // Запит для отримання конкретного замовлення
-    $conn = new mysqli("localhost", "root", "Sillver-228", "freelans");
+    $conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

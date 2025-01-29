@@ -37,7 +37,7 @@
                 // Переміщення файлу в директорію
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
                     // Оновлення запису в базі даних
-                    $sql = "UPDATE freelans.freelanser_akks SET avatar = ? WHERE id_f = ?";
+                    $sql = "UPDATE nkloqzcz_freelans.freelanser_akks SET avatar = ? WHERE id_f = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param('si', $fileDestination, $userId);
 

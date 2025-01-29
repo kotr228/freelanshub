@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Телеграм не може бути порожнім.");
     }
 
-    $query = "UPDATE freelans.freelanser_akks SET phone = ? WHERE id_f = ?";
+    $query = "UPDATE nkloqzcz_freelans.freelanser_akks SET phone = ? WHERE id_f = ?";
     $stmt = $conn->prepare($query);
 
     if (!$stmt) {
