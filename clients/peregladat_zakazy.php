@@ -66,18 +66,13 @@ include('orders.php'); // Підключення скрипта
     <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
     <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
   <!-- Модальне вікно для сповіщень -->
-      <div id="modaln" class="modaln">
-        <div class="modaln-content">
-        <h3>Сповіщення</h3>
-        <div class="notifications-list">
-          <!-- Тут будуть відображатися сповіщення -->
-          <p>Нове повідомлення: Замовлення №123 оновлено.</p>
-          <p>Сповіщення: Ваше замовлення прийнято.</p>
-        </div>
-        <div class="modaln-actions">
-        <a href="#" class="btnn-close">Закрити</a>
-      </div>
+  <div id="notificationModal" class="modal">
+  <div class="modal-content">
+  <button class="btn-open-modal-notifications">Сповіщення</button>
+    <ul id="notificationList"></ul>
+    <button class="btn-close" onclick="closeModal()">Закрити</button>
   </div>
+</div>
   </div> 
   </div>   
 </div>
@@ -123,26 +118,68 @@ include('orders.php'); // Підключення скрипта
 </body>
 </html>
 <script>
-  // Отримання елементів
-const btnOpenModalNotifications = document.querySelector('.btn-open-modal-notifications');
-const modalNotifications = document.getElementById('modal-notifications');
-const btnCloseModal = modalNotifications.querySelector('.btn-close');
+document.addEventListener('DOMContentLoaded', () => {
+  const modalNotifications = document.getElementById('notificationModal');
+  const notificationList = document.getElementById('notificationList');
+  const btnOpenModalNotifications = document.querySelector('.btn-open-modal-notifications');
+  const btnCloseModal = modalNotifications.querySelector('.btn-close');
 
-// Відкриття модального вікна
-btnOpenModalNotifications.addEventListener('click', () => {
-  modalNotifications.style.display = 'block';
-});
+  // Функція для завантаження виконаних замовлень
+  function loadDoneOrders() {
+    fetch('orders.php?filter=done')
+      .then(response => response.text())
+      .then(html => {
+        // Очищуємо попередні сповіщення
+        notificationList.innerHTML = '';
 
-// Закриття модального вікна
-btnCloseModal.addEventListener('click', () => {
-  modalNotifications.style.display = 'none';
-});
+        // Створюємо тимчасовий елемент для обробки отриманого HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
 
-// Закриття модального вікна при кліку поза ним
-window.addEventListener('click', (event) => {
-  if (event.target === modalNotifications) {
-    modalNotifications.style.display = 'none';
+        // Знаходимо виконані замовлення в отриманих даних
+        const doneOrders = [];
+        tempDiv.querySelectorAll('.block_info').forEach(order => {
+          const label = order.querySelector('p:first-child').textContent.replace('Назва: ', '').trim();
+          doneOrders.push(label);
+        });
+
+        // Якщо є виконані замовлення, додаємо їх до модального вікна
+        if (doneOrders.length > 0) {
+          doneOrders.forEach(label => {
+            const li = document.createElement('li');
+            li.textContent = `Ваше замовлення "${label}" виконано`;
+            notificationList.appendChild(li);
+          });
+
+          // Відкриваємо модальне вікно
+          modalNotifications.style.display = 'block';
+        } else {
+          // Якщо немає виконаних замовлень
+          const li = document.createElement('li');
+          li.textContent = 'Немає нових сповіщень.';
+          notificationList.appendChild(li);
+
+          modalNotifications.style.display = 'block';
+        }
+      })
+      .catch(error => console.error('Помилка отримання виконаних замовлень:', error));
   }
-});
 
+  // Відкриття модального вікна при натисканні на кнопку
+  btnOpenModalNotifications.addEventListener('click', () => {
+    loadDoneOrders();
+  });
+
+  // Закриття модального вікна при натисканні кнопки
+  btnCloseModal.addEventListener('click', () => {
+    modalNotifications.style.display = 'none';
+  });
+
+  // Закриття модального вікна при кліку поза ним
+  window.addEventListener('click', (event) => {
+    if (event.target === modalNotifications) {
+      modalNotifications.style.display = 'none';
+    }
+  });
+});
 </script>
