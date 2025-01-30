@@ -36,7 +36,7 @@ include('get_user.php');
 </div>
 </div>
 
-<div class="header_item"><a href="#modalph" class="btn-open-modal">Політика конфеденційності</a> </div>
+<div class="header_item"><a href="#modalph" class="btn-open-modal">Політика конфеденційності</a>
     
     <div id="modalph">
       <div class="modal-contentph">
@@ -53,7 +53,7 @@ include('get_user.php');
       </div>
     </div>
 
- 
+  </div>
 
     <div class="header_item">Служба підтримки</div>
     <button class="header_item" onclick="location.href='peregladat_zakazy.php'">На головну</button>
