@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Запит для вставки замовлення
     $sql = "INSERT INTO job (lable, spacsalyty, tipe, description, id_c, status, price, date)
-            VALUES (?, ?, ?, ?, ?, 'Активне', ?, ?)";
+            VALUES (?, ?, ?, ?, ?, 'S1', ?, ?)";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssids", $name, $specialty, $type, $description, $id_c, $price, $deadline);
