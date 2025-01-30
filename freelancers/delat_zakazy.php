@@ -109,8 +109,21 @@ $conn->close();
         <label for="specialty">Спеціальність:</label>
         <select id="specialty" name="specialty" class="input">
             <option value="" disabled selected></option>
-            <option value="spec1" <?= $specialty == 'spec1' ? 'selected' : '' ?>>Програмування</option>
-            <option value="spec2" <?= $specialty == 'spec2' ? 'selected' : '' ?>>Студентські роботи</option>
+            <option value="spec1" <?= $specialty == 'spec1' ? 'selected' : '' ?>>Виготовлення кошторисної документації (інвесторська кошторисна документація, договірна ціна тощо)</option>
+            <option value="spec2" <?= $specialty == 'spec2' ? 'selected' : '' ?>>Написання пояснювальної записки до проектної документації</option>
+            <option value="spec3" <?= $specialty == 'spec3' ? 'selected' : '' ?>>Дистанційне ведення бухгалтерії підприємства</option>
+            <option value="spec4" <?= $specialty == 'spec4' ? 'selected' : '' ?>>Переклад та коригування текстів</option>
+            <option value="spec5" <?= $specialty == 'spec5' ? 'selected' : '' ?>>Написання та коригування статей для видань</option>
+            <option value="spec6" <?= $specialty == 'spec6' ? 'selected' : '' ?>>Створення рекламних макетів, логотипів підприємств</option>  
+            <option value="spec7" <?= $specialty == 'spec7' ? 'selected' : '' ?>>3д-дизайн</option>
+            <option value="spec8" <?= $specialty == 'spec8' ? 'selected' : '' ?>>2д-дизайн</option>
+            <option value="spec9" <?= $specialty == 'spec9' ? 'selected' : '' ?>>Фронтенд для сайтів</option>  
+            <option value="spec10" <?= $specialty == 'spec10' ? 'selected' : '' ?>>Бекенд для сайтів</option>
+            <option value="spec11" <?= $specialty == 'spec11' ? 'selected' : '' ?>>Фулстак для сайтів</option>
+            <option value="spec12" <?= $specialty == 'spec12' ? 'selected' : '' ?>>Відеомонтаж</option>
+            <option value="spec13" <?= $specialty == 'spec13' ? 'selected' : '' ?>>Фотомонтаж</option>
+            <option value="spec14" <?= $specialty == 'spec14' ? 'selected' : '' ?>>Програмування</option>
+            <option value="spec15" <?= $specialty == 'spec15' ? 'selected' : '' ?>>Студентські роботи</option>
         </select>
     </div>
 

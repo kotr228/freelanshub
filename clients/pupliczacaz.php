@@ -1,5 +1,6 @@
 <?php
 include('db_connect.php');
+include('get_user.php');
 ?>
 
 <!DOCTYPE html>
@@ -16,11 +17,11 @@ include('db_connect.php');
     <div class="header_item">Цінова політика</div>
     <div class="header_item">Політика конфедеційності</div>
     <div class="header_item">Служба підтримки</div>
-    <div class="header_item">На головну</div>
+    <button class="header_item" onclick="location.href='peregladat_zakazy.php'">На головну</button>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
-        <img class="logo-user" src="img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
+      <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
       </a>
       <div class="dropdown-menu">
         <button class="dropdown-item">Змінити аккаунт</button>
@@ -37,8 +38,9 @@ include('db_connect.php');
           <label for="type">Тип:</label>
           <select id="type" class="input" name="type" required>
             <option value="" disabled selected></option>
-            <option value="type1">Тип 1</option>
-            <option value="type2">Тип 2</option>
+            <option value="type1" <?= $type == 'type1' ? 'selected' : '' ?>>Одноразова робота</option>
+            <option value="type2" <?= $type == 'type2' ? 'selected' : '' ?>>Робота на певний період</option>
+            <option value="type3" <?= $type == 'type3' ? 'selected' : '' ?>>Робота на довгий період часу</option>
           </select>
         </div>
   
@@ -46,8 +48,21 @@ include('db_connect.php');
           <label for="specialty">Спеціальність:</label>
           <select id="specialty" class="input" name="specialty" required>
             <option value="" disabled selected></option>
-            <option value="spec1">Спеціальність 1</option>
-            <option value="spec2">Спеціальність 2</option>
+            <option value="spec1">Виготовлення кошторисної документації (інвесторська кошторисна документація, договірна ціна тощо)</option>
+            <option value="spec2">Написання пояснювальної записки до проектної документації</option>
+            <option value="spec3">Дистанційне ведення бухгалтерії підприємства</option>
+            <option value="spec4">Переклад та коригування текстів</option>
+            <option value="spec5">Написання та коригування статей для видань</option>
+            <option value="spec6">Створення рекламних макетів, логотипів підприємств</option>  
+            <option value="spec7">3д-дизайн</option>
+            <option value="spec8">2д-дизайн</option>
+            <option value="spec9">Фронтенд для сайтів</option>  
+            <option value="spec10">Бекенд для сайтів</option>
+            <option value="spec11">Фулстак для сайтів</option>
+            <option value="spec12">Відеомонтаж</option>
+            <option value="spec13">Фотомонтаж</option>
+            <option value="spec14">Програмування</option>
+            <option value="spec15">Студентські роботи</option>
           </select>
         </div>
   
