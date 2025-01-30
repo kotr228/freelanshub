@@ -63,10 +63,20 @@ include('get_user.php');
       <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
       </a>
       <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item">Налаштування аккаунту</button>
-      </div>
+    <button class="dropdown-item" onclick="location.href='loginclients.html'">Змінити аккаунт</button>
+    <button class="dropdown-item" onclick="location.href='registerclients.html'">Вийти з аккаунту</button>
+    <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
+    <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
+  <!-- Модальне вікно для сповіщень -->
+  <div id="notificationModal" class="modal">
+  <div class="modal-content">
+  <button class="btn-open-modal-notifications">Сповіщення</button>
+    <ul id="notificationList"></ul>
+    <button class="btn-close" onclick="closeModal()">Закрити</button>
+  </div>
+</div>
+  </div> 
+  </div>   
     </div>
   </header>
   
