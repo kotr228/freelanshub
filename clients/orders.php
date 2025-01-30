@@ -24,16 +24,16 @@ switch ($filter) {
         $sql = "SELECT * FROM job WHERE id_c = ? AND (status = 'Неактивне' OR status = 'Сплачене')";
         break;
     case 'in_progress':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне' AND id_f IS NOT NULL";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'ÐÐºÑ‚Ð¸Ð²Ð½Ðµ' AND id_f IS NOT NULL";
         break;
     case 'free':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне' AND id_f IS NULL";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'ÐÐºÑ‚Ð¸Ð²Ð½Ðµ' AND id_f IS NULL";
         break;
     case 'done':
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Виконане' AND id_f IS NOT NULL";
         break;
     default:
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне'";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'ÐÐºÑ‚Ð¸Ð²Ð½Ðµ'";
         break;
 }
 
