@@ -10,6 +10,7 @@ include('get_user.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Делать заказы</title>
   <link rel="stylesheet" href="style.css/pupliczacaz.css">
+  <link rel="stylesheet" href="style.css/delat_zakazu.css">
 </head>
 <body class="body">
 <div class="site">
