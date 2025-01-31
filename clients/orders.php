@@ -17,6 +17,8 @@ if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
 }
 $conn->set_charset("utf8");
+var_dump($_GET['filter']); // Додатковий вивід для перевірки
+
 
 // Формування SQL-запиту залежно від фільтру
 switch ($filter) {
