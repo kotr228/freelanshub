@@ -37,7 +37,6 @@ switch ($filter) {
         break;
 }
 
-
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
