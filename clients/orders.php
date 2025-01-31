@@ -36,7 +36,7 @@ switch ($filter) {
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S2' AND id_f IS NOT NULL";
         break;
     default:
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1'";
+        $sql = "SELECT * FROM job WHERE id_c = 5 AND status = 'S1'";
         break;
 }
 echo "SQL запит: " . $sql;
