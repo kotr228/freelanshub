@@ -17,7 +17,9 @@ if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
 }
 $conn->set_charset("utf8");
-var_dump($_GET['filter']);
+var_dump($_GET['filter']); // Додатковий вивід для перевірки
+var_dump($user_id); // Перевірка ідентифікатора користувача
+settype($user_id, "intrgre");
 
 // Формування SQL-запиту залежно від фільтру
 switch ($filter) {
@@ -37,7 +39,7 @@ switch ($filter) {
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне'";
         break;
 }
-
+echo "SQL запит: " . $sql;
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
