@@ -17,33 +17,28 @@ if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
 }
 $conn->set_charset("utf8");
-var_dump($_GET['filter']); // Додатковий вивід для перевірки
-var_dump($user_id); // Перевірка ідентифікатора користувача
-settype($user_id, "intrgre");
 
 // Формування SQL-запиту залежно від фільтру
 switch ($filter) {
     case 'inactive':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND (status = 'Неактивне' OR status = 'Сплачене')";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND (status = 'S3' OR status = 'S4')";
         break;
     case 'in_progress':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне' AND id_f IS NOT NULL";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1' AND id_f IS NOT NULL";
         break;
     case 'free':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне' AND id_f IS NULL";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1' AND id_f IS NULL";
         break;
     case 'done':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Виконане' AND id_f IS NOT NULL";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S2' AND id_f IS NOT NULL";
         break;
     default:
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'Активне'";
+        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1'";
         break;
 }
-echo "SQL запит: " . $sql;
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-echo "SQL запит: " . $stmt;
 $result = $stmt->get_result();
 ?>
