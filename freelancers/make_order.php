@@ -23,14 +23,14 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
     $conn->set_charset("utf8");
 
     // Перевірка, чи доступне замовлення
-    $stmt = $conn->prepare("SELECT * FROM job WHERE id_j = ? AND status = 'S1'");
+    $stmt = $conn->prepare("SELECT * FROM job WHERE id_j = ? AND status = 'Активне'");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // Оновлення статусу замовлення
-        $update_stmt = $conn->prepare("UPDATE job SET status = 'S2', id_f = ? WHERE id_j = ?");
+        $update_stmt = $conn->prepare("UPDATE job SET status = 'Виконане', id_f = ? WHERE id_j = ?");
         $update_stmt->bind_param("ii", $id_f, $order_id);
         if ($update_stmt->execute()) {
             header("Location: delat_zakazy.php");
