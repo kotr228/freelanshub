@@ -39,6 +39,7 @@ switch ($filter) {
         $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1'";
         break;
 }
+echo "SQL запит: " . $sql;
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
