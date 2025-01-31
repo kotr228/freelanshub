@@ -81,7 +81,7 @@ include('get_user.php');
 </div>
   </header>
   <div class="main-header">
-    <button class="header_item" onclick="location.href='?filter=active'">Активні замовлення</button>
+  <button class="header_item" onclick="location.href='?filter=active'">Активні замовлення</button>
     <button class="header_item" onclick="location.href='?filter=inactive'">Неактивні замовлення</button>
     <button class="header_item" onclick="location.href='?filter=in_progress'">Замовлення на виконанні</button>
     <button class="header_item" onclick="location.href='?filter=free'">Вільні замовлення</button>
