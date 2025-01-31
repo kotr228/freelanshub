@@ -18,8 +18,6 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8");
 var_dump($_GET['filter']); // Додатковий вивід для перевірки
-
-settype($user_id, "intrgre");
 var_dump($user_id); // Перевірка ідентифікатора користувача
 // Формування SQL-запиту залежно від фільтру
 switch ($filter) {
