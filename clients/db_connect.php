@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 
 if (!isset($_SESSION['user_id'])) {
     // Якщо не увійшов, перенаправляємо на сторінку логіну
-    header("Location: loginfreelans.html");
+    header("Location: loginclients.html");
     exit();
 }
 
