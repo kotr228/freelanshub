@@ -22,9 +22,7 @@ function has_invalid_chars($input) {
 
 // Перевірка введених даних
 if (has_invalid_chars($name) || has_invalid_chars($email) || has_invalid_chars($phone) || has_invalid_chars($telegram) || has_invalid_chars($password)) {
-    $_SESSION['error_message'] = "❌ Помилка: Використання спецсимволів заборонено!";
-    header("Location: registerfreeland.html"); // Повертаємося назад на форму
-    exit();
+    die("Помилка: Використання спецсимволів заборонено! <br> Заборонені символи: --, ', \", ;, <, >, \\, /, `, $");
 }
 
   // Підключення до бази даних 
