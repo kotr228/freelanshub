@@ -9,6 +9,22 @@
   $telegram = $_POST['telegram'];
   $password = $_POST['password'];
   
+// Функція для перевірки спецсимволів
+function has_invalid_chars($input) {
+    $forbidden_chars = ['--', "'", '"', ';', '<', '>', '\\', '/', '`', '$'];
+    foreach ($forbidden_chars as $char) {
+        if (strpos($input, $char) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Перевірка введених даних
+if (has_invalid_chars($name) || has_invalid_chars($email) || has_invalid_chars($phone) || has_invalid_chars($telegram) || has_invalid_chars($password)) {
+    die("Помилка: Використання спецсимволів заборонено! <br> Заборонені символи: --, ', \", ;, <, >, \\, /, `, $");
+}
+
   // Підключення до бази даних 
   $db_conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
   
