@@ -22,9 +22,9 @@
 
 // Перевірка введених даних
 if (has_invalid_chars($name) || has_invalid_chars($email) || has_invalid_chars($phone) || has_invalid_chars($telegram) || has_invalid_chars($password)) {
-    die("Помилка: Використання спецсимволів заборонено! <br> Заборонені символи: --, ', \", ;, <, >, \\, /, `, $");
+    echo json_encode(["status" => "error", "message" => "❌ Помилка: Використання спецсимволів заборонено!<br>Заборонені символи: --, ', \", ;, <, >, \\, /, `, $"]);
+    exit();
 }
-
 
   // Підключення до бази даних
   $db_conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
