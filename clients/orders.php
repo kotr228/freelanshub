@@ -46,7 +46,13 @@ if (!$stmt) {
 }
 
 $stmt->execute();
-$result = $stmt->get_result();
+
+
+if (!$stmt->execute()) {
+    die("Помилка виконання: " . $stmt->error);
+}
+
+
 
 $result = $stmt->get_result();
 if ($result->num_rows === 0) {
@@ -55,6 +61,7 @@ if ($result->num_rows === 0) {
 
 var_dump($user_id);
 var_dump($filter);
+var_dump($result);
 
 $result = $stmt->get_result();
 if ($result->num_rows === 0) {
