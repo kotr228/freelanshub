@@ -41,7 +41,7 @@ switch ($filter) {
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$result = $stmt->query();
+$result = $stmt->get_result();
 
 var_dump($user_id);
 var_dump($filter);
