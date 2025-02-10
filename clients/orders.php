@@ -37,31 +37,12 @@ switch ($filter) {
         break;
 }
 
-if (!$stmt) {
-    die("Помилка підготовки запиту: " . $conn->error);
-}
+$sql = "SELECT * FROM job WHERE id_c = 5 AND status = 'S1'";
 
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-
-if (!$stmt->execute()) {
-    die("Помилка виконання запиту: " . $stmt->error);
-}
-
-
 $result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    die("Немає результатів для вибраного фільтра.");
-}
-
-while ($row = $result->fetch_assoc()) {
-    echo "<pre>";
-    print_r($row);
-    echo "</pre>";
-}
-
 
 ?>
