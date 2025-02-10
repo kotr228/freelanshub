@@ -81,11 +81,13 @@ include('get_user.php');
 </div>
   </header>
   <div class="main-header">
+  <form id="filter-form" method="GET" action="orders.php">
     <button class="header_item" onclick="location.href='?filter=active'">Активні замовлення</button>
     <button class="header_item" onclick="location.href='?filter=inactive'">Неактивні замовлення</button>
     <button class="header_item" onclick="location.href='?filter=in_progress'">Замовлення на виконанні</button>
     <button class="header_item" onclick="location.href='?filter=free'">Вільні замовлення</button>
     <button class="header_item" onclick="location.href='?filter=done'">Виконані замовлення</button>
+    </form>
   </div>
   <main class="main">
   <?php while ($row = $result->fetch_assoc()): ?>
@@ -102,6 +104,7 @@ include('get_user.php');
       </div>
     </div>
     <?php endwhile; ?>
+    <div id="results"></div>
   </main>
 
   <div class="obolocka">
