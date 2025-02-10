@@ -45,6 +45,12 @@ if (!$stmt) {
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
+
+if (!$stmt->execute()) {
+    die("Помилка виконання запиту: " . $stmt->error);
+}
+
+
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
