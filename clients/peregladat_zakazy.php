@@ -89,21 +89,10 @@ include('get_user.php');
   </div>
   <main class="main">
   <?php while ($row = $result->fetch_assoc()): ?>
-    <div class="block_info">
-      <p>Назва: <?= htmlspecialchars($row['lable']) ?></p>
-      <p>Спеціальність: <?= htmlspecialchars($row['spacsalyty']) ?></p>
-      <p>Тип: <?= htmlspecialchars($row['tipe']) ?></p>
-      <p>Тип: Tipe</p>
-      <p>Статус: <?= htmlspecialchars($row['status']) ?></p>
-      <div class="data_price">
-        <p>Срок до: <?= htmlspecialchars($row['date']) ?></p>
-        <p>Ціна: <?= htmlspecialchars($row['price']) ?> грн</p>
-        <?php echo "<a href='infojobclients.php?id_j=" . htmlspecialchars($row['id_j']) . "' class='header_item'>Детальніше</a>"; ?>
-      </div>
-    </div>
+    <?php include('orders.php');?>
     <?php endwhile; ?>
-    <div id="results"></div>
-    <?php //include('orders.php');?>
+  
+    
   </main>
 
   <div class="obolocka">
