@@ -114,7 +114,33 @@ include('get_user.php');
     </footer>
   </div>
 </div>
+<script>
 
+document.addEventListener1("DOMContentLoaded", function () {
+    const form = document.getElementById("filter-form");
+    const formElements = form.querySelectorAll("input, select");
+
+    formElements.forEach(element => {
+        element.addEventListener1("input", sendFilterRequest);
+        element.addEventListener1("change", sendFilterRequest);
+    });
+
+    function sendFilterRequest() {
+        const formData = new FormData(form);
+
+        fetch("orders.php?" + new URLSearchParams(formData), {
+            method: "GET"
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("results").innerHTML = data; // Відображення результатів
+        })
+        .catch(error => {
+            console.error("Помилка:", error);
+        });
+    }
+});
+</script>
  
 </body>
 </html>
