@@ -40,32 +40,11 @@ switch ($filter) {
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
-
-if (!$stmt) {
-    die("Помилка prepare: " . $conn->error);
-}
-
 $stmt->execute();
-
-
-if (!$stmt->execute()) {
-    die("Помилка виконання: " . $stmt->error);
-}
-
-
-
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
-    die("Немає даних для цього фільтру.");
-}
+$result = $stmt->query();
 
 var_dump($user_id);
 var_dump($filter);
 var_dump($result);
-
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
-    die("Немає замовлень для user_id = $user_id та фільтра $filter.");
-}
 
 ?>
