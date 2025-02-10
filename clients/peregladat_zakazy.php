@@ -88,11 +88,11 @@ include('get_user.php');
     <button class="header_item" onclick="location.href='?filter=done'">Виконані замовлення</button>
   </div>
   <main class="main">
-  <?php while ($row = $result->fetch_assoc()):
-    include('orders.php');
-    endwhile; ?>
-  
+  <?php while ($row = $result->fetch_assoc()): ?>
     
+    <?php endwhile; ?>
+  
+    <?php include('orders.php');?>
   </main>
 
   <div class="obolocka">
