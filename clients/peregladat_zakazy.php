@@ -1,6 +1,6 @@
 <?php
 include('db_connect.php');
-include('orders.php'); // Підключення скрипта
+//include('orders.php'); // Підключення скрипта
 include('get_user.php');
 ?>
 
@@ -103,6 +103,7 @@ include('get_user.php');
     </div>
     <?php endwhile; ?>
     <div id="results"></div>
+    <?php include('orders.php');?> // Підключення скрипта
   </main>
 
   <div class="obolocka">
