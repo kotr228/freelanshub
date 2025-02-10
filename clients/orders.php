@@ -16,10 +16,10 @@ $filter = $_GET['filter'] ?? 'active'; // За замовчуванням "ак�
 if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
 }
-$conn->set_charset("utf8mb3_general_ci");
+$conn->set_charset("utf8");
 
 // Формування SQL-запиту залежно від фільтру
-switch ($filter) {
+/*switch ($filter) {
     case 'inactive':
         $sql = "SELECT * FROM job WHERE id_c = $user_id AND (status = 'S3' OR status = 'S4')";
         break;
@@ -35,7 +35,20 @@ switch ($filter) {
     default:
         $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1'";
         break;
+}*/
+
+if ($filter === 'inactive') {
+    $sql .= "SELECT * FROM job WHERE id_c = $user_id AND (status = 'S3' OR status = 'S4')";
+} elseif($filter === 'in_progress') {
+    $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NOT NULL";
+} elseif ($filter === 'free') {
+    $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NULL";
+} elseif ($filter === 'done') {
+    $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S2' AND id_f IS NOT NULL";
+} elseif ($filter === 'active') {
+    $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1'";
 }
+
 
 
 //$stmt = $conn->prepare($sql);
