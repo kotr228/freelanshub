@@ -68,11 +68,5 @@ if ($result->num_rows === 0) {
     die("Немає замовлень для user_id = $user_id та фільтра $filter.");
 }
 
-while ($row = $result->fetch_assoc()) {
-    echo "<pre>";
-    print_r($row); // Виводить масив значень для кожного запису
-    echo "</pre>";
-}
-
 
 ?>
