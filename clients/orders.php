@@ -48,5 +48,8 @@ if ($result->num_rows === 0) {
     die("Немає даних для цього фільтру.");
 }
 
+var_dump($user_id);
+var_dump($filter);
+
 
 ?>
