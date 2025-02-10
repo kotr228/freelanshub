@@ -38,11 +38,11 @@ switch ($filter) {
 }
 
 
-$stmt = $conn->prepare($sql);
+//$stmt = $conn->prepare($sql);
 
-$stmt->execute();
-$result = $stmt->get_result();
-
+//$stmt->execute();
+//$result = $stmt->get_result();
+$result = $conn->query($sql);
 var_dump($user_id);
 var_dump($filter);
 var_dump($result);
