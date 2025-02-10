@@ -37,6 +37,11 @@ switch ($filter) {
         break;
 }
 
+if (!$stmt) {
+    die("Помилка підготовки запиту: " . $conn->error);
+}
+
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
