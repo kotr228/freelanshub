@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     die("Ви повинні бути авторизовані.");
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = (int) $_SESSION['user_id'];
 $filter = $_GET['filter'] ?? 'active'; // За замовчуванням "активні замовлення"
 
 //$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
@@ -40,6 +40,11 @@ switch ($filter) {
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
+
+if (!$stmt) {
+    die("Помилка prepare: " . $conn->error);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -50,6 +55,11 @@ if ($result->num_rows === 0) {
 
 var_dump($user_id);
 var_dump($filter);
+
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
+    die("Немає замовлень для user_id = $user_id та фільтра $filter.");
+}
 
 
 ?>
