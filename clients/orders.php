@@ -37,11 +37,9 @@ switch ($filter) {
         break;
 }
 
-$sql = "SELECT * FROM job WHERE id_c = 5 AND status = 'S1'";
-
 
 $stmt = $conn->prepare($sql);
-
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
