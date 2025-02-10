@@ -21,25 +21,25 @@ $conn->set_charset("utf8mb3_general_ci");
 // Формування SQL-запиту залежно від фільтру
 switch ($filter) {
     case 'inactive':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND (status = 'S3' OR status = 'S4')";
+        $sql = "SELECT * FROM job WHERE id_c = $user_id AND (status = 'S3' OR status = 'S4')";
         break;
     case 'in_progress':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1' AND id_f IS NOT NULL";
+        $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NOT NULL";
         break;
     case 'free':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1' AND id_f IS NULL";
+        $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NULL";
         break;
     case 'done':
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S2' AND id_f IS NOT NULL";
+        $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S2' AND id_f IS NOT NULL";
         break;
     default:
-        $sql = "SELECT * FROM job WHERE id_c = ? AND status = 'S1'";
+        $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1'";
         break;
 }
 
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+
 $stmt->execute();
 $result = $stmt->get_result();
 
