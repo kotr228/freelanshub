@@ -16,13 +16,26 @@ if (!is_numeric($kay) || !is_numeric($id_j)) {
     die("Неправильні параметри.");
 }
 
-if ($kay == 1) {
+switch ($kay) {
+    case 1:
+        header("Location: infojobclients.php?id_j = . $id_j");
+        break;
+    case 2:
+        header("Location: infojobclients.php?id_j = . $id_j");
+        break;
+    case 3:
+        header("Location: infojobclients.php?id_j = . $id_j");
+        break;
+    
+}
+
+/*if ($kay == 1) {
     header("Location: infojobclients.php?id_j = . $id_j");
     exit;
 } elseif($kay == 2) {
     
 } elseif ($kay == 3) {
     
-}
+}*/
 
 ?>
