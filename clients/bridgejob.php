@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $kay = (int)$_GET['kay'];
-$id_j = (int)$_GET['id_j'];
+$id_j = intval($_GET['id_j'] ?? 0);
 
 if (!is_numeric($kay) || !is_numeric($id_j)) {
     die("Неправильні параметри.");
