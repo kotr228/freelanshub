@@ -15,9 +15,10 @@ $id_j = (int)$_GET['id_j'];
 if (!is_numeric($kay) || !is_numeric($id_j)) {
     die("Неправильні параметри.");
 }
-header("Location: infojobclients.php?id_j = . $id_j");
+
 if ($kay == 1) {
     header("Location: infojobclients.php?id_j = . $id_j");
+    exit;
 } elseif($kay == 2) {
     
 } elseif ($kay == 3) {
