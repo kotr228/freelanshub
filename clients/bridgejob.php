@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     die("Ви повинні бути авторизовані.");
 }
 
-$kay = isset($_GET['kay']) ? intval($_GET['kay']) : 0;
-$id_j = isset($_GET['id_j']) ? intval($_GET['id_j']) : 0;
+$kay = (int)$_GET['kay'];
+$id_j = (int)$_GET['id_j'];
 
 if (!is_numeric($kay) || !is_numeric($id_j)) {
     die("Неправильні параметри.");
