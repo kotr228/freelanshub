@@ -16,6 +16,8 @@ if (!is_numeric($kay) || !is_numeric($id_j)) {
     die("Неправильні параметри.");
 }
 
+header("Location: infojobclients.php?id_j = . $id_j");
+
 switch ($kay) {
     case 1:
         header("Location: infojobclients.php?id_j = . $id_j");
