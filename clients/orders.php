@@ -72,7 +72,7 @@ if ($result->num_rows > 0) {
         echo "<div class='data_price'>";
         echo "<p>Срок до: " . htmlspecialchars($row['date']) . "</p>";
         echo "<p>Ціна: " . htmlspecialchars($row['price']) . "</p>";
-        echo "<a href='bridgejob.php?id_j=" . htmlspecialchars($row['id_j']) . "&kay = bridgekay' class='header_item'>Детальніше</a>"; // Кнопка
+        echo "<a href='bridgejob.php?id_j=" . htmlspecialchars($row['id_j']) . "&kay = . $bridgekay' class='header_item'>Детальніше</a>"; // Кнопка
         echo "</div>";
         echo "</div>";
     }
