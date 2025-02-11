@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = (int) $_SESSION['user_id'];
 $filter = $_GET['filter'] ?? 'active'; // За замовчуванням "активні замовлення"
-
+$bridgekay = (int)null;
 //$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
 if ($conn->connect_error) {
     die("Помилка підключення: " . $conn->connect_error);
@@ -39,14 +39,19 @@ $conn->set_charset("utf8");
 
 if ($filter === 'inactive') {
     $sql .= "SELECT * FROM job WHERE id_c = $user_id AND (status = 'S3' OR status = 'S4')";
+    $bridgekay = 1;
 } elseif($filter === 'in_progress') {
     $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NOT NULL";
+    $bridgekay = 3;
 } elseif ($filter === 'free') {
     $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1' AND id_f IS NULL";
+    $bridgekay = 1;
 } elseif ($filter === 'done') {
     $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S2' AND id_f IS NOT NULL";
+    $bridgekay = 2;
 } elseif ($filter === 'active') {
     $sql = "SELECT * FROM job WHERE id_c = $user_id AND status = 'S1'";
+    $bridgekay = 1;
 }
 
 
@@ -67,7 +72,7 @@ if ($result->num_rows > 0) {
         echo "<div class='data_price'>";
         echo "<p>Срок до: " . htmlspecialchars($row['date']) . "</p>";
         echo "<p>Ціна: " . htmlspecialchars($row['price']) . "</p>";
-        echo "<a href='infojobfree.php?id_j=" . htmlspecialchars($row['id_j']) . "' class='header_item'>Детальніше</a>"; // Кнопка
+        echo "<a href='bridgejob.php?id_j=" . htmlspecialchars($row['id_j']) . "&kay = bridgekay' class='header_item'>Детальніше</a>"; // Кнопка
         echo "</div>";
         echo "</div>";
     }
