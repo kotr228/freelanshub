@@ -1,6 +1,6 @@
 <?php
 include('db_connect.php');
-include('orders.php'); // Підключення скрипта
+//include('orders.php'); // Підключення скрипта
 include('get_user.php');
 ?>
 
@@ -89,19 +89,10 @@ include('get_user.php');
   </div>
   <main class="main">
   <?php while ($row = $result->fetch_assoc()): ?>
-    <div class="block_info">
-      <p>Назва: <?= htmlspecialchars($row['lable']) ?></p>
-      <p>Спеціальність: <?= htmlspecialchars($row['spacsalyty']) ?></p>
-      <p>Тип: <?= htmlspecialchars($row['tipe']) ?></p>
-      <p>Тип: Tipe</p>
-      <p>Статус: <?= htmlspecialchars($row['status']) ?></p>
-      <div class="data_price">
-        <p>Срок до: <?= htmlspecialchars($row['date']) ?></p>
-        <p>Ціна: <?= htmlspecialchars($row['price']) ?> грн</p>
-        <?php echo "<a href='infojobclients.php?id_j=" . htmlspecialchars($row['id_j']) . "' class='header_item'>Детальніше</a>"; ?>
-      </div>
-    </div>
+    
     <?php endwhile; ?>
+  
+    <?php include('orders.php');?>
   </main>
 
   <div class="obolocka">
@@ -114,7 +105,33 @@ include('get_user.php');
     </footer>
   </div>
 </div>
+<script>
 
+document.addEventListener1("DOMContentLoaded", function () {
+    const form = document.getElementById("filter-form");
+    const formElements = form.querySelectorAll("input, select");
+
+    formElements.forEach(element => {
+        element.addEventListener1("input", sendFilterRequest);
+        element.addEventListener1("change", sendFilterRequest);
+    });
+
+    function sendFilterRequest() {
+        const formData = new FormData(form);
+
+        fetch("orders.php?" + new URLSearchParams(formData), {
+            method: "GET"
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("results").innerHTML = data; // Відображення результатів
+        })
+        .catch(error => {
+            console.error("Помилка:", error);
+        });
+    }
+});
+</script>
  
 </body>
 </html>

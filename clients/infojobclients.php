@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії
 $id_j = intval($_GET['id_j'] ?? 0);
-
+$kay = (int)$_GET['kay'];
 if ($id_j <= 0) {
     die("Error: Неправильний ID замовлення.");
 }
@@ -175,7 +175,7 @@ $stmt->close();
 $status = $order['status'] ?? '';
 
 // Перевіряємо, чи статус "Виконане"
-if ($status === 'Виконане'): ?>
+if ($status === 'S2'): ?>
     <form action="pay_order.php" method="post">
         <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
         <button type="submit" class="vzatysa">Сплатити замовлення</button>
