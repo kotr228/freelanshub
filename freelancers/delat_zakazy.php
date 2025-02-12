@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+setInterval(1500);
 </script>
 
 </body>
