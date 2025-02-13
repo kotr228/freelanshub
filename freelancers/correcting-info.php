@@ -22,6 +22,7 @@ include('get_user.php');
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
         <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
     </div>
+    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
     <img class="logo" src="img/Freelanshub (1).png" alt="logo">
   </header>
   <main class="main">

@@ -83,9 +83,9 @@ $conn->close();
         <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
       </a>
       <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
+      <button class="dropdown-item" onclick="location.href='loginfreelans.html'">Змінити аккаунт</button>
+      <button class="dropdown-item" onclick="location.href='registrfreelans.html'">Вийти з аккаунту</button>
+      <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
       </div>
     </div>
   </header>
