@@ -13,7 +13,7 @@ $deadline = $_GET['deadline'] ?? '';
 $price_from = $_GET['price_from'] ?? 0;
 $price_to = $_GET['price_to'] ?? 1000;
 
-$user_id = |(int)$_SESSION['user_id_f'];
+$user_id = (int)$_SESSION['user_id_f'];
 
 // Формування SQL-запиту з умовами фільтрації
 $sql = "SELECT * FROM job WHERE id_f = $user_id";
