@@ -28,6 +28,8 @@ if (!empty($deadline)) {
     $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
 }
 
+$sql .= " AND id_f IS NULL";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
