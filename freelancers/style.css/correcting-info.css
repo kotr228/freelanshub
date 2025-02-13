@@ -478,7 +478,7 @@ html, body {
   color: #fff;
   background-color: #F0AD4E;
   padding: 10px 10px;
-  flex-grow: 1; /* Позволяет элементу расширяться */
+  
   text-align: center; /* Центрируем текст внутри элемента */
   min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
 }
