@@ -116,7 +116,7 @@ include('bank_card_info.php');
         <a href="#modalbk" class="btn-open-modalbk">Змінити номер банківської карти</a>
 
         <div id="modalbk">
-      <div class="modalbk-content">
+      <div class="modal-content">
       <h3>Оновлення номеру телефону</h3>
       <form action="update_bk.php" method="POST">
         <label for="new_bk">Новий номер телефону:</label>
