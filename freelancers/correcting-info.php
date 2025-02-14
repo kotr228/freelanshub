@@ -113,17 +113,17 @@ include('bank_card_info.php');
 
       <div class="row">
         <span><?php echo htmlspecialchars($user_card); ?></span>
-        <a href="#modal" class="btn-open-modal">Змінити номер банківської карти</a>
+        <a href="#modalbk" class="btn-open-modalbk">Змінити номер банківської карти</a>
 
-        <div id="modal">
-      <div class="modal-content">
+        <div id="modalbk">
+      <div class="modalbk-content">
       <h3>Оновлення номеру телефону</h3>
       <form action="update_bk.php" method="POST">
         <label for="new_bk">Новий номер телефону:</label>
           <input type="text" id="new_bk" name="new_bk" required>
-            <div class="modal-actions">
-               <button type="submit" class="btn-update">Оновити</button>
-              <a href="#" class="btn-close">Скасувати</a>
+            <div class="modalbk-actions">
+               <button type="submit" class="btn-updatebk">Оновити</button>
+              <a href="#" class="btn-closebk">Скасувати</a>
             </div>
           </form>
         </div>
