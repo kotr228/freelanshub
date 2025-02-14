@@ -113,9 +113,9 @@ include('bank_card_info.php');
 
       <div class="row">
         <span><?php echo htmlspecialchars($user_card); ?></span>
-        <a href="#modalbk" class="btn-open-modal">Змінити номер банківської карти</a>
+        <a href="#modal" class="btn-open-modal">Змінити номер банківської карти</a>
 
-        <div id="modalbk">
+        <div id="modal">
       <div class="modal-content">
       <h3>Оновлення номеру телефону</h3>
       <form action="update_bk.php" method="POST">
