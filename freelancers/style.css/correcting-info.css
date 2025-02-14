@@ -12,7 +12,7 @@ html, body {
 
 
 
-.btn-open-modal, .btn-open-modalph, .btn-open-modal-about, .btn-open-modalbk {
+.btn-open-modal, .btn-open-modalph, .btn-open-modal-about {
   text-decoration: none;
   display: flex; /* Flex-контейнер для центрирования */
   justify-content: center; /* Горизонтальное центрирование текста */
@@ -44,6 +44,22 @@ html, body {
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
 
+.btn-open-modalbk {
+  text-decoration: none;
+  display: flex; /* Flex-контейнер для центрирования */
+  justify-content: center; /* Горизонтальное центрирование текста */
+  align-items: center; /* Вертикальное центрирование текста */
+  background-color: #fca03d; /* Помаранчевий фон */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 385px; /* Однакова ширина кнопок */
+  text-align: center; /* Убедимся, что текст будет центрирован */
+}
+
 .btn-open-modalem {
   text-decoration: none;
   display: flex; /* Flex-контейнер для центрирования */
@@ -60,7 +76,7 @@ html, body {
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
 
-.modal, .modalph, .modal-about, .modalavatar, .modalbk {
+.modal, .modalph, .modal-about, .modalavatar {
   display: none; /* Спочатку приховано */
   position: fixed;
   top: 0;
@@ -74,6 +90,19 @@ html, body {
 }
 
 .modaltg {
+  display: none; /* Спочатку приховано */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalbk {
   display: none; /* Спочатку приховано */
   position: fixed;
   top: 0;
@@ -100,7 +129,7 @@ html, body {
 }
 
 /* Стилі для модального вікна */
-#modal, #modalph, #modal-about, #modalbk {
+#modal, #modalph, #modal-about {
   position: fixed;
   top: 0;
   left: 0;
@@ -124,6 +153,18 @@ html, body {
   align-items: center;
 }
 
+#modalbk {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Модальне вікно приховане за замовчуванням */
+  justify-content: center;
+  align-items: center;
+}
+
 #modalem {
   position: fixed;
   top: 0;
@@ -136,7 +177,7 @@ html, body {
   align-items: center;
 }
 
-#modal:target, #modalph:target, #modal-about:target, #modalbk:target {
+#modal:target, #modalph:target, #modal-about:target {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
@@ -144,11 +185,15 @@ html, body {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
+#modalbk:target {
+  display: flex; /* Показуємо вікно при переході на #modal */
+}
+
 #modalem:target {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content, .modal-contentph, .modala-content, .modal-contentbk {
+.modal-content, .modal-contentph, .modala-content {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
@@ -168,6 +213,16 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
+.modal-contentbk {
+  background-color: #222831;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px; /* Встановити ширину */
+    max-width: 90%; /* Максимальна ширина */
+    min-width: 250px; /* Мінімальна ширина */
+    box-shadow: 0 4px 8px #fff;
+}
+
 .modal-contentem {
   background-color: #222831;
     padding: 20px;
@@ -178,7 +233,7 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
-.modal h2, .modalph h2, .modalbk h2 {
+.modal h2, .modalph h2 {
   margin-bottom: 15px;
 }
 
@@ -186,11 +241,15 @@ html, body {
   margin-bottom: 15px;
 }
 
+.modalbk h2 {
+  margin-bottom: 15px;
+}
+
 .modalem h2 {
   margin-bottom: 15px;
 }
 
-.modal input, .modalph input, .modalbk input {
+.modal input, .modalph input {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
@@ -206,6 +265,14 @@ html, body {
   border-radius: 4px;
 }
 
+.modalbk input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .modalem input {
   width: 100%;
   padding: 8px;
@@ -214,7 +281,7 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-buttons, .modalph-buttons, .modalbk-buttons {
+.modal-buttons, .modalph-buttons {
   display: flex;
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
@@ -224,12 +291,17 @@ html, body {
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
 
+.modalbk-buttons {
+  display: flex;
+  justify-content: space-between; /* Розміщує кнопки по боках */
+}
+
 .modalem-buttons {
   display: flex;
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
 
-.modal-content h3, .modal-contentph h3, .modal-contentbk h3 {
+.modal-content h3, .modal-contentph h3 {
   margin-bottom: 20px;
 }
 
@@ -237,11 +309,15 @@ html, body {
   margin-bottom: 20px;
 }
 
+.modal-contentbk h3 {
+  margin-bottom: 20px;
+}
+
 .modal-contentem h3 {
   margin-bottom: 20px;
 }
 
-.modal-content input, .modal-contentph input, .modal-contentbk input[type="text"] {
+.modal-content input, .modal-contentph input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -257,6 +333,14 @@ html, body {
   border-radius: 4px;
 }
 
+.modal-contentbk input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .modal-contentem input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -265,7 +349,7 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-actions, .modalph-actions, .modalbk-actions {
+.modal-actions, .modalph-actions {
   display: flex;
   justify-content: space-between;
 }
@@ -275,12 +359,17 @@ html, body {
   justify-content: space-between;
 }
 
+.modalbk-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
 .modalem-actions {
   display: flex;
   justify-content: space-between;
 }
 
-.btn-update, .btn-close, .btn-updateph, .btn-closeph, .btn-updatebk, .btn-closebk {
+.btn-update, .btn-close, .btn-updateph, .btn-closeph {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -291,6 +380,16 @@ html, body {
 }
 
 .btn-updatetg, .btn-closetg {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-updatebk, .btn-closebk {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -319,12 +418,18 @@ html, body {
   background-color: #28a745;
   color: #fff;
 }
+
+.btn-updatebk {
+  background-color: #28a745;
+  color: #fff;
+}
+
 .btn-updateem {
   background-color: #28a745;
   color: #fff;
 }
 
-.btn-update:hover, .btn-updateph:hover, .btn-updatebk:hover {
+.btn-update:hover, .btn-updateph:hover {
   background-color: #218838;
 }
 
@@ -332,11 +437,15 @@ html, body {
   background-color: #218838;
 }
 
+.btn-updatebk:hover {
+  background-color: #218838;
+}
+
 .btn-updateem:hover {
   background-color: #218838;
 }
 
-.btn-close, .btn-closeph, .btn-closebk {
+.btn-close, .btn-closeph {
   background-color: #dc3545;
   color: #fff;
 }
@@ -346,16 +455,25 @@ html, body {
   color: #fff;
 }
 
+.btn-closebk {
+  background-color: #dc3545;
+  color: #fff;
+}
+
 .btn-closeem {
   background-color: #dc3545;
   color: #fff;
 }
 
-.btn-close:hover, .btn-closeph:hover, .btn-closebk:hover {
+.btn-close:hover, .btn-closeph:hover {
   background-color: #c82333;
 }
 
 .btn-closetg:hover {
+  background-color: #c82333;
+}
+
+.btn-closebk:hover {
   background-color: #c82333;
 }
 
