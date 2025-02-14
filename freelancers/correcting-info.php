@@ -113,7 +113,7 @@ include('bank_card_info.php');
 
       <div class="row">
         <span><?php echo htmlspecialchars($user_card); ?></span>
-        <a href="#modalbk" class="btn-open-modalbk">Змінити номер банківської карти</a>
+        <a href="#modalbk" class="btn-open-modal">Змінити номер банківської карти</a>
 
         <div id="modalbk">
       <div class="modalbk-content">
