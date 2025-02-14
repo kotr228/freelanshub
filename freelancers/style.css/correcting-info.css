@@ -12,7 +12,7 @@ html, body {
 
 
 
-.btn-open-modal, .btn-open-modalph, .btn-open-modal-about {
+.btn-open-modal, .btn-open-modalph, .btn-open-modal-about, .btn-open-modalbk {
   text-decoration: none;
   display: flex; /* Flex-контейнер для центрирования */
   justify-content: center; /* Горизонтальное центрирование текста */
@@ -60,7 +60,7 @@ html, body {
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
 
-.modal, .modalph, .modal-about, .modalavatar {
+.modal, .modalph, .modal-about, .modalavatar, .modalbk {
   display: none; /* Спочатку приховано */
   position: fixed;
   top: 0;
@@ -100,7 +100,7 @@ html, body {
 }
 
 /* Стилі для модального вікна */
-#modal, #modalph, #modal-about {
+#modal, #modalph, #modal-about, #modalbk {
   position: fixed;
   top: 0;
   left: 0;
@@ -136,7 +136,7 @@ html, body {
   align-items: center;
 }
 
-#modal:target, #modalph:target, #modal-about:target {
+#modal:target, #modalph:target, #modal-about:target, #modalbk:target {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
@@ -148,7 +148,7 @@ html, body {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content, .modal-contentph, .modala-content {
+.modal-content, .modal-contentph, .modala-content, .modalbk-content {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
@@ -178,7 +178,7 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
-.modal h2, .modalph h2 {
+.modal h2, .modalph h2, .modalbk h2 {
   margin-bottom: 15px;
 }
 
@@ -190,7 +190,7 @@ html, body {
   margin-bottom: 15px;
 }
 
-.modal input, .modalph input {
+.modal input, .modalph input, .modalbk input {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
@@ -214,7 +214,7 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-buttons, .modalph-buttons {
+.modal-buttons, .modalph-buttons, .modalbk-buttons {
   display: flex;
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
@@ -229,7 +229,7 @@ html, body {
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
 
-.modal-content h3, .modal-contentph h3 {
+.modal-content h3, .modal-contentph h3, .modalbk-content h3 {
   margin-bottom: 20px;
 }
 
@@ -241,7 +241,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-.modal-content input, .modal-contentph input[type="text"] {
+.modal-content input, .modal-contentph input, .modalbk-content input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -265,7 +265,7 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-actions, .modalph-actions {
+.modal-actions, .modalph-actions, .modalbk-actions {
   display: flex;
   justify-content: space-between;
 }
@@ -280,7 +280,7 @@ html, body {
   justify-content: space-between;
 }
 
-.btn-update, .btn-close, .btn-updateph, .btn-closeph {
+.btn-update, .btn-close, .btn-updateph, .btn-closeph, .btn-updatebk, .btn-closebk {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -324,7 +324,7 @@ html, body {
   color: #fff;
 }
 
-.btn-update:hover, .btn-updateph:hover {
+.btn-update:hover, .btn-updateph:hover, .btn-updatebk:hover {
   background-color: #218838;
 }
 
@@ -336,7 +336,7 @@ html, body {
   background-color: #218838;
 }
 
-.btn-close, .btn-closeph {
+.btn-close, .btn-closeph, .btn-closebk {
   background-color: #dc3545;
   color: #fff;
 }
@@ -351,7 +351,7 @@ html, body {
   color: #fff;
 }
 
-.btn-close:hover, .btn-closeph:hover {
+.btn-close:hover, .btn-closeph:hover, .btn-closebk:hover {
   background-color: #c82333;
 }
 
