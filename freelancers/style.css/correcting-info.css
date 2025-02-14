@@ -148,7 +148,7 @@ html, body {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content, .modal-contentph, .modala-content, .modalbk-content {
+.modal-content, .modal-contentph, .modala-content, .modal-contentbk {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
@@ -229,7 +229,7 @@ html, body {
   justify-content: space-between; /* Розміщує кнопки по боках */
 }
 
-.modal-content h3, .modal-contentph h3, .modalbk-content h3 {
+.modal-content h3, .modal-contentph h3, .modal-contentbk h3 {
   margin-bottom: 20px;
 }
 
@@ -241,7 +241,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-.modal-content input, .modal-contentph input, .modalbk-content input[type="text"] {
+.modal-content input, .modal-contentph input, .modal-contentbk input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
