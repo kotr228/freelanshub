@@ -190,7 +190,7 @@ if ($status === 'S1'): ?>
     </form>
 <?php endif; ?>
 
-<!-- Перевіряємо, чи статус "Виконане"-->
+<!-- Перевіряємо, чи статус "сплачено"-->
 <?php if ($status === 'S3'): ?>
     <form action="" method="post">
         <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">

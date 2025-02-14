@@ -52,7 +52,7 @@ $freelancer_payment = $price - $commission;
 // Симуляція платежу
 if (processPayment($freelancer_cart, $freelancer_payment) && processPayment($owner_cart, $commission)) {
     // Оновлення статусу замовлення
-    $stmt = $conn->prepare("UPDATE job SET status = 'Сплачено' WHERE id_j = ?");
+    $stmt = $conn->prepare("UPDATE job SET status = 'S3' WHERE id_j = ?");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
     $stmt->close();
