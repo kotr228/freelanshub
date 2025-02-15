@@ -68,11 +68,11 @@ include('get_user.php');
     <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
   <!-- Модальне вікно для сповіщень -->
   <div id="notificationModal" class="modal">
-  <div class="modal-content">
-  <button class="btn-open-modal-notifications">Сповіщення</button>
-    <ul id="notificationList"></ul>
-    <button class="btn-close" onclick="closeModal()">Закрити</button>
-  </div>
+   <div class="modal-content">
+      <button class="btn-open-modal-notifications">Сповіщення</button>
+      <ul id="notificationList"></ul>
+      <button class="btn-close">Закрити</button>
+   </div>
 </div>
   </div> 
   </div>   
@@ -154,29 +154,50 @@ document.addEventListener('DOMContentLoaded', () => {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
 
-        // Знаходимо виконані замовлення в отриманих даних
+        // Знаходимо виконані замовлення та перевіряємо їх статус
         const doneOrders = [];
+        const s2Orders = [];
+
         tempDiv.querySelectorAll('.block_info').forEach(order => {
           const label = order.querySelector('p:first-child').textContent.replace('Назва: ', '').trim();
-          doneOrders.push(label);
+          const statusElement = order.querySelector('.order-status');
+
+          if (statusElement) {
+            const status = statusElement.textContent.trim();
+
+            if (status === 'S2') {
+              s2Orders.push(label);
+            } else {
+              doneOrders.push(label);
+            }
+          }
         });
 
-        // Якщо є виконані замовлення, додаємо їх до модального вікна
+        // Додавання повідомлень у модальне вікно
+        if (s2Orders.length > 0) {
+          s2Orders.forEach(label => {
+            const li = document.createElement('li');
+            li.textContent = `Вітаю! Ваше замовлення "${label}" виконано. Будь ласка, оплатіть.`;
+            notificationList.appendChild(li);
+          });
+        }
+
         if (doneOrders.length > 0) {
           doneOrders.forEach(label => {
             const li = document.createElement('li');
-            li.textContent = `Ваше замовлення "${label}" виконано`;
+            li.textContent = `Ваше замовлення "${label}" виконано.`;
             notificationList.appendChild(li);
           });
+        }
 
-          // Відкриваємо модальне вікно
-          modalNotifications.style.display = 'block';
-        } else {
-          // Якщо немає виконаних замовлень
+        if (s2Orders.length === 0 && doneOrders.length === 0) {
           const li = document.createElement('li');
           li.textContent = 'Немає нових сповіщень.';
           notificationList.appendChild(li);
+        }
 
+        // Відкриваємо модальне вікно, якщо є хоч одне сповіщення
+        if (notificationList.children.length > 0) {
           modalNotifications.style.display = 'block';
         }
       })
@@ -200,4 +221,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 </script>
