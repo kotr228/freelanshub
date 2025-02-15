@@ -1,17 +1,8 @@
 <?php
 include('db_connect.php');
-include('get_user.php'); // Тут уже є $user_id
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+//include('orders.php'); // Підключення скрипта
+include('get_user.php');
 ?>
-<ul id="notificationList">
-    <?php foreach ($notifications as $notification): ?>
-        <li><?php echo htmlspecialchars($notification['message']); ?></li>
-    <?php endforeach; ?>
-</ul>
-
-
 
 <!DOCTYPE html>
 <html lang="UK">
@@ -209,54 +200,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('.btn-open-modal-notifications').addEventListener('click', function () {
-        fetch('mark_notifications_read.php', { method: 'POST' })
-            .then(() => {
-                console.log('Сповіщення оновлено');
-                loadNotifications();
-            });
-    });
-});
-document.addEventListener("DOMContentLoaded", function () {
-    const btnOpenModal = document.querySelector('.btn-open-modal-notifications');
-    const notificationList = document.getElementById('notificationList');
-
-    btnOpenModal.addEventListener('click', function () {
-        fetch('load_notifications.php')
-            .then(response => response.json())
-            .then(data => {
-                notificationList.innerHTML = ""; // Очищаємо попередні сповіщення
-
-                if (data.error) {
-                    notificationList.innerHTML = `<li>${data.error}</li>`;
-                } else if (data.length === 0) {
-                    notificationList.innerHTML = "<li>Немає нових сповіщень.</li>";
-                } else {
-                    data.forEach(notification => {
-                        const li = document.createElement('li');
-                        li.textContent = notification.message;
-                        notificationList.appendChild(li);
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("Помилка завантаження сповіщень:", error);
-                notificationList.innerHTML = "<li>Помилка завантаження сповіщень.</li>";
-            });
-    });
-});
-
-document.querySelector('.btn-open-modal-notifications').addEventListener('click', function () {
-    loadNotifications();
-});
-fetch('mark_notifications_read.php', { method: 'POST' })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log("Сповіщення позначені як прочитані");
-        }
-    })
-    .catch(error => console.error("Помилка позначення сповіщень як прочитаних:", error));
-
 </script>
