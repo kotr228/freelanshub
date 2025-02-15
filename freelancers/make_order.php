@@ -23,7 +23,7 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
     $conn->set_charset("utf8");
 
     // Перевірка, чи доступне замовлення
-    $stmt = $conn->prepare("SELECT * FROM job WHERE id_j = ? AND status = 'Активне'");
+    $stmt = $conn->prepare("SELECT * FROM job WHERE id_j = ? AND status = 'S1'");
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
     $result = $stmt->get_result();
