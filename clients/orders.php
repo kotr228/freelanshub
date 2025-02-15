@@ -68,16 +68,17 @@ if ($result->num_rows > 0) {
         echo "<p>Назва: " . htmlspecialchars($row['lable']) . "</p>";
         echo "<p>Спеціальність: " . htmlspecialchars($row['spacsalyty']) . "</p>";
         echo "<p>Тип: " . htmlspecialchars($row['tipe']) . "</p>";
-        echo "<p>Статус: " . htmlspecialchars($row['status']) . "</p>";
+        echo "<p class='order-status'>Статус: " . htmlspecialchars($row['status']) . "</p>"; // Додаємо тут
         echo "<div class='data_price'>";
         echo "<p>Срок до: " . htmlspecialchars($row['date']) . "</p>";
         echo "<p>Ціна: " . htmlspecialchars($row['price']) . "</p>";
-        echo "<a href='infojobclients.php?id_j=" . htmlspecialchars($row['id_j']) . "&kay = . $bridgekay' class='header_item'>Детальніше</a>"; // Кнопка
+        echo "<a href='infojobclients.php?id_j=" . htmlspecialchars($row['id_j']) . "&kay=" . $bridgekay . "' class='header_item'>Детальніше</a>"; // Кнопка
         echo "</div>";
         echo "</div>";
     }
 } else {
     echo "<p>Немає замовлень за заданими параметрами.</p>";
 }
+
 
 ?>
