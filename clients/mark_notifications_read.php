@@ -1,6 +1,11 @@
 <?php
 include('db_connect.php');
-include('get_user.php'); // Використовуємо $user_id
+include('get_user.php');
 
-$conn->query("UPDATE notifications SET is_read = 1 WHERE user_id = $user_id");
+$query = "UPDATE notifications SET is_read = 1 WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+
+echo json_encode(["success" => true]);
 ?>
