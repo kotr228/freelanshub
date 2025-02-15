@@ -5,6 +5,24 @@ include('email_info.php');
 include('phone_info.php');
 include('get_user.php');
 include('bank_card_info.php');
+
+// Функція для рендеру модального вікна
+function renderModal($modalId, $title, $inputName, $inputLabel, $formAction) {
+    echo "
+    <div id='$modalId' class='modal'>
+        <div class='modal-content'>
+            <h3>$title</h3>
+            <form action='$formAction' method='POST'>
+                <label for='$inputName'>$inputLabel</label>
+                <input type='text' id='$inputName' name='$inputName' required>
+                <div class='modal-actions'>
+                    <button type='submit' class='btn-update'>Оновити</button>
+                    <button type='button' class='btn-close'>Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +51,7 @@ include('bank_card_info.php');
         <a href="#modal" class="btn-open-modal">Змінити ім'я</a>
 
         <!-- Модальне вікно -->
-      <div id="modal">
+      <!--<div id="modal">
       <div class="modal-content">
       <h3>Оновлення імені</h3>
       <form action="update_name.php" method="POST">
@@ -47,8 +65,10 @@ include('bank_card_info.php');
         </div>
       </div>
       </form>
-      </div>
+      </div>-->
 
+      <?php renderModal("modal", "Оновлення імені", "new_name", "Нове ім'я:", "update_name.php");
+?>
       <div class="row">
         <span><?php echo htmlspecialchars($user_tg); ?></span>
         <a href="#modaltg" class="btn-open-modaltg">Змінити телеграм</a>
