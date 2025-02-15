@@ -13,23 +13,11 @@ $deadline = $_GET['deadline'] ?? '';
 $price_from = $_GET['price_from'] ?? 0;
 $price_to = $_GET['price_to'] ?? 1000;
 
+$user_id = (int)$_SESSION['user_id_f'];
+
 // Формування SQL-запиту з умовами фільтрації
-$sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
+$sql = "SELECT * FROM job WHERE id_f = $user_id";
 
-if (!empty($type)) {
-    $sql .= " AND tipe = '$type'";
-}
-if (!empty($specialty)) {
-    $sql .= " AND spacsalyty = '$specialty'";
-}
-
-if (!empty($deadline)) {
-    $sql .= " AND date <= '$deadline'";
-}
-
-if (!empty($status)) {
-    $sql .= " AND status != 'Активне'";
-}
 
 $result = $conn->query($sql);
 

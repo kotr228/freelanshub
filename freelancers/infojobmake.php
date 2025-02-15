@@ -127,7 +127,7 @@ $stmt->close();
 
 </div>
     <div class="header_item">Служба підтримки</div>
-    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
+    <button class="header_item" onclick="location.href='my_orders.php'">На попередню</button>
     <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
@@ -135,8 +135,8 @@ $stmt->close();
         <img class="logo-user" src="img/png-transparent-computer-icons-user-profile-user-account-avatar-heroes-silhouette-black-thumbnail.png" alt="">
       </a>
       <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
+        <button class="dropdown-item" onclick="location.href='loginfreelans.html'">Змінити аккаунт</button>
+        <button class="dropdown-item" onclick="location.href='registrfreelans.html'">Вийти з аккаунту</button>
         <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
       </div>
     </div>

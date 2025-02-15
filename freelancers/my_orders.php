@@ -75,7 +75,7 @@ $conn->close();
   </div>
   
     <div class="header_item">Служба підтримки</div>
-    <div class="header_item">На головну</div>
+    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
     <?php include('get_user.php'); ?>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p> <!-- Виведення імені користувача -->
@@ -83,9 +83,9 @@ $conn->close();
         <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
       </a>
       <div class="dropdown-menu">
-        <button class="dropdown-item">Змінити аккаунт</button>
-        <button class="dropdown-item">Вийти з аккаунту</button>
-        <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
+      <button class="dropdown-item" onclick="location.href='loginfreelans.html'">Змінити аккаунт</button>
+      <button class="dropdown-item" onclick="location.href='registrfreelans.html'">Вийти з аккаунту</button>
+      <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
       </div>
     </div>
   </header>

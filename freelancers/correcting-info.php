@@ -4,6 +4,7 @@ include('tg_info.php');
 include('email_info.php');
 include('phone_info.php');
 include('get_user.php');
+include('bank_card_info.php');
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,7 @@ include('get_user.php');
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
         <img class="logo-user" src="<?php echo htmlspecialchars($avatar_path); ?>" alt="">
     </div>
+    <button class="header_item" onclick="location.href='delat_zakazy.php'">На головну</button>
     <img class="logo" src="img/Freelanshub (1).png" alt="logo">
   </header>
   <main class="main">
@@ -108,6 +110,26 @@ include('get_user.php');
       </div>
       </form>
       </div>
+
+      <div class="row">
+        <span><?php echo htmlspecialchars($user_card); ?></span>
+        <a href="#modalbk" class="btn-open-modalbk">Змінити номер банківської карти</a>
+
+        <div id="modalbk">
+      <div class="modal-contentbk">
+      <h3>Оновлення номеру телефону</h3>
+      <form action="update_bk.php" method="POST">
+        <label for="new_bk">Новий номер телефону:</label>
+          <input type="text" id="new_bk" name="new_bk" required>
+            <div class="modalbk-actions">
+               <button type="submit" class="btn-updatebk">Оновити</button>
+              <a href="#" class="btn-closebk">Скасувати</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      </form>
+      </div>
     </div>
     <div class="block-container n1">
       <p>Про себе</p>
@@ -160,4 +182,3 @@ include('get_user.php');
  
 </body>
 </html>
-//
