@@ -1,8 +1,21 @@
 <?php
 include('db_connect.php');
-//include('orders.php'); // Підключення скрипта
-include('get_user.php');
+include('get_user.php'); // Тут уже є $user_id
+
+// Отримуємо всі сповіщення для поточного користувача
+$result = $conn->query("SELECT id, message FROM notifications WHERE user_id = $user_id AND is_read = 0");
+
+$notifications = [];
+while ($row = $result->fetch_assoc()) {
+    $notifications[] = $row;
+}
 ?>
+<ul id="notificationList">
+    <?php foreach ($notifications as $notification): ?>
+        <li><?php echo htmlspecialchars($notification['message']); ?></li>
+    <?php endforeach; ?>
+</ul>
+
 
 <!DOCTYPE html>
 <html lang="UK">
@@ -199,5 +212,25 @@ document.addEventListener('DOMContentLoaded', () => {
       modalNotifications.style.display = 'none';
     }
   });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('.btn-open-modal-notifications').addEventListener('click', function () {
+        fetch('mark_notifications_read.php', { method: 'POST' })
+            .then(() => {
+                console.log('Сповіщення оновлено');
+                loadNotifications();
+            });
+    });
+});
+function loadNotifications() {
+    fetch('load_notifications.php')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('notificationList').innerHTML = html;
+        });
+}
+
+document.querySelector('.btn-open-modal-notifications').addEventListener('click', function () {
+    loadNotifications();
 });
 </script>
