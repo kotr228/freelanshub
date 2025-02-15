@@ -173,16 +173,13 @@ $stmt->close();
 
         </div>
         
-       <a class="vzatysa" href="make_order.php">Позначити <br>як виконане</a>
+       
       <?php
        $status = $order['status'] ?? '';
 
       // Перевіряємо, чи статус "Активне"
-      if ($status === 'S2'): ?>
-      <form action="" method="post">
-          <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
-          <button type="submit" class="vzatysa">Скасувати замовлення</button>
-      </form>
+      if ($status === 'S1'): ?>
+      <a class="vzatysa" href="make_order.php">Позначити <br>як виконане</a>
       <?php endif; ?>
 
 
