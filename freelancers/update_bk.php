@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id_f'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_em = trim($_POST['new_bk']);
+    $new_bk = trim($_POST['new_bk']);
     $user_id = $_SESSION['user_id_f'];
 
-    if (empty($new_em)) {
+    if (empty($new_bk)) {
         die("банківська карта не може бути порожнім.");
     }
 
