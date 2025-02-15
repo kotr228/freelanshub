@@ -1,6 +1,9 @@
 <?php
 include('db_connect.php');
 include('get_user.php'); // Тут уже є $user_id
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Отримуємо всі сповіщення для поточного користувача
 $result = $conn->query("SELECT id, message FROM notifications WHERE user_id = $user_id AND is_read = 0");
@@ -15,6 +18,7 @@ while ($row = $result->fetch_assoc()) {
         <li><?php echo htmlspecialchars($notification['message']); ?></li>
     <?php endforeach; ?>
 </ul>
+
 
 
 <!DOCTYPE html>
