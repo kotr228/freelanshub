@@ -117,9 +117,9 @@ include('bank_card_info.php');
 
         <div id="modalbk">
       <div class="modal-contentbk">
-      <h3>Оновлення номеру телефону</h3>
+      <h3>Оновлення номеру банківської карти</h3>
       <form action="update_bk.php" method="POST">
-        <label for="new_bk">Новий номер телефону:</label>
+        <label for="new_bk">Новий номер банківської карти:</label>
           <input type="text" id="new_bk" name="new_bk" required>
             <div class="modalbk-actions">
                <button type="submit" class="btn-updatebk">Оновити</button>
