@@ -30,7 +30,7 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
 
     if ($result->num_rows > 0) {
         // Оновлення статусу замовлення
-        $update_stmt = $conn->prepare("UPDATE job SET status = 'Активне', id_f = ? WHERE id_j = ?");
+        $update_stmt = $conn->prepare("UPDATE job SET status = 'S2', id_f = ? WHERE id_j = ?");
         $update_stmt->bind_param("ii", $id_f, $order_id);
         if ($update_stmt->execute()) {
             header("Location: delat_zakazy.php");
