@@ -178,7 +178,7 @@ $stmt->close();
        $status = $order['status'] ?? '';
 
       // Перевіряємо, чи статус "Активне"
-      if ($status === 'S2'): ?>
+      if ($status === 'S1'): ?>
       <a class="vzatysa" href="make_order.php">Позначити <br>як виконане</a>
       <?php endif; ?>
 
