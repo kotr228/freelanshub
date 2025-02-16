@@ -11,7 +11,7 @@ $type = $_GET['type'] ?? '';
 $specialty = $_GET['specialty'] ?? '';
 $deadline = $_GET['deadline'] ?? '';
 $price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : 0;
-$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 10000;
+$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 100000;
 
 // Формування SQL-запиту з умовами фільтрації
 $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
