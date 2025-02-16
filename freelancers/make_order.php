@@ -25,9 +25,15 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+<<<<<<< Updated upstream
     if ($row = $result->fetch_assoc()) {
         $client_id = $row['id_c']; // Отримуємо ID замовника
 
+=======
+
+    
+    if ($result->num_rows > 0) {
+>>>>>>> Stashed changes
         // Оновлення статусу замовлення
         $update_stmt = $conn->prepare("UPDATE job SET status = 'S2', id_f = ? WHERE id_j = ?");
         $update_stmt->bind_param("ii", $id_f, $order_id);
