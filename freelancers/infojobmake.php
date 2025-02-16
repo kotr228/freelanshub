@@ -217,7 +217,6 @@ $stmt->close();
     </footer>
   </div>
 </div>
-//Додавання повідомлення в чаи в баззу даних далі на реакті 
 <script>
 document.getElementById('sendButton').addEventListener('click', () => {
   const messageInput = document.getElementById('messageInput');

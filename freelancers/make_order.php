@@ -32,16 +32,16 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
         $update_stmt = $conn->prepare("UPDATE job SET status = 'S2', id_f = ? WHERE id_j = ?");
         $update_stmt->bind_param("ii", $id_f, $order_id);
         if ($update_stmt->execute()) {
-            
-            // Додаємо запис про сповіщення в таблицю `notifications`
-            $message = "Ваше замовлення #$order_id виконано! Оплатіть роботу.";
-            $insert_stmt = $conn->prepare("INSERT INTO notifications (user_id, message, is_read) VALUES (?, ?, 0)");
-            $insert_stmt->bind_param("is", $client_id, $message);
+            // Додаємо запис про сповіщення в таблицю `notifications_c`
+            $message = "Вітаю. Ваше замовлення #$order_id виконано";
+            $insert_stmt = $conn->prepare("INSERT INTO notifications_c (id_c, id_j, message, is_read) VALUES (?, ?, ?, 0)");
+            $insert_stmt->bind_param("iis", $client_id, $order_id, $message);
             $insert_stmt->execute();
             $insert_stmt->close();
-
+        
             header("Location: delat_zakazy.php");
-        } else {
+        }        
+         else {
             echo "Помилка при оновленні замовлення: " . $conn->error;
         }
         $update_stmt->close();
