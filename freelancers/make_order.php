@@ -57,4 +57,5 @@ if (isset($_SESSION['order_id']) && is_numeric($_SESSION['order_id'])) {
 } else {
     die("ID замовлення не знайдено в сесії або воно некоректне.");
 }
+}
 ?>
