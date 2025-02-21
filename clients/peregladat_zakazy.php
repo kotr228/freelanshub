@@ -67,7 +67,7 @@ include('get_user.php');
     <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
     <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
   <!-- Модальне вікно для сповіщень -->
-  <div id="notificationModal" class="modal">
+  <div id="modaln" class="modal">
   <div class="modal-content">
     <h3>Сповіщення</h3>
     <ul id="notificationList"></ul>
@@ -140,7 +140,7 @@ document.addEventListener1("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', () => {
   const modalNotifications = document.getElementById('notificationModal');
   const notificationList = document.getElementById('notificationList');
-  const btnOpenModalNotifications = document.querySelector('.btn-open-modal-notifications');
+  const btnOpenModalNotifications = document.querySelector('.btn-open-modaln');
   const btnCloseModal = modalNotifications.querySelector('.btn-close');
 
   // Функція для отримання сповіщень
