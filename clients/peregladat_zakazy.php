@@ -141,11 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalNotifications = document.getElementById('notificationModal');
   const notificationList = document.getElementById('notificationList');
   const btnOpenModalNotifications = document.querySelector('.btn-open-modaln');
-  const btnCloseModal = modalNotifications.querySelector('.btn-close');
+  const btnCloseModal = modalNotifications?.querySelector('.btn-close');
 
-  // Функція для отримання сповіщень
+  // Перевіряємо, чи всі елементи існують
+  if (!modalNotifications || !notificationList || !btnOpenModalNotifications || !btnCloseModal) {
+    console.error('Не вдалося знайти один або кілька елементів для модального вікна сповіщень.');
+    return;
+  }
+
+  // Функція для завантаження сповіщень
   function loadNotifications() {
-    fetch('get_notifications.php')  // ВАЖЛИВО: шлях правильний, бо JS виконується на клієнті
+    fetch('get_notifications.php')
       .then(response => response.json())
       .then(data => {
         notificationList.innerHTML = '';
@@ -157,21 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
             notificationList.appendChild(li);
           });
         } else {
-          const li = document.createElement('li');
-          li.textContent = 'Немає нових сповіщень.';
-          notificationList.appendChild(li);
+          notificationList.innerHTML = '<li>Немає нових сповіщень.</li>';
         }
 
-        // Показуємо модальне вікно, якщо є нові сповіщення
-        if (notificationList.children.length > 0) {
-          modalNotifications.style.display = 'block';
-        }
+        // Показуємо модальне вікно
+        modalNotifications.style.display = 'block';
       })
       .catch(error => console.error('Помилка отримання сповіщень:', error));
   }
 
   // Відкриття модального вікна при натисканні на кнопку
-  btnOpenModalNotifications.addEventListener('click', () => {
+  btnOpenModalNotifications.addEventListener('click', (event) => {
+    event.preventDefault(); // Запобігаємо переходу за `href="#"`
     loadNotifications();
   });
 
@@ -187,4 +190,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 </script>
