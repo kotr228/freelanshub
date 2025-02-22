@@ -138,19 +138,20 @@ document.addEventListener1("DOMContentLoaded", function () {
 </html>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modalNotifications = document.getElementById('notificationModal');
+  const modalNotifications = document.getElementById('modaln'); // Виправлено `id`
   const notificationList = document.getElementById('notificationList');
   const btnOpenModalNotifications = document.querySelector('.btn-open-modaln');
   const btnCloseModal = modalNotifications?.querySelector('.btn-close');
 
-  // Перевіряємо, чи всі елементи існують
   if (!modalNotifications || !notificationList || !btnOpenModalNotifications || !btnCloseModal) {
     console.error('Не вдалося знайти один або кілька елементів для модального вікна сповіщень.');
     return;
   }
 
-  // Функція для завантаження сповіщень
-  function loadNotifications() {
+  // Відкриття модального вікна при натисканні кнопки
+  btnOpenModalNotifications.addEventListener('click', (event) => {
+    event.preventDefault(); // Запобігаємо переходу за `href="#"`
+
     fetch('get_notifications.php')
       .then(response => response.json())
       .then(data => {
@@ -166,16 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
           notificationList.innerHTML = '<li>Немає нових сповіщень.</li>';
         }
 
-        // Показуємо модальне вікно
+        // Відображаємо модальне вікно
         modalNotifications.style.display = 'block';
       })
       .catch(error => console.error('Помилка отримання сповіщень:', error));
-  }
-
-  // Відкриття модального вікна при натисканні на кнопку
-  btnOpenModalNotifications.addEventListener('click', (event) => {
-    event.preventDefault(); // Запобігаємо переходу за `href="#"`
-    loadNotifications();
   });
 
   // Закриття модального вікна при натисканні кнопки
@@ -190,5 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 
 </script>
