@@ -138,26 +138,29 @@ document.addEventListener1("DOMContentLoaded", function () {
 </html>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  console.log("Скрипт завантажено");
+
   const modalNotifications = document.getElementById('modaln');
   const notificationList = document.getElementById('notificationList');
   const btnOpenModalNotifications = document.querySelector('.btn-open-modaln');
   const btnCloseModal = modalNotifications?.querySelector('.btn-close');
 
+  console.log("Перевірка елементів:", { modalNotifications, notificationList, btnOpenModalNotifications, btnCloseModal });
+
   if (!modalNotifications || !notificationList || !btnOpenModalNotifications || !btnCloseModal) {
-    console.error('Не вдалося знайти один або кілька елементів для модального вікна сповіщень.');
+    console.error('Не знайдено один або кілька елементів для сповіщень.');
     return;
   }
 
-  // Відкриття модального вікна при натисканні кнопки
   btnOpenModalNotifications.addEventListener('click', (event) => {
-    event.preventDefault(); // Запобігаємо переходу за `href="#"`
+    event.preventDefault();
+    console.log("Кнопка сповіщень натиснута!");
 
     fetch('get_notifications.php')
       .then(response => response.json())
       .then(data => {
-        console.log("Отримані сповіщення:", data); // Для дебагу
-
-        notificationList.innerHTML = ''; // Очистити список перед виведенням
+        console.log("Отримані сповіщення:", data);
+        notificationList.innerHTML = '';
 
         if (data.error) {
           notificationList.innerHTML = `<li style="color: red;">Помилка: ${data.error}</li>`;
@@ -174,22 +177,20 @@ document.addEventListener('DOMContentLoaded', () => {
           notificationList.innerHTML = '<li>Немає нових сповіщень.</li>';
         }
 
-        // Відображаємо модальне вікно
         modalNotifications.style.display = 'block';
       })
       .catch(error => console.error('Помилка отримання сповіщень:', error));
   });
 
-  // Закриття модального вікна при натисканні кнопки
   btnCloseModal.addEventListener('click', () => {
     modalNotifications.style.display = 'none';
   });
 
-  // Закриття модального вікна при кліку поза ним
   window.addEventListener('click', (event) => {
     if (event.target === modalNotifications) {
       modalNotifications.style.display = 'none';
     }
   });
 });
+
 </script>
