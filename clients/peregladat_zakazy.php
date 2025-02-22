@@ -138,7 +138,7 @@ document.addEventListener1("DOMContentLoaded", function () {
 </html>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const modalNotifications = document.getElementById('modaln'); // Виправлено `id`
+  const modalNotifications = document.getElementById('modaln');
   const notificationList = document.getElementById('notificationList');
   const btnOpenModalNotifications = document.querySelector('.btn-open-modaln');
   const btnCloseModal = modalNotifications?.querySelector('.btn-close');
@@ -155,7 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('get_notifications.php')
       .then(response => response.json())
       .then(data => {
-        notificationList.innerHTML = '';
+        console.log("Отримані сповіщення:", data); // Для дебагу
+
+        notificationList.innerHTML = ''; // Очистити список перед виведенням
+
+        if (data.error) {
+          notificationList.innerHTML = `<li style="color: red;">Помилка: ${data.error}</li>`;
+          return;
+        }
 
         if (data.length > 0) {
           data.forEach(notification => {
@@ -185,6 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-
 </script>

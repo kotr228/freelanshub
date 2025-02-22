@@ -1,8 +1,10 @@
 <?php
 include('../db_connect.php'); // ВАЖЛИВО! Оскільки файл в `clients/`, треба правильно підключити БД
 
-if (!isset($_SESSION)) {
-    session_start();
+// Переконуємося, що користувач авторизований
+if (!isset($_SESSION['user_id_c'])) {
+    echo json_encode(["error" => "Користувач не авторизований"]);
+    exit;
 }
 
 if (!isset($_SESSION['user_id_c'])) {
