@@ -180,7 +180,7 @@ html, body {
   background-color: #fff;
 }
 
-.btn-open-modal, .btn-open-modalph, .btn-open-modal-about {
+.btn-open-modal, .btn-open-modalph, .btn-open-modal-about, .btn-open-modal-about1 {
   text-decoration: none;
   display: flex; /* Flex-контейнер для центрирования */
   justify-content: center; /* Горизонтальное центрирование текста */
@@ -195,7 +195,7 @@ html, body {
   text-align: center; /* Убедимся, что текст будет центрирован */
 }
 
-.modal, .modalph, .modal-about {
+.modal, .modalph, .modal-about, .modal-about1 {
   display: none; /* Спочатку приховано */
   position: fixed;
   top: 0;
@@ -208,7 +208,7 @@ html, body {
   z-index: 9999;
 }
 
-#modal, #modalph, #modal-about {
+#modal, #modalph, #modal-about, #modal-about1 {
   position: fixed;
   top: 0;
   left: 0;
@@ -220,11 +220,11 @@ html, body {
   align-items: center;
 }
 
-#modal:target, #modalph:target, #modal-about:target {
+#modal:target, #modalph:target, #modal-about:target, #modal-about1:target {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content, .modal-contentph, .modala-content {
+.modal-content, .modal-contentph, .modala-content, .modala1-content {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
@@ -234,7 +234,7 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
-.modal h2, .modalph h2, .modal-about h2 {
+.modal h2, .modalph h2, .modal-about h2, .modal-about1 h2 {
   margin-bottom: 15px;
 }
 
@@ -263,12 +263,12 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-actions, .modalph-actions, .modala-actions {
+.modal-actions, .modalph-actions, .modala-actions, .modala1-actions {
   display: flex;
   justify-content: space-between;
 }
 
-.btn-update, .btn-close, .btn-updateph, .btn-closeph, .btn-updatea, .btn-closea {
+.btn-update, .btn-close, .btn-updateph, .btn-closeph, .btn-updatea, .btn-closea, .btn-updatea1, .btn-closea1 {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -287,7 +287,7 @@ html, body {
   background-color: #218838;
 }
 
-.btn-close, .btn-closeph, .btn-closea {
+.btn-close, .btn-closeph, .btn-closea, .btn-closea1 {
   background-color: #dc3545;
   color: #fff;
 }
