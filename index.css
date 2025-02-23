@@ -234,7 +234,7 @@ html, body {
     box-shadow: 0 4px 8px #fff;
 }
 
-.modal h2, .modalph h2 {
+.modal h2, .modalph h2, .modal-about h2 {
   margin-bottom: 15px;
 }
 
@@ -263,12 +263,12 @@ html, body {
   border-radius: 4px;
 }
 
-.modal-actions, .modalph-actions {
+.modal-actions, .modalph-actions, .modala-actions {
   display: flex;
   justify-content: space-between;
 }
 
-.btn-update, .btn-close, .btn-updateph, .btn-closeph {
+.btn-update, .btn-close, .btn-updateph, .btn-closeph, .btn-updatea, .btn-closea {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
@@ -287,7 +287,7 @@ html, body {
   background-color: #218838;
 }
 
-.btn-close, .btn-closeph {
+.btn-close, .btn-closeph, .btn-closea {
   background-color: #dc3545;
   color: #fff;
 }
