@@ -224,7 +224,7 @@ html, body {
   display: flex; /* Показуємо вікно при переході на #modal */
 }
 
-.modal-content, .modal-contentph, .modala-content {
+.modal-content, .modal-contentph, .modal-contenta {
   background-color: #222831;
     padding: 20px;
     border-radius: 8px;
