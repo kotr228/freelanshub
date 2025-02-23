@@ -6,7 +6,7 @@ include('db_connect.php');
 
 // Перевірка авторизації
 if (!isset($_SESSION['user_id'])) {
-    die("Ви повинні бути авторизовані.");
+    header("Location: loginclients.html");
 }
 
 $user_id = (int) $_SESSION['user_id'];

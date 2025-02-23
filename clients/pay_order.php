@@ -3,7 +3,7 @@ include('db_connect.php'); // Підключення до бази даних
 
 // Перевірка авторизації клієнта
 if (!isset($_SESSION['user_id'])) {
-    die("Error: Ви не авторизовані.");
+    header("Location: loginclients.html");
 }
 
 // Отримання ID замовлення

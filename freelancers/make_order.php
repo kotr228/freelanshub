@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include('db_connect.php');
 
 if (!isset($_SESSION['user_id_f'])) {
-    die("Ви повинні бути авторизовані для виконання цієї дії");
+    header("Location: loginfreelans.html");
 }
 
 if (!isset($_SESSION['order_id']) || !is_numeric($_SESSION['order_id'])) {

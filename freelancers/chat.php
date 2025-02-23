@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include('db_connect.php');
 
 if (!isset($_SESSION['user_id_f'])) {
-    die("Ви повинні бути авторизовані.");
+    header("Location: loginfreelans.html");
 }
 
 $user_id = $_SESSION['user_id_f'];

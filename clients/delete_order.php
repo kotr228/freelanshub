@@ -7,7 +7,7 @@ include('db_connect.php');
 
 // Перевірка, чи користувач авторизований
 if (!isset($_SESSION['user_id'])) {
-    die("Ви повинні бути авторизовані для виконання цієї дії.");
+    header("Location: loginclients.html");
 }
 
 // Перевірка, чи є id замовлення в сесії

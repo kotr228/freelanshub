@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Перевірка авторизації клієнта
 if (!isset($_SESSION['user_id_f'])) {
-  die("Error: Ви не авторизовані.");
+  header("Location: loginfreelans.html");
 }
 
 $id_c = $_SESSION['user_id']; // Отримання ID клієнта із сесії

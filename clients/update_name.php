@@ -3,7 +3,7 @@ include('db_connect.php');
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    die("Користувач не авторизований.");
+    header("Location: loginclients.html");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

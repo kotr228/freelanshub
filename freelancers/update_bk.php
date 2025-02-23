@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_id_f'])) {
-    die("Користувач не авторизований.");
+    header("Location: loginfreelans.html");
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
