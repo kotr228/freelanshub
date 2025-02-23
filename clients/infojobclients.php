@@ -176,7 +176,7 @@ $status = $order['status'] ?? '';
 
 // Перевіряємо, чи статус "Активне"
 if ($status === 'S1'): ?>
-  <form action="" method="post">
+  <form action="delete_order.php" method="post">
       <input type="hidden" name="id_j" value="<?php echo $order['id_j']; ?>">
       <button type="submit" class="vzatysa">Скасувати замовлення</button>
   </form>
