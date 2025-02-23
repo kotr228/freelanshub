@@ -8,7 +8,7 @@ include('get_user.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Делать заказы</title>
+  <title>Публікація замовлення</title>
   <link rel="stylesheet" href="style.css/pupliczacaz.css">
 </head>
 <body class="body">
