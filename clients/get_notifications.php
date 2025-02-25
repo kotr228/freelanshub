@@ -1,12 +1,6 @@
 <?php
 session_start();
 include('../db_connect.php'); // Переконайся, що шлях правильний!
-
-if (!isset($_SESSION['user_id_c'])) {
-    echo json_encode(["error" => "Користувач не авторизований"]);
-    exit;
-}
-
 $user_id_c = $_SESSION['user_id_c'];
 
 $conn->set_charset("utf8");
