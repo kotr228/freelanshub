@@ -66,14 +66,15 @@ include('get_user.php');
     <button class="dropdown-item" onclick="location.href='registerclients.html'">Вийти з аккаунту</button>
     <button class="dropdown-item" onclick="location.href='correcting-info.php'">Налаштування аккаунту</button>
     <div class="dropdown-item">  <a href="#modaln" class="btn-open-modaln">Сповіщення</a>
-  <!-- Модальне вікно для сповіщень -->
-  <div id="modaln" class="modal">
+<!-- Модальне вікно для сповіщень -->
+<div id="modaln" class="modal">
   <div class="modal-content">
     <h3>Сповіщення</h3>
     <ul id="notificationList"></ul>
     <button class="btn-close">Закрити</button>
   </div>
 </div>
+
 
   </div> 
   </div>   
@@ -107,36 +108,6 @@ include('get_user.php');
   </div>
 </div>
 <script>
-
-document.addEventListener1("DOMContentLoaded", function () {
-    const form = document.getElementById("filter-form");
-    const formElements = form.querySelectorAll("input, select");
-
-    formElements.forEach(element => {
-        element.addEventListener1("input", sendFilterRequest);
-        element.addEventListener1("change", sendFilterRequest);
-    });
-
-    function sendFilterRequest() {
-        const formData = new FormData(form);
-
-        fetch("orders.php?" + new URLSearchParams(formData), {
-            method: "GET"
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("results").innerHTML = data; // Відображення результатів
-        })
-        .catch(error => {
-            console.error("Помилка:", error);
-        });
-    }
-});
-</script>
- 
-</body>
-</html>
-<script>
 document.addEventListener('DOMContentLoaded', () => {
   console.log("Скрипт завантажено");
 
@@ -155,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
   btnOpenModalNotifications.addEventListener('click', (event) => {
     event.preventDefault();
     console.log("Кнопка сповіщень натиснута!");
+
+    // Модальне вікно відкривається ще до отримання даних
+    modalNotifications.style.display = 'block';
 
     fetch('get_notifications.php')
       .then(response => response.json())
@@ -176,10 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           notificationList.innerHTML = '<li>Немає нових сповіщень.</li>';
         }
-
-        modalNotifications.style.display = 'block';
       })
-      .catch(error => console.error('Помилка отримання сповіщень:', error));
+      .catch(error => {
+        console.error('Помилка отримання сповіщень:', error);
+        notificationList.innerHTML = '<li style="color: red;">Не вдалося завантажити сповіщення.</li>';
+      });
   });
 
   btnCloseModal.addEventListener('click', () => {
@@ -192,5 +167,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
 </script>
