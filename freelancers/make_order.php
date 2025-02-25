@@ -23,14 +23,15 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8");
 
-// Отримуємо ID замовника
-$stmt = $conn->prepare("SELECT id_c FROM job WHERE id_j = ?");
+// Отримуємо ID замовника та назву замовлення
+$stmt = $conn->prepare("SELECT id_c, title FROM job WHERE id_j = ?");
 $stmt->bind_param("i", $order_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     $client_id = $row['id_c'];
+    $order_title = $row['title']; // Отримуємо назву замовлення
 } else {
     die("Помилка: Замовник не знайдений.");
 }
@@ -45,8 +46,8 @@ if (!$update_stmt->execute()) {
 }
 $update_stmt->close();
 
-// Додаємо сповіщення
-$message = "Вітаю. Ваше замовлення #$order_id виконано";
+// Додаємо сповіщення з назвою замовлення
+$message = "Вітаю. Ваше замовлення «$order_title» виконано";
 $insert_stmt = $conn->prepare("INSERT INTO notifications_c (id_c, id_j, message, is_read) VALUES (?, ?, ?, 0)");
 $insert_stmt->bind_param("iis", $client_id, $order_id, $message);
 
