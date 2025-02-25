@@ -4,39 +4,28 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include('db_connect.php');
+include('order_detail_data.php'); // Підключаємо файл з інформацією про замовлення
 
 if (!isset($_SESSION['user_id_f'])) {
     header("Location: loginfreelans.html");
+    exit;
 }
 
-if (!isset($_SESSION['order_id']) || !is_numeric($_SESSION['order_id'])) {
+if (!isset($_SESSION['id_j']) || !is_numeric($_SESSION['id_j'])) {
     die("Помилка: ID замовлення некоректний.");
 }
 
-$order_id = $_SESSION['order_id'];
+$order_id = $_SESSION['id_j'];
 $id_f = $_SESSION['user_id_f'];
 
-// Підключення до бази даних
-$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
-if ($conn->connect_error) {
-    die("Помилка підключення до БД: " . $conn->connect_error);
+// Переконуємося, що у нас є назва замовлення
+$order_title = $order['lable'] ?? "Без назви";
+
+// Отримуємо ID замовника
+$client_id = $order['id_c'] ?? null;
+if (!$client_id) {
+    die("Помилка: ID замовника не знайдено.");
 }
-$conn->set_charset("utf8");
-
-// Отримуємо ID замовника та назву замовлення
-$stmt = $conn->prepare("SELECT id_c, title FROM job WHERE id_j = ?");
-$stmt->bind_param("i", $order_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($row = $result->fetch_assoc()) {
-    $client_id = $row['id_c'];
-    $order_title = $row['title']; // Отримуємо назву замовлення
-} else {
-    die("Помилка: Замовник не знайдений.");
-}
-
-$stmt->close();
 
 // Оновлення статусу замовлення
 $update_stmt = $conn->prepare("UPDATE job SET status = 'S2', id_f = ? WHERE id_j = ?");
