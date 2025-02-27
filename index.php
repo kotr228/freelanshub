@@ -47,6 +47,16 @@ if ($last_cleanup < date("Y-m-d")) {
         }
         $idList = implode(",", $orderIds); // Перетворюємо масив у список ID
 
+        // 2. Отримуємо всі шляхи до файлів, які потрібно видалити
+        $filesToDelete = $conn->query("SELECT file_path FROM files WHERE id_j IN ($idList)");
+
+        while ($file = $filesToDelete->fetch_assoc()) {
+            $filePath = $file['file_path']; // Формуємо повний шлях
+            if (file_exists($filePath)) {
+                unlink($filePath); // Видаляємо файл
+            }
+        }
+
         // Видаляємо пов'язані файли
         $conn->query("DELETE FROM files WHERE id_j IN ($idList)");
 
