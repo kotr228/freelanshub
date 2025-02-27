@@ -28,6 +28,24 @@ if ($last_cleanup < date("Y-m-d")) {
         $conn->query("DELETE FROM job WHERE id_j IN ($idList) AND status = 'S1' AND id_f IS NULL");
     }
 
+    $ordersToDelete = $conn->query("SELECT id_j FROM job WHERE date < NOW() - INTERVAL 365 DAY AND status = 'S3' AND id_f IS NULL");
+
+    if ($ordersToDelete->num_rows > 0) {
+        $orderIds = [];
+        while ($row = $ordersToDelete->fetch_assoc()) {
+            $orderIds[] = $row['id_j'];
+        }
+        $idList = implode(",", $orderIds); // Перетворюємо масив у список ID
+
+        // Видаляємо пов'язані файли
+        $conn->query("DELETE FROM files WHERE id_j IN ($idList)");
+
+        // Видаляємо замовлення
+        $conn->query("DELETE FROM job WHERE id_j IN ($idList) AND status = 'S3' AND id_f IS NULL");
+    }
+
+
+    
     // Оновлюємо дату останнього очищення
     $conn->query("UPDATE cleanup SET last_cleanup = CURDATE()");
 }
