@@ -1,3 +1,41 @@
+<?php
+$conn = new mysqli("localhost", "nkloqzcz_root", "Sillver-228", "nkloqzcz_freelans");
+if ($conn->connect_error) {
+    die("Помилка підключення: " . $conn->connect_error);
+}
+
+// Перевіряємо, коли востаннє проводилося очищення
+$result = $conn->query("SELECT last_cleanup FROM cleanup LIMIT 1");
+$row = $result->fetch_assoc();
+$last_cleanup = $row ? $row['last_cleanup'] : "2000-01-01";
+
+// Якщо сьогодні ще не виконувалося очищення
+if ($last_cleanup < date("Y-m-d")) {
+    // Знаходимо ID замовлень, які старші за 30 днів
+    $ordersToDelete = $conn->query("SELECT id_j FROM job WHERE date < NOW() - INTERVAL 30 DAY");
+
+    if ($ordersToDelete->num_rows > 0) {
+        $orderIds = [];
+        while ($row = $ordersToDelete->fetch_assoc()) {
+            $orderIds[] = $row['id_j'];
+        }
+        $idList = implode(",", $orderIds); // Перетворюємо масив у список ID
+
+        // Видаляємо пов'язані файли
+        $conn->query("DELETE FROM files WHERE id_j IN ($idList)");
+
+        // Видаляємо замовлення
+        $conn->query("DELETE FROM job WHERE id_j IN ($idList)");
+    }
+
+    // Оновлюємо дату останнього очищення
+    $conn->query("UPDATE cleanup SET last_cleanup = CURDATE()");
+}
+
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="UK">
 <head>
