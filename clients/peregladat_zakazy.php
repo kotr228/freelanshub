@@ -55,7 +55,7 @@ include('get_user.php');
 
   </div>
     <div class="header_item">Служба підтримки</div>
-    <button class="header_item" onclick="location.href='../../index.html'">На головну</button>
+    <button class="header_item" onclick="location.href='../../index.php'">На головну</button>
     <div class="header_user-info">
       <p class="header_user-name"><?php echo htmlspecialchars($user_name); ?></p>
       <a href="#">
