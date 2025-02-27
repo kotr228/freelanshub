@@ -25,7 +25,7 @@ if ($last_cleanup < date("Y-m-d")) {
         $conn->query("DELETE FROM files WHERE id_j IN ($idList)");
 
         // Видаляємо замовлення
-        $conn->query("DELETE FROM job WHERE id_j IN ($idList)");
+        $conn->query("DELETE FROM job WHERE id_j IN ($idList) AND status = 'S1' AND id_f IS NULL");
     }
 
     // Оновлюємо дату останнього очищення
