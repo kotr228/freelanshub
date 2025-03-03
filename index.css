@@ -304,7 +304,7 @@ html, body {
   }
   
   .site{
-    max-width: 2080px;
+    max-width: 768px;
   }
   
   .header{
@@ -312,7 +312,7 @@ html, body {
     margin: 15px 10px;
     padding: 13px 30px;
     display: flex;
-    border: #F0AD4E solid 6px;
+    border: #F0AD4E solid 3px;
     border-radius: 25px;
     justify-content: space-between;
   }
@@ -328,10 +328,10 @@ html, body {
     border-radius: 15px;
     color: #fff;
     background-color: #F0AD4E;
-    padding: 10px 10px;
+    padding: 1px 1px;
     flex-grow: 1; /* Позволяет элементу расширяться */
     text-align: center; /* Центрируем текст внутри элемента */
-    min-width: 150px; /* Минимальная ширина для предотвращения сжатия */
+    min-width: 15px; /* Минимальная ширина для предотвращения сжатия */
   }
   .header_item:hover{
     cursor: pointer;
