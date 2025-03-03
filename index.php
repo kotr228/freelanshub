@@ -157,13 +157,13 @@ $conn->close();
         <p class="caption">Увійти як замовник</p>
       </div>
     </a>
-    <div class="button"><a href="#modal-about" class="btn-open-modal-about">Рекламка</a></div>
+    <div class="button">Рекламка</div>
   </main>
 
   <div class="obolocka">
     <footer class="footer">
       <img class="logo" src="img/Freelanshub (1).png" alt="logo">
-      <div class="footer-item">Реклама</div>
+      <div class="footer-item"><a href="#modal-about" class="btn-open-modal-about">Реклама</a></div>
       <div class="footer-item">Партнерство</div>
       <div class="footer-item">Про нас</div>
     </footer>
