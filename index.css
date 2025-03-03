@@ -291,3 +291,75 @@ html, body {
   background-color: #dc3545;
   color: #fff;
 }
+
+
+/* --- Адаптивність для планшетів (1024px) --- */
+@media screen and (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header_item {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button {
+    width: 90%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-item {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+/* --- Адаптивність для мобільних телефонів (768px) --- */
+@media screen and (max-width: 768px) {
+  .header {
+    font-size: 1.2em;
+  }
+
+  .main {
+    padding: 10px;
+  }
+
+  .button {
+    flex-grow: unset;
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+}
+
+/* --- Адаптивність для дуже маленьких екранів (480px) --- */
+@media screen and (max-width: 480px) {
+  .header {
+    font-size: 1em;
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}
