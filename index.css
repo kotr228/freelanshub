@@ -558,11 +558,55 @@ html, body {
   }
   
   html, body {
-    background: #222831;
-    font-family: 'Roboto', sans-serif;
+    background-color: #1f252d;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+}
+.container {
+    border: 3px solid #f4a43d;
+    border-radius: 15px;
+    padding: 20px;
+    display: inline-block;
+    margin: 20px auto;
+}
+.button {
+    display: block;
+    background-color: #f4a43d;
+    color: white;
+    border: none;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    width: 90%;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.button:hover {
+    background-color: #e69530;
+}
+.navbar {
     display: flex;
     justify-content: center;
-  }
+    padding: 10px;
+    background-color: #f4a43d;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 90%;
+}
+.navbar-light {
+    background-color: #fdf7dc;
+}
+.footer {
+    background-color: gray;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    width: 90%;
+    margin: 20px auto;
+}
   
   .site {
     max-width: 400px;
