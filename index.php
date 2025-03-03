@@ -133,6 +133,8 @@ $conn->close();
         <div class="modala-content">
           <h3>Служба підтримки:</h3>
           <br><h6> </h6>
+          <h3>Реклама:</h3>
+          <br><h6> </h6>
           <div class="modala-actions">
            <a href="#" class="btn-close">Закрити</a>
          </div>
@@ -155,7 +157,7 @@ $conn->close();
         <p class="caption">Увійти як замовник</p>
       </div>
     </a>
-    <div class="button">Рекламка</div>
+    <div class="button"><a href="#modal-about" class="btn-open-modal-about">Рекламка</a></div>
   </main>
 
   <div class="obolocka">
