@@ -295,37 +295,108 @@ html, body {
 
 /* --- Адаптивність для планшетів (1024px) --- */
 @media screen and (max-width: 1024px) {
-  .header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .header_item {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+html, body {
+  background: #222831;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+}
 
-  .main {
-    flex-direction: column;
-    align-items: center;
-  }
+.site {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .button {
-    width: 90%;
-    height: auto;
-    padding: 20px;
-  }
+.header {
+  font-size: 1.2em;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  border: #F0AD4E solid 4px;
+  border-radius: 15px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #1E1E24;
+}
 
-  .footer {
-    flex-direction: column;
-    text-align: center;
-  }
+.header_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #F0AD4E;
+  padding: 10px;
+  flex-grow: 1;
+  text-align: center;
+  min-width: 100px;
+  cursor: pointer;
+}
 
-  .footer-item {
-    width: 100%;
-    margin: 10px 0;
-  }
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+}
+
+.button {
+  width: 90%;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:nth-child(1) {
+  background-color: orange;
+}
+
+.button:nth-child(2) {
+  background-color: rgb(254, 249, 214);
+}
+
+.button:nth-child(3) {
+  background-color: gray;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 10px;
+  border-radius: 15px;
+  border: rgb(240, 173, 78) solid 4px;
+  background-color: #1E1E24;
+}
+
+.footer-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #F0AD4E;
+  padding: 10px;
+  cursor: pointer;
+}
 }
 
 /* --- Адаптивність для мобільних телефонів (768px) --- */
