@@ -331,7 +331,7 @@ html, body {
     padding: 1px 1px;
     flex-grow: 1; /* Позволяет элементу расширяться */
     text-align: center; /* Центрируем текст внутри элемента */
-    min-width: 15px; /* Минимальная ширина для предотвращения сжатия */
+    min-width: 10px; /* Минимальная ширина для предотвращения сжатия */
   }
   .header_item:hover{
     cursor: pointer;
@@ -340,6 +340,7 @@ html, body {
   
   .main {
     display: flex;
+    flex-direction: column; /* Встановлюємо напрямок стовпцем */
     justify-content: space-evenly; /* Равномерное распределение с одинаковыми отступами */
     align-items: center; /* Центровка по вертикали */
     height: 70vh; /* Высота контейнера */
@@ -355,7 +356,7 @@ html, body {
     flex-basis: 0; /* Задает базовую ширину кнопок */
     max-width: 550px; /* Максимальная ширина кнопки */
     height: 60vh !important;
-    overflow: hidden; /* Скрываем излишки картинки за границами */
+    /*overflow: hidden;  Скрываем излишки картинки за границами */
     border-radius: 25px; /* Закругленные углы */
     font-size: 16px;
     color: #333;
@@ -483,7 +484,6 @@ html, body {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
     text-align: center; /* Убедимся, что текст будет центрирован */
