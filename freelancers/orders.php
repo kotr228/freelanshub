@@ -18,7 +18,7 @@ if (($type === null) && ($specialty === null) && ($deadline === null)){
 } else {
     // Формування SQL-запиту з умовами фільтрації
 $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
-
+ 
 if (!empty($type)) {
     $sql .= " AND tipe = '" . $conn->real_escape_string($type) . "'";
 }
