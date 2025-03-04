@@ -7,11 +7,11 @@ if ($conn->connect_error) {
 }
 
 // Отримання параметрів фільтрації
-$type = $_GET['type'] ?? '';
-$specialty = $_GET['specialty'] ?? '';
-$deadline = $_GET['deadline'] ?? '';
-$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'];
-$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'];
+$type = $_GET['type'] ?? null;
+$specialty = $_GET['specialty'] ?? null;
+$deadline = $_GET['deadline'] ?? null;
+$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : null;
+$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : null;
 
 if (empty($type) && empty($specialty) && empty($deadline) && empty($price_from) && empty($price_to)){
     $sql = "SELECT * FROM job";
