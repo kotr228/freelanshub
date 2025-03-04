@@ -13,7 +13,7 @@ $deadline = $_GET['deadline'] ?? null;
 $price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : null;
 $price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : null;
 
-if (empty($type) && empty($specialty) && empty($deadline) && empty($price_from) && empty($price_to)){
+if (($type === null) && ($specialty === null) && ($deadline === null) && ($price_from === null) && ($price_to === null)){
     $sql = "SELECT * FROM job";
 } else {
     // Формування SQL-запиту з умовами фільтрації
