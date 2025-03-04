@@ -17,33 +17,22 @@ if (($type === null) && ($specialty === null) && ($deadline === null) && ($price
     $sql = "SELECT * FROM job";
 } else {
     // Формування SQL-запиту з умовами фільтрації
-if ((!empty($price_from)) && (!empty($price_to))){
 $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
-} else {
-    $sql = "SELECT * FROM job";
-}
-
-if (!empty($type) && ($price_from === null) && ($price_to === null)) {
-    $sql .= " WHERE tipe = '" . $conn->real_escape_string($type) . "'";
-} elseif (!empty($type) && (!empty($price_from)) && (!empty($price_to))) {
+ 
+if (!empty($type)) {
     $sql .= " AND tipe = '" . $conn->real_escape_string($type) . "'";
 }
 
-if (!empty($specialty) && ($price_from === null) && ($price_to === null)) {
-    $sql .= " WHERE spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
-} elseif (!empty($specialty) && (!empty($price_from)) && (!empty($price_to))){
+if (!empty($specialty)) {
     $sql .= " AND spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
 }
 
-if (!empty($deadline) && ($price_from === null) && ($price_to === null)) {
-    $sql .= " WHERE date >= '" . $conn->real_escape_string($deadline) . "'";
-} elseif (!empty($deadline) && (!empty($price_from)) && (!empty($price_to))){
+if (!empty($deadline)) {
     $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
+}
 }
 
 $sql .= " AND id_f IS NULL";
-}
-
 
 $result = $conn->query($sql);
 
