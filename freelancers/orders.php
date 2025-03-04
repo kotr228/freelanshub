@@ -10,10 +10,10 @@ if ($conn->connect_error) {
 $type = $_GET['type'] ?? null;
 $specialty = $_GET['specialty'] ?? null;
 $deadline = $_GET['deadline'] ?? null;
-$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : null;
-$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : null;
+$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : 0;
+$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 84000000;
 
-if (($type === null) && ($specialty === null) && ($deadline === null) && ($price_from === null) && ($price_to === null)){
+if (($type === null) && ($specialty === null) && ($deadline === null)){
     $sql = "SELECT * FROM job";
 } else {
     // Формування SQL-запиту з умовами фільтрації
