@@ -23,20 +23,27 @@ $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
     $sql = "SELECT * FROM job";
 }
 
-if (!empty($type)) {
+if (!empty($type) && ($price_from === null) && ($price_to === null)) {
+    $sql .= " WHERE tipe = '" . $conn->real_escape_string($type) . "'";
+} elseif (!empty($type) && (!empty($price_from)) && (!empty($price_to))) {
     $sql .= " AND tipe = '" . $conn->real_escape_string($type) . "'";
 }
 
-if (!empty($specialty)) {
+if (!empty($specialty) && ($price_from === null) && ($price_to === null)) {
+    $sql .= " WHERE spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
+} elseif (!empty($specialty) && (!empty($price_from)) && (!empty($price_to))){
     $sql .= " AND spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
 }
 
-if (!empty($deadline)) {
+if (!empty($deadline) && ($price_from === null) && ($price_to === null)) {
+    $sql .= " WHERE date >= '" . $conn->real_escape_string($deadline) . "'";
+} elseif (!empty($deadline) && (!empty($price_from)) && (!empty($price_to))){
     $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
-}
 }
 
 $sql .= " AND id_f IS NULL";
+}
+
 
 $result = $conn->query($sql);
 
