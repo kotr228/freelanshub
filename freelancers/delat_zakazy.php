@@ -186,8 +186,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Помилка:", error);
         });
     }
+
+    sendFilterRequest(); // Викликаємо функцію одразу після завантаження сторінки
 });
-setInterval(1500);
 </script>
 
 </body>
