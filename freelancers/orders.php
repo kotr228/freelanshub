@@ -10,8 +10,8 @@ if ($conn->connect_error) {
 $type = $_GET['type'] ?? '';
 $specialty = $_GET['specialty'] ?? '';
 $deadline = $_GET['deadline'] ?? '';
-$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : 0;
-$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 100000;
+$price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'];
+$price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'];
 
 if (empty($type) && empty($specialty) && empty($deadline) && empty($price_from) && empty($price_to)){
     $sql = "SELECT * FROM job";
