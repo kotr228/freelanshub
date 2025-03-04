@@ -14,25 +14,41 @@ $price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (f
 $price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 8400000000;
 
 if (($type === null) && ($specialty === null) && ($deadline === null) && ($price_from === null) && ($price_to === null)){
-    $sql = "SELECT * FROM job";
+    $sql = "SELECT * FROM job WHERE id_f IS NULL";
 } else {
     // Формування SQL-запиту з умовами фільтрації
-$sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
+$sql = "SELECT * FROM job";
  
 if (!empty($type)) {
+    if ($sql == "SELECT * FROM job"){$sql .= " WHERE tipe = '" . $conn->real_escape_string($type) . "'"; } else {
     $sql .= " AND tipe = '" . $conn->real_escape_string($type) . "'";
-}
+}}
 
 if (!empty($specialty)) {
+    if ($sql == "SELECT * FROM job"){$sql .= " WHERE spacsalyty = '" . $conn->real_escape_string($specialty) . "'"; } else {
     $sql .= " AND spacsalyty = '" . $conn->real_escape_string($specialty) . "'";
-}
+}}
 
 if (!empty($deadline)) {
+    if ($sql == "SELECT * FROM job"){$sql .= " WHERE date >= '" . $conn->real_escape_string($deadline) . "'"; } else {
     $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
-}
+}}
+
+if (!empty($price_from)) {
+    if ($sql == "SELECT * FROM job"){$sql .= " WHERE date >= '" . $conn->real_escape_string($price_from) . "'"; } else {
+    $sql .= " AND date >= '" . $conn->real_escape_string($price_from) . "'";
+}}
+
+if (!empty($price_to)) {
+    if ($sql == "SELECT * FROM job"){$sql .= " WHERE date <= '" . $conn->real_escape_string($price_to) . "'"; } else {
+    $sql .= " AND date <= '" . $conn->real_escape_string($price_to) . "'";
+}}
+
+if ($sql == "SELECT * FROM job"){
+    $sql .= " WHERE id_f IS NULL"; } else {$sql .= " AND id_f IS NULL";}
+
 }
 
-$sql .= " AND id_f IS NULL";
 
 $result = $conn->query($sql);
 
