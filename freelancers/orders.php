@@ -13,7 +13,10 @@ $deadline = $_GET['deadline'] ?? '';
 $price_from = isset($_GET['price_from']) && is_numeric($_GET['price_from']) ? (float)$_GET['price_from'] : 0;
 $price_to = isset($_GET['price_to']) && is_numeric($_GET['price_to']) ? (float)$_GET['price_to'] : 100000;
 
-// Формування SQL-запиту з умовами фільтрації
+if (empty($type) && empty($specialty) && empty($deadline) && empty($price_from) && empty($price_to)){
+    $sql = "SELECT * FROM job";
+} else {
+    // Формування SQL-запиту з умовами фільтрації
 $sql = "SELECT * FROM job WHERE price BETWEEN $price_from AND $price_to";
 
 if (!empty($type)) {
@@ -26,6 +29,7 @@ if (!empty($specialty)) {
 
 if (!empty($deadline)) {
     $sql .= " AND date >= '" . $conn->real_escape_string($deadline) . "'";
+}
 }
 
 $sql .= " AND id_f IS NULL";
