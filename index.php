@@ -133,7 +133,7 @@ $conn->close();
         <div class="modala-content">
           <h3>Служба підтримки:</h3>
           <br><h6> </h6>
-          <h3>Реклама:</h3>
+          <h3>Реклама і партнерстово:</h3>
           <br><h6> </h6>
           <div class="modala-actions">
            <a href="#" class="btn-close">Закрити</a>
@@ -164,7 +164,7 @@ $conn->close();
     <footer class="footer">
       <img class="logo" src="img/Freelanshub (1).png" alt="logo">
       <div class="footer-item"><a href="#modal-about" class="btn-open-modal-about">Реклама</a></div>
-      <div class="footer-item">Партнерство</div>
+      <div class="footer-item"><a href="#modal-about" class="btn-open-modal-about">Партнерство</a></div>
       <div class="footer-item">Про нас</div>
     </footer>
   </div>
