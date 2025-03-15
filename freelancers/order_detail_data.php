@@ -14,7 +14,7 @@ if (isset($_GET['id_j']) && is_numeric($_GET['id_j'])) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $conn->set_charset("utf8");
+    
 
     $stmt = $conn->prepare("SELECT * FROM job WHERE id_j = ?");
     $stmt->bind_param("i", $order_id);
