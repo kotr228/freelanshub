@@ -132,9 +132,9 @@ $conn->close();
       <div id="modal-about">
         <div class="modala-content">
           <h3>Служба підтримки:</h3>
-          <br><h6> </h6>
+          <br><h6>telegram username: @freelansehub</h6>
           <h3>Реклама і партнерстово:</h3>
-          <br><h6> </h6>
+          <br><h6>telegram username: @freelansehun_partner</h6>
           <div class="modala-actions">
            <a href="#" class="btn-close">Закрити</a>
          </div>
