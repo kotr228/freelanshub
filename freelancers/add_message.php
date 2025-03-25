@@ -4,7 +4,7 @@ include('db_connect.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
 
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['user_id_f'])) {
         echo json_encode(['success' => false, 'error' => 'Ви не авторизовані']);
         exit;
     }
