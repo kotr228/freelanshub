@@ -34,8 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc(); // Отримання даних користувача
 
         // Діагностика: виведення хешу і введеного пароля
-        echo "Збережений хеш пароля: " . $row['password'] . "<br>";  
-        echo "Введений пароль: " . $password . "<br>";  
+        echo "Введений пароль невірний";  
 
         // Діагностика: виведення результату функції password_verify()
         if (password_verify($password, $row['password'])) {
