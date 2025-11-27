@@ -9,8 +9,8 @@ import errorHandler from './middleware/errorHandler.js';
 // SQL Models
 import { User, Message } from './models/sql/index.js';
 
-// Routes (використовують ті самі роути, але з SQL моделями)
-import authRoutes from './routes/authRoutes.js';
+// SQL Routes
+import authRoutes from './routes/sql/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import bidRoutes from './routes/bidRoutes.js';
