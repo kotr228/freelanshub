@@ -11,8 +11,8 @@ import { User, Message } from './models/sql/index.js';
 
 // SQL Routes
 import authRoutes from './routes/sql/authRoutes.js';
+import projectRoutes from './routes/sql/projectRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import projectRoutes from './routes/projectRoutes.js';
 import bidRoutes from './routes/bidRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
