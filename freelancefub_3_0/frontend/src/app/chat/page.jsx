@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { messagesAPI } from '@/lib/api';
 
 const ChatList = () => {
   const { user } = useAuth();
@@ -19,10 +17,7 @@ const ChatList = () => {
 
   const fetchConversations = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/api/messages/conversations`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await messagesAPI.getConversations();
       setConversations(response.data.data);
     } catch (error) {
       console.error('Помилка завантаження чатів:', error);

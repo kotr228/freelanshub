@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import axios from 'axios';
+import { messagesAPI } from '@/lib/api';
 import { io } from 'socket.io-client';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+// Socket.io потребує базову URL без /api
+const SOCKET_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
 const Chat = () => {
   const params = useParams();
@@ -39,7 +40,7 @@ const Chat = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    socketRef.current = io(API_URL, {
+    socketRef.current = io(SOCKET_URL, {
       auth: { token }
     });
 
@@ -80,10 +81,7 @@ const Chat = () => {
 
   const fetchConversations = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/api/messages/conversations`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await messagesAPI.getConversations();
       setConversations(response.data.data);
 
       // Якщо є projectId в URL, знайти цей проєкт
@@ -100,10 +98,7 @@ const Chat = () => {
 
   const fetchMessages = async (projId) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_URL}/api/messages/${projId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await messagesAPI.getMessages(projId);
       setMessages(response.data.data);
     } catch (error) {
       console.error('Помилка завантаження повідомлень:', error);
