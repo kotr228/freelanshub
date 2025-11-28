@@ -30,7 +30,7 @@ const Navbar = () => {
                     Створити проєкт
                   </Link>
                 )}
-                <Link to={`/profile/${user?._id}`} className="px-3 py-2 hover:text-primary">
+                <Link to={`/profile/${user?.id}`} className="px-3 py-2 hover:text-primary">
                   {user?.name}
                 </Link>
                 <button onClick={logout} className="px-3 py-2 text-red-600 hover:text-red-700">

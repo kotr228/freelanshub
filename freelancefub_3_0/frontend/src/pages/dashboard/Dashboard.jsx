@@ -25,8 +25,8 @@ const Dashboard = () => {
       <h1 className="text-3xl font-bold mb-8">Панель управління</h1>
       <div className="grid gap-6">
         {projects.map(p => (
-          <div key={p._id} className="bg-white p-6 rounded-lg shadow">
-            <Link to={`/projects/${p._id}`}>
+          <div key={p.id} className="bg-white p-6 rounded-lg shadow">
+            <Link to={`/projects/${p.id}`}>
               <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
               <p className="text-gray-600">{p.description}</p>
             </Link>

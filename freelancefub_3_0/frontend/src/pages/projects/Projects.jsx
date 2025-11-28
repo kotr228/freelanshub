@@ -53,8 +53,8 @@ const Projects = () => {
 
       <div className="grid gap-6">
         {projects.map(project => (
-          <div key={project._id} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <Link to={`/projects/${project._id}`}>
+          <div key={project.id} className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <Link to={`/projects/${project.id}`}>
               <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
               <p className="text-gray-600 mb-4 line-clamp-2">{project.description}</p>
               <div className="flex items-center justify-between">
@@ -67,7 +67,7 @@ const Projects = () => {
                   </span>
                 </div>
                 <span className="text-sm text-gray-500">
-                  Заявок: {project.bidsCount || 0}
+                  Заявок: {project.bids_count || 0}
                 </span>
               </div>
             </Link>
