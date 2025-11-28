@@ -19,6 +19,11 @@ const CreateProject = () => {
     }
   };
 
+  const categories = [
+    'Веб-розробка', 'Мобільна розробка', 'Дизайн',
+    'Копірайтинг', 'Маркетинг', 'SEO', 'Відеомонтаж', 'Переклад', 'Інше'
+  ];
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Створити проєкт</h1>
@@ -34,7 +39,24 @@ const CreateProject = () => {
             value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Бюджет</label>
+          <label className="block text-sm font-medium mb-2">Категорія</label>
+          <select required className="w-full px-4 py-2 border rounded-lg"
+            value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})}>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Тип бюджету</label>
+          <select className="w-full px-4 py-2 border rounded-lg"
+            value={formData.budgetType} onChange={(e) => setFormData({...formData, budgetType: e.target.value})}>
+            <option value="fixed">Фіксована ціна</option>
+            <option value="hourly">Погодинна оплата</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Бюджет (грн)</label>
           <input type="number" required className="w-full px-4 py-2 border rounded-lg"
             value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} />
         </div>
