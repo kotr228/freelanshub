@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/context/AuthContext';
-import { projectsAPI } from '@/services/api';
+import { useAuth } from '@/contexts/AuthContext';
+import { projectsAPI } from '@/lib/api';
 
 const Dashboard = () => {
   const { user } = useAuth();
