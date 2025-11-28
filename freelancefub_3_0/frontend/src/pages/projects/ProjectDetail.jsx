@@ -76,12 +76,27 @@ const ProjectDetail = () => {
     }
   };
 
+  const handleUpdateStatus = async (newStatus) => {
+    if (!confirm(`Змінити статус проєкту на "${newStatus === 'completed' ? 'Завершений' : 'Скасований'}"?`)) {
+      return;
+    }
+    try {
+      await projectsAPI.updateStatus(id, newStatus);
+      alert('Статус проєкту оновлено!');
+      fetchProject();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Помилка оновлення статусу');
+    }
+  };
+
   if (loading) return <div className="text-center py-12">Завантаження...</div>;
   if (!project) return <div className="text-center py-12">Проєкт не знайдено</div>;
 
   const isOwner = user?.id === project.client_id;
   const isFreelancer = user?.role === 'freelancer';
+  const isAssignedFreelancer = isFreelancer && user?.id === project.freelancer_id;
   const canBid = isFreelancer && project.status === 'open';
+  const canManageStatus = isOwner || isAssignedFreelancer;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -101,17 +116,42 @@ const ProjectDetail = () => {
             <span className={`ml-2 px-2 py-1 rounded text-sm ${
               project.status === 'open' ? 'bg-green-100 text-green-800' :
               project.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
+              project.status === 'completed' ? 'bg-purple-100 text-purple-800' :
+              project.status === 'cancelled' ? 'bg-red-100 text-red-800' :
               'bg-gray-100 text-gray-800'
             }`}>
               {project.status === 'open' ? 'Відкритий' :
                project.status === 'in_progress' ? 'В роботі' :
-               project.status === 'completed' ? 'Завершений' : project.status}
+               project.status === 'completed' ? 'Завершений' :
+               project.status === 'cancelled' ? 'Скасований' : project.status}
             </span>
           </div>
           <div>
             <span className="font-semibold">Заявок:</span> {project.bids_count || 0}
           </div>
         </div>
+
+        {/* Кнопки управління статусом (для власника та виконавця) */}
+        {canManageStatus && project.status !== 'completed' && project.status !== 'cancelled' && (
+          <div className="flex gap-2 mt-4">
+            {project.status === 'in_progress' && (
+              <button
+                onClick={() => handleUpdateStatus('completed')}
+                className="flex-1 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+              >
+                ✓ Позначити виконаним
+              </button>
+            )}
+            {(project.status === 'open' || project.status === 'in_progress') && isOwner && (
+              <button
+                onClick={() => handleUpdateStatus('cancelled')}
+                className="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+              >
+                ✕ Скасувати проєкт
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Кнопка подати заявку (для фрілансерів) */}
         {canBid && !showBidForm && (
