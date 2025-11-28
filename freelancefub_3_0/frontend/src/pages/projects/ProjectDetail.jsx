@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { projectsAPI, bidsAPI } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 
@@ -97,6 +97,7 @@ const ProjectDetail = () => {
   const isAssignedFreelancer = isFreelancer && user?.id === project.freelancer_id;
   const canBid = isFreelancer && project.status === 'open';
   const canManageStatus = isOwner || isAssignedFreelancer;
+  const canAccessChat = (isOwner || isAssignedFreelancer) && project.freelancer_id;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -130,6 +131,19 @@ const ProjectDetail = () => {
             <span className="font-semibold">Заявок:</span> {project.bids_count || 0}
           </div>
         </div>
+
+        {/* Кнопка відкрити чат */}
+        {canAccessChat && (
+          <Link
+            to={`/chat/${project.id}`}
+            className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 mt-4 flex items-center justify-center gap-2 font-semibold"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            💬 Відкрити чат
+          </Link>
+        )}
 
         {/* Кнопки управління статусом (для власника та виконавця) */}
         {canManageStatus && project.status !== 'completed' && project.status !== 'cancelled' && (

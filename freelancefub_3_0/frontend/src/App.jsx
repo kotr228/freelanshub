@@ -36,6 +36,7 @@ function AppContent() {
         <Route path="/create-project" element={<PrivateRoute><CreateProject /></PrivateRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
         <Route path="/chat/:projectId" element={<PrivateRoute><Chat /></PrivateRoute>} />
       </Routes>
     </div>

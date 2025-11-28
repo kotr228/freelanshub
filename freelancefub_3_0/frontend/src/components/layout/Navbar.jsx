@@ -25,6 +25,9 @@ const Navbar = () => {
                 <Link to="/dashboard" className="px-3 py-2 hover:text-primary">
                   Панель
                 </Link>
+                <Link to="/chat" className="px-3 py-2 hover:text-primary">
+                  💬 Чат
+                </Link>
                 {user?.role === 'client' && (
                   <Link to="/create-project" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                     Створити проєкт
