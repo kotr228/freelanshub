@@ -80,7 +80,7 @@ export default function Profile() {
           <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
             <div className="text-center">
               <div className="text-2xl font-bold text-primary">
-                {profileUser.rating ? profileUser.rating.toFixed(1) : '0.0'}
+                {profileUser.rating ? parseFloat(profileUser.rating).toFixed(1) : '0.0'}
               </div>
               <div className="text-sm text-gray-600">Рейтинг</div>
             </div>
