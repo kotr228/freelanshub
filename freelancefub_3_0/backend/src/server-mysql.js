@@ -14,7 +14,7 @@ import authRoutes from './routes/sql/authRoutes.js';
 import projectRoutes from './routes/sql/projectRoutes.js';
 import bidRoutes from './routes/sql/bidRoutes.js';
 import messageRoutes from './routes/sql/messageRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import userRoutes from './routes/sql/userRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 
 import jwt from 'jsonwebtoken';
