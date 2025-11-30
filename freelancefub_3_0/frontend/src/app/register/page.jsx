@@ -40,61 +40,61 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-dark py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <h2 className="text-center text-3xl font-bold text-gray-900">
+        <h2 className="text-center text-3xl font-bold text-white">
           Реєстрація на FreelanceHub
         </h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-900/50 border border-red-500 text-red-200 px-4 py-3 rounded">
               {error}
             </div>
           )}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Ім'я</label>
+              <label className="block text-sm font-medium text-gray-300">Ім'я</label>
               <input
                 type="text"
                 name="name"
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <label className="block text-sm font-medium text-gray-300">Email</label>
               <input
                 type="email"
                 name="email"
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Пароль</label>
+              <label className="block text-sm font-medium text-gray-300">Пароль</label>
               <input
                 type="password"
                 name="password"
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Роль</label>
+              <label className="block text-sm font-medium text-gray-300">Роль</label>
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white focus:outline-none focus:ring-primary focus:border-primary"
               >
                 <option value="freelancer">Фрілансер</option>
                 <option value="client">Замовник</option>
@@ -102,24 +102,26 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Телефон</label>
+              <label className="block text-sm font-medium text-gray-300">Телефон</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                placeholder="+380..."
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Telegram</label>
+              <label className="block text-sm font-medium text-gray-300">Telegram</label>
               <input
                 type="text"
                 name="telegram"
                 value={formData.telegram}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+                placeholder="@username"
+                className="mt-1 block w-full px-3 py-2 bg-dark-lighter border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -127,13 +129,13 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-primary hover:bg-blue-600 focus:outline-none disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm bg-primary text-dark font-semibold hover:bg-primary-dark focus:outline-none disabled:opacity-50 transition-colors"
           >
             {loading ? 'Завантаження...' : 'Зареєструватися'}
           </button>
 
           <div className="text-center">
-            <Link href="/login" className="text-primary hover:text-blue-600">
+            <Link href="/login" className="text-primary hover:text-primary-dark transition-colors">
               Вже є акаунт? Увійти
             </Link>
           </div>

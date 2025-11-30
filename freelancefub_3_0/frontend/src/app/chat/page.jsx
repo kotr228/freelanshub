@@ -43,23 +43,23 @@ const ChatList = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-12">Завантаження...</div>;
+    return <div className="text-center py-12 text-gray-300">Завантаження...</div>;
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="p-4 border-b border-gray-200">
-          <h1 className="text-2xl font-bold">Повідомлення</h1>
+    <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+      <div className="bg-dark-card rounded-lg shadow-lg overflow-hidden">
+        <div className="p-4 border-b border-gray-700">
+          <h1 className="text-2xl font-bold text-white">Повідомлення</h1>
         </div>
 
         {conversations.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="p-8 text-center text-gray-400">
+            <svg className="mx-auto h-12 w-12 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
-            <h3 className="mt-2 text-sm font-medium text-gray-900">Немає активних чатів</h3>
-            <p className="mt-1 text-sm text-gray-500">Почніть проєкт, щоб розпочати спілкування</p>
+            <h3 className="mt-2 text-sm font-medium text-white">Немає активних чатів</h3>
+            <p className="mt-1 text-sm text-gray-400">Почніть проєкт, щоб розпочати спілкування</p>
           </div>
         ) : (
           <div>
@@ -72,24 +72,24 @@ const ChatList = () => {
                 <div
                   key={conv.project.id}
                   onClick={() => handleSelectConversation(conv)}
-                  className="p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors"
+                  className="p-4 border-b border-gray-700 cursor-pointer hover:bg-dark-lighter transition-colors"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
+                    <div className="w-14 h-14 rounded-full bg-primary text-dark flex items-center justify-center font-bold text-lg">
                       {otherUser?.name?.[0]?.toUpperCase() || '?'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start">
-                        <h3 className="font-semibold text-base truncate">
+                        <h3 className="font-semibold text-base truncate text-white">
                           {otherUser?.name || 'Користувач'}
                         </h3>
                         {conv.lastMessage && (
-                          <span className="text-xs text-gray-500 ml-2">
+                          <span className="text-xs text-gray-400 ml-2">
                             {formatDate(conv.lastMessage.created_at)}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 truncate mt-1">
+                      <p className="text-sm text-gray-400 truncate mt-1">
                         {conv.project.title}
                       </p>
                       {conv.lastMessage && (
@@ -98,7 +98,7 @@ const ChatList = () => {
                         </p>
                       )}
                       {conv.unreadCount > 0 && (
-                        <span className="inline-block mt-2 px-2 py-0.5 bg-red-500 text-white text-xs rounded-full">
+                        <span className="inline-block mt-2 px-2 py-0.5 bg-primary text-dark text-xs rounded-full font-semibold">
                           {conv.unreadCount}
                         </span>
                       )}

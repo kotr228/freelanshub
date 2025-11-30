@@ -161,21 +161,21 @@ const Chat = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-12">Завантаження...</div>;
+    return <div className="text-center py-12 text-gray-300">Завантаження...</div>;
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 150px)' }}>
+    <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+      <div className="bg-dark-card rounded-lg shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 150px)' }}>
         <div className="flex h-full">
           {/* Список чатів */}
-          <div className="w-1/3 border-r border-gray-200 overflow-y-auto">
-            <div className="p-4 border-b border-gray-200">
-              <h2 className="text-xl font-bold">Повідомлення</h2>
+          <div className="w-full md:w-1/3 border-r border-gray-700 overflow-y-auto">
+            <div className="p-4 border-b border-gray-700">
+              <h2 className="text-xl font-bold text-white">Повідомлення</h2>
             </div>
 
             {conversations.length === 0 ? (
-              <div className="p-4 text-center text-gray-500">
+              <div className="p-4 text-center text-gray-400">
                 Немає активних чатів
               </div>
             ) : (
@@ -191,26 +191,26 @@ const Chat = () => {
                     <div
                       key={conv.project.id}
                       onClick={() => handleSelectConversation(conv)}
-                      className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
-                        isSelected ? 'bg-blue-50' : ''
+                      className={`p-4 border-b border-gray-700 cursor-pointer hover:bg-dark-lighter transition-colors ${
+                        isSelected ? 'bg-dark-lighter' : ''
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                        <div className="w-12 h-12 rounded-full bg-primary text-dark flex items-center justify-center font-bold">
                           {otherUser?.name?.[0]?.toUpperCase() || '?'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start">
-                            <h3 className="font-semibold text-sm truncate">
+                            <h3 className="font-semibold text-sm truncate text-white">
                               {otherUser?.name || 'Користувач'}
                             </h3>
                             {conv.lastMessage && (
-                              <span className="text-xs text-gray-500 ml-2">
+                              <span className="text-xs text-gray-400 ml-2">
                                 {formatDate(conv.lastMessage.created_at)}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-gray-600 truncate">
+                          <p className="text-xs text-gray-400 truncate">
                             {conv.project.title}
                           </p>
                           {conv.lastMessage && (
@@ -219,7 +219,7 @@ const Chat = () => {
                             </p>
                           )}
                           {conv.unreadCount > 0 && (
-                            <span className="inline-block mt-1 px-2 py-0.5 bg-red-500 text-white text-xs rounded-full">
+                            <span className="inline-block mt-1 px-2 py-0.5 bg-primary text-dark text-xs rounded-full font-semibold">
                               {conv.unreadCount}
                             </span>
                           )}
@@ -237,9 +237,9 @@ const Chat = () => {
             {selectedProject ? (
               <>
                 {/* Заголовок */}
-                <div className="p-4 border-b border-gray-200">
-                  <h3 className="font-bold">{selectedProject.title}</h3>
-                  <p className="text-sm text-gray-600">
+                <div className="p-4 border-b border-gray-700">
+                  <h3 className="font-bold text-white">{selectedProject.title}</h3>
+                  <p className="text-sm text-gray-400">
                     {selectedProject.client_id === user.id
                       ? selectedProject.freelancer?.name
                       : selectedProject.client?.name}
@@ -247,7 +247,7 @@ const Chat = () => {
                 </div>
 
                 {/* Повідомлення */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-dark-lighter">
                   {messages.map((msg) => {
                     const isMine = msg.sender_id === user.id;
                     return (
@@ -257,12 +257,12 @@ const Chat = () => {
                       >
                         <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                           isMine
-                            ? 'bg-primary text-white'
-                            : 'bg-gray-200 text-gray-800'
+                            ? 'bg-primary text-dark'
+                            : 'bg-gray-700 text-white'
                         }`}>
                           <p className="text-sm">{msg.content}</p>
                           <p className={`text-xs mt-1 ${
-                            isMine ? 'text-blue-100' : 'text-gray-500'
+                            isMine ? 'text-dark/70' : 'text-gray-400'
                           }`}>
                             {formatDate(msg.created_at)}
                           </p>
@@ -272,8 +272,8 @@ const Chat = () => {
                   })}
                   {isTyping && (
                     <div className="flex justify-start">
-                      <div className="bg-gray-200 px-4 py-2 rounded-lg">
-                        <span className="text-sm text-gray-600">Друкує...</span>
+                      <div className="bg-gray-700 px-4 py-2 rounded-lg">
+                        <span className="text-sm text-gray-300">Друкує...</span>
                       </div>
                     </div>
                   )}
@@ -281,19 +281,19 @@ const Chat = () => {
                 </div>
 
                 {/* Форма відправки */}
-                <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200">
+                <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-700">
                   <div className="flex gap-2">
                     <input
                       type="text"
                       value={newMessage}
                       onChange={handleTyping}
                       placeholder="Напишіть повідомлення..."
-                      className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="flex-1 px-4 py-2 bg-dark-lighter border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                     <button
                       type="submit"
                       disabled={!newMessage.trim()}
-                      className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                      className="px-6 py-2 bg-primary text-dark font-semibold rounded-lg hover:bg-primary-dark disabled:bg-gray-700 disabled:cursor-not-allowed transition-colors"
                     >
                       Відправити
                     </button>
@@ -301,13 +301,13 @@ const Chat = () => {
                 </form>
               </>
             ) : (
-              <div className="flex-1 flex items-center justify-center text-gray-500">
+              <div className="flex-1 flex items-center justify-center text-gray-400">
                 <div className="text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="mx-auto h-12 w-12 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">Оберіть чат</h3>
-                  <p className="mt-1 text-sm text-gray-500">Виберіть розмову зі списку ліворуч</p>
+                  <h3 className="mt-2 text-sm font-medium text-white">Оберіть чат</h3>
+                  <p className="mt-1 text-sm text-gray-400">Виберіть розмову зі списку ліворуч</p>
                 </div>
               </div>
             )}
