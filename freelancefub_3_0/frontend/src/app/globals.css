@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --primary: #3B82F6;
+  --primary: #FFC107;
+  --dark: #1A1A1A;
 }
 
 body {
@@ -13,4 +14,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #1A1A1A;
+  color: #FFFFFF;
 }

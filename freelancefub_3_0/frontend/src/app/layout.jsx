@@ -11,9 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="uk">
-      <body>
+      <body className="bg-dark text-white">
         <AuthProvider>
-          <div className="min-h-screen bg-gray-50 flex flex-col">
+          <div className="min-h-screen bg-dark flex flex-col">
             <Navbar />
             <main className="flex-grow">
               {children}
