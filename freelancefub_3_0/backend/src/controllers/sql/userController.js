@@ -1,4 +1,4 @@
-import User from '../../models/mysql/User.js';
+import { User } from '../../models/sql/index.js';
 import { Op } from 'sequelize';
 
 // Отримати профіль користувача за ID
