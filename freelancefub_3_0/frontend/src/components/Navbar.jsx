@@ -30,6 +30,9 @@ const Navbar = () => {
                 <Link href="/chat" className="px-3 py-2 hover:text-primary">
                   💬 Чат
                 </Link>
+                <Link href="/settings" className="px-3 py-2 hover:text-primary">
+                  ⚙️ Налаштування
+                </Link>
                 {user?.role === 'client' && (
                   <Link href="/create-project" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                     Створити проєкт
