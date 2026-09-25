@@ -33,7 +33,16 @@ npm run dev               # http://localhost:3000
 
 1. Подивіться вивід у терміналі, де запущено `npm run dev`: там є справжня причина і шлях до `next-panic-*.log`.
 2. Після `git pull` виконайте `npm install` (генерує Prisma Client у `src/generated/prisma`), потім видаліть кеш: `rm -rf .next` (Windows PowerShell: `Remove-Item -Recurse -Force .next`).
-3. Запасний варіант без Turbopack: `npm run dev:webpack`.
+3. Запасний варіант без Turbopack: `npm run dev:webpack` (і `npm run build:webpack` для збирання).
+4. `failed to create junction point ... Incorrect function (os error 1)` — диск не підтримує junction-посилання
+   (FAT32/exFAT, мережеві чи хмарні диски). Перенесіть проєкт на NTFS-диск (зазвичай `C:`) або користуйтеся `dev:webpack` / `build:webpack`.
+5. `EPERM: operation not permitted, mkdir ...src\generated\prisma` під час `npm install` — файли тримає інший процес
+   (старий `next dev`, редактор, антивірус). Зупиніть процеси `node` і повторіть `npx prisma generate`.
+
+### Якщо `npm run db:deploy` пише `P3005 The database schema is not empty`
+
+У базі вже є таблиці, створені не міграціями. Якщо даних там немає, очистіть базу і накотіть міграції:
+`npx prisma migrate reset` (видаляє **всі** таблиці й дані в базі з `DIRECT_URL`).
 
 ### База даних
 
