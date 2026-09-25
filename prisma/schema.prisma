@@ -1,0 +1,214 @@
+// Freelanshub — PostgreSQL (Neon) schema.
+// Prisma 7: connection URLs live in prisma.config.ts, not here.
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------------------------------------ enums
+
+enum Role {
+  CLIENT
+  FREELANCER
+}
+
+/// OPEN — free, waiting for a freelancer; IN_PROGRESS — assigned;
+/// DONE — freelancer finished, waiting for payment; PAID; ARCHIVED.
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+  PAID
+  ARCHIVED
+}
+
+enum JobType {
+  ONE_TIME // Одноразова робота
+  FIXED_PERIOD // Робота на певний період
+  LONG_TERM // Робота на довгий період часу
+}
+
+// ------------------------------------------------------------------ users
+
+model User {
+  id           Int      @id @default(autoincrement())
+  role         Role
+  name         String   @db.VarChar(45)
+  email        String   @db.VarChar(150)
+  passwordHash String
+  telegram     String   @db.VarChar(45)
+  phone        String   @db.VarChar(45)
+  avatar       String?
+  about        String?
+  /// Freelancers only
+  specialty    String?  @db.VarChar(150)
+  /// Freelancers only — card for payouts
+  bankCard     String?  @db.VarChar(19)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  clientJobs      Job[]          @relation("ClientJobs")
+  freelancerJobs  Job[]          @relation("FreelancerJobs")
+  sentMessages    Message[]      @relation("SentMessages")
+  threads         Message[]      @relation("ThreadFreelancer")
+  reviewsWritten  Review[]       @relation("ReviewAuthor")
+  reviewsReceived Review[]       @relation("ReviewTarget")
+  notifications   Notification[]
+  payments        Payment[]      @relation("PaymentClient")
+  payouts         Payment[]      @relation("PaymentFreelancer")
+
+  /// The same e-mail may exist once per role (as in the original platform).
+  @@unique([email, role])
+  @@map("users")
+}
+
+// ------------------------------------------------------------------ jobs
+
+model Job {
+  id           Int       @id @default(autoincrement())
+  title        String    @db.VarChar(45)
+  /// Specialty code: spec1…spec15 (see src/lib/constants.ts)
+  specialty    String    @db.VarChar(20)
+  type         JobType
+  description  String    @db.VarChar(500)
+  price        Decimal   @db.Decimal(12, 2)
+  deadline     DateTime? @db.Date
+  status       JobStatus @default(OPEN)
+  clientId     Int
+  freelancerId Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  client        User           @relation("ClientJobs", fields: [clientId], references: [id], onDelete: Cascade)
+  freelancer    User?          @relation("FreelancerJobs", fields: [freelancerId], references: [id], onDelete: SetNull)
+  messages      Message[]
+  attachments   Attachment[]
+  reviews       Review[]
+  notifications Notification[]
+  payment       Payment?
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([clientId, status])
+  @@index([freelancerId, status])
+  @@index([specialty])
+  @@map("jobs")
+}
+
+/// Files attached to a job (messageId is null) or to a chat message.
+model Attachment {
+  id         Int      @id @default(autoincrement())
+  jobId      Int
+  messageId  Int?
+  uploaderId Int?
+  fileName   String   @db.VarChar(255)
+  /// Path relative to STORAGE_DIR (or an object-storage key)
+  filePath   String   @db.VarChar(255)
+  size       Int?
+  createdAt  DateTime @default(now())
+
+  job     Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  message Message? @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+  @@index([messageId])
+  @@map("attachments")
+}
+
+// ------------------------------------------------------------------ chat
+
+/// One conversation per (job, freelancer): freelancers can ask questions
+/// before taking a job, the client sees one thread per freelancer.
+model Message {
+  id           Int       @id @default(autoincrement())
+  jobId        Int
+  freelancerId Int
+  senderId     Int
+  body         String
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  job         Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  freelancer  User         @relation("ThreadFreelancer", fields: [freelancerId], references: [id], onDelete: Cascade)
+  sender      User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  attachments Attachment[]
+
+  @@index([jobId, freelancerId, id])
+  @@map("messages")
+}
+
+// ------------------------------------------------------------------ reviews
+
+/// Left after a job is paid; each side may review the other once per job.
+model Review {
+  id        Int      @id @default(autoincrement())
+  jobId     Int
+  authorId  Int
+  targetId  Int
+  /// 1–5 (enforced in application code / a CHECK constraint in the migration)
+  rating    Int      @db.SmallInt
+  comment   String?  @db.VarChar(1000)
+  createdAt DateTime @default(now())
+
+  job    Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  author User @relation("ReviewAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  target User @relation("ReviewTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, authorId])
+  @@index([targetId])
+  @@map("reviews")
+}
+
+// ------------------------------------------------------------------ notifications
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  jobId     Int?
+  message   String   @db.VarChar(500)
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job? @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead, createdAt(sort: Desc)])
+  @@map("notifications")
+}
+
+// ------------------------------------------------------------------ payments
+
+model Payment {
+  id           Int      @id @default(autoincrement())
+  /// Nullable so the payment history survives the yearly job cleanup
+  jobId        Int?     @unique
+  clientId     Int
+  freelancerId Int
+  amount       Decimal  @db.Decimal(12, 2)
+  commission   Decimal  @db.Decimal(12, 2)
+  payout       Decimal  @db.Decimal(12, 2)
+  bankCard     String   @db.VarChar(19)
+  createdAt    DateTime @default(now())
+
+  job        Job? @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  client     User @relation("PaymentClient", fields: [clientId], references: [id])
+  freelancer User @relation("PaymentFreelancer", fields: [freelancerId], references: [id])
+
+  @@index([freelancerId])
+  @@map("payments")
+}
+
+// ------------------------------------------------------------------ housekeeping
+
+/// Single row (id = 1) — when the daily cleanup job last ran.
+model Cleanup {
+  id            Int      @id @default(1)
+  lastCleanupAt DateTime @default(now())
+
+  @@map("cleanup")
+}

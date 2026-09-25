@@ -43,6 +43,18 @@ curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/cleanup
 
 Видаляє вільні замовлення, дедлайн яких минув понад 30 днів тому, і завершені замовлення, старші за рік, разом із файлами.
 
+## PostgreSQL (Neon) + Prisma
+
+Перехід з MySQL на Neon іде через Prisma 7 (`prisma/schema.prisma`, `prisma.config.ts`, `src/lib/prisma.ts`).
+Приклад Server Actions на Prisma — `src/app/actions/jobs.ts` (`createJob`, `getJobs`, `getMyJobs`).
+Решта застосунку поки працює через `mysql2` (`src/lib/db.ts`).
+
+1. У `.env` задайте `DATABASE_URL` (пулований рядок Neon, хост з `-pooler`) і `DIRECT_URL` (прямий, без `-pooler`) — див. `.env.example`.
+2. `npm install` — `postinstall` запускає `prisma generate` (клієнт генерується в `src/generated/prisma`, він не в git).
+3. Порожня база: `npm run db:migrate -- --name init` створить таблиці й першу міграцію. На продакшні — `npm run db:deploy`.
+   Якщо таблиці в Neon вже створені вручну: `npx prisma db pull` підтягне їх у схему.
+4. `npm run db:studio` — перегляд даних.
+
 ## Структура
 
 ```
