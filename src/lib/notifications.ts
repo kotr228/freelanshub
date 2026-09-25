@@ -1,7 +1,6 @@
 import "server-only";
-import { execute, query } from "./db";
-import type { Role } from "./constants";
-import type { PoolConnection } from "mysql2/promise";
+import type { Prisma } from "@/generated/prisma/client";
+import { prisma } from "./prisma";
 
 export type Notification = {
   id: number;
@@ -11,27 +10,28 @@ export type Notification = {
   createdAt: string;
 };
 
-export async function notify(role: Role, userId: number, orderId: number | null, message: string, db?: PoolConnection) {
-  await execute(
-    "INSERT INTO notifications (role, user_id, id_j, message) VALUES (?, ?, ?, ?)",
-    [role, userId, orderId, message],
-    db,
-  );
+type Db = Prisma.TransactionClient | typeof prisma;
+
+export async function notify(userId: number, orderId: number | null, message: string, db: Db = prisma) {
+  await db.notification.create({ data: { userId, jobId: orderId, message: message.slice(0, 500) } });
 }
 
-export async function listNotifications(role: Role, userId: number) {
-  const rows = await query<{ id: number; orderId: number | null; message: string; isRead: number; createdAt: string }>(
-    `SELECT id_n AS id, id_j AS orderId, message, is_read AS isRead, created_at AS createdAt
-       FROM notifications WHERE role = ? AND user_id = ?
-      ORDER BY id_n DESC LIMIT 30`,
-    [role, userId],
-  );
-  return rows.map<Notification>((row) => ({ ...row, isRead: Boolean(row.isRead) }));
+export async function listNotifications(userId: number): Promise<Notification[]> {
+  const rows = await prisma.notification.findMany({
+    where: { userId },
+    orderBy: { id: "desc" },
+    take: 30,
+    select: { id: true, jobId: true, message: true, isRead: true, createdAt: true },
+  });
+  return rows.map((row) => ({
+    id: row.id,
+    orderId: row.jobId,
+    message: row.message,
+    isRead: row.isRead,
+    createdAt: row.createdAt.toISOString(),
+  }));
 }
 
-export async function markAllRead(role: Role, userId: number) {
-  await execute("UPDATE notifications SET is_read = TRUE WHERE role = ? AND user_id = ? AND is_read = FALSE", [
-    role,
-    userId,
-  ]);
+export async function markAllRead(userId: number) {
+  await prisma.notification.updateMany({ where: { userId, isRead: false }, data: { isRead: true } });
 }

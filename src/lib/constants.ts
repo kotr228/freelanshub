@@ -1,10 +1,12 @@
-// Domain vocabulary. Codes (type1, spec3, S2…) are what the database stores,
+// Domain vocabulary. Codes (ONE_TIME, spec3, DONE…) are what the database stores,
 // labels are what users see.
 
+// Keys match the JobType enum in prisma/schema.prisma.
+// (Plain strings here: this file is also imported by Client Components.)
 export const ORDER_TYPES = {
-  type1: "Одноразова робота",
-  type2: "Робота на певний період",
-  type3: "Робота на довгий період часу",
+  ONE_TIME: "Одноразова робота",
+  FIXED_PERIOD: "Робота на певний період",
+  LONG_TERM: "Робота на довгий період часу",
 } as const;
 
 export const SPECIALTIES = {
@@ -36,27 +38,21 @@ export function specialtyLabel(code: string) {
   return SPECIALTIES[code as SpecialtyCode] ?? code;
 }
 
-/**
- * S1 — active (free when no freelancer is assigned, otherwise in progress)
- * S2 — done by the freelancer, waiting for the client's payment
- * S3 — paid
- * S4 — archived
- */
-export type OrderStatus = "S1" | "S2" | "S3" | "S4";
+/** Mirrors the JobStatus enum in prisma/schema.prisma. */
+export type JobStatusCode = "OPEN" | "IN_PROGRESS" | "DONE" | "PAID" | "ARCHIVED";
 
 export type OrderStage = "free" | "in_progress" | "done" | "paid" | "archived";
 
-export function orderStage(status: string, freelancerId: number | null): OrderStage {
-  switch (status) {
-    case "S2":
-      return "done";
-    case "S3":
-      return "paid";
-    case "S4":
-      return "archived";
-    default:
-      return freelancerId ? "in_progress" : "free";
-  }
+const STAGE_BY_STATUS: Record<JobStatusCode, OrderStage> = {
+  OPEN: "free",
+  IN_PROGRESS: "in_progress",
+  DONE: "done",
+  PAID: "paid",
+  ARCHIVED: "archived",
+};
+
+export function orderStage(status: JobStatusCode): OrderStage {
+  return STAGE_BY_STATUS[status];
 }
 
 export const STAGE_META: Record<OrderStage, { label: string; tone: string }> = {
@@ -67,7 +63,14 @@ export const STAGE_META: Record<OrderStage, { label: string; tone: string }> = {
   archived: { label: "В архіві", tone: "zinc" },
 };
 
+/** Role as used in URLs, the session cookie and the UI. The database uses CLIENT / FREELANCER. */
 export type Role = "client" | "freelancer";
+
+export const DB_ROLE = { client: "CLIENT", freelancer: "FREELANCER" } as const;
+
+export function roleFromDb(role: "CLIENT" | "FREELANCER"): Role {
+  return role === "CLIENT" ? "client" : "freelancer";
+}
 
 export const ROLE_LABEL: Record<Role, string> = {
   client: "Замовник",

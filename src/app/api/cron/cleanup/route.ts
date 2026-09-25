@@ -1,13 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { execute, query } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { removeStored } from "@/lib/storage";
 
+const DAY = 86_400_000;
+
 /**
- * Daily housekeeping (was run on every visit of index.php before):
- *  - free orders whose deadline passed more than 30 days ago are removed;
- *  - finished orders (paid/archived) older than a year are removed with all their files,
- *    as promised in the privacy policy.
+ * Daily housekeeping:
+ *  - open jobs whose deadline passed more than 30 days ago are removed;
+ *  - finished jobs (paid/archived) older than a year are removed with all their files,
+ *    as promised in the privacy policy. Payment records stay (their jobId becomes NULL).
  * Call with: curl -H "Authorization: Bearer $CRON_SECRET" https://host/api/cron/cleanup
+ * (on Vercel, add it to vercel.json "crons" — Vercel sends the same header).
  */
 export async function GET(request: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -15,28 +18,30 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const stale = await query<{ id: number }>(
-    `SELECT id_j AS id FROM job
-      WHERE (status = 'S1' AND id_f IS NULL AND date < NOW() - INTERVAL 30 DAY)
-         OR (status IN ('S3', 'S4') AND COALESCE(created_at, date) < NOW() - INTERVAL 365 DAY)`,
-  );
-  const ids = stale.map((row) => row.id);
+  const now = Date.now();
+  const stale = await prisma.job.findMany({
+    where: {
+      OR: [
+        { status: "OPEN", deadline: { lt: new Date(now - 30 * DAY) } },
+        { status: { in: ["PAID", "ARCHIVED"] }, createdAt: { lt: new Date(now - 365 * DAY) } },
+      ],
+    },
+    select: { id: true },
+  });
+  const ids = stale.map((job) => job.id);
 
   if (ids.length > 0) {
-    const marks = ids.map(() => "?").join(",");
-    const files = await query<{ path: string }>(
-      `SELECT file_path AS path FROM files WHERE id_j IN (${marks})
-       UNION ALL
-       SELECT cf.file_path FROM chat_files cf JOIN chat ch ON ch.id_chat = cf.id_chat WHERE ch.id_j IN (${marks})`,
-      [...ids, ...ids],
-    );
-    await Promise.all(files.map((file) => removeStored(file.path)));
-    // Payment records keep their history; they just lose the link to the deleted order.
-    await execute(`UPDATE \`otrimani kohti\` SET id_j = NULL WHERE id_j IN (${marks})`, ids);
-    await execute(`DELETE FROM notifications WHERE id_j IN (${marks})`, ids);
-    await execute(`DELETE FROM job WHERE id_j IN (${marks})`, ids);
+    const files = await prisma.attachment.findMany({ where: { jobId: { in: ids } }, select: { filePath: true } });
+    // Messages, attachments, reviews and notifications go with the job (ON DELETE CASCADE).
+    await prisma.job.deleteMany({ where: { id: { in: ids } } });
+    await Promise.all(files.map((file) => removeStored(file.filePath)));
   }
-  await execute("UPDATE cleanup SET last_cleanup = CURDATE()");
 
-  return NextResponse.json({ removedOrders: ids.length });
+  await prisma.cleanup.upsert({
+    where: { id: 1 },
+    create: { id: 1, lastCleanupAt: new Date() },
+    update: { lastCleanupAt: new Date() },
+  });
+
+  return NextResponse.json({ removedJobs: ids.length });
 }

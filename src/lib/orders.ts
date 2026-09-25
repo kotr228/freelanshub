@@ -1,18 +1,21 @@
 import "server-only";
-import { query, queryOne } from "./db";
-import { orderStage, type OrderStage, type Role } from "./constants";
+import type { Prisma } from "@/generated/prisma/client";
+import { orderStage, type JobStatusCode, type OrderStage, type Role } from "./constants";
+import { prisma } from "./prisma";
 import type { Session } from "./session";
 
+/** A job as the UI sees it: plain JSON (no Decimal / Date), safe to pass to Client Components. */
 export type Order = {
   id: number;
   title: string;
   specialty: string;
   type: string;
   description: string;
-  status: string;
+  status: JobStatusCode;
   price: number;
+  /** "YYYY-MM-DD" */
   deadline: string | null;
-  createdAt: string | null;
+  createdAt: string;
   clientId: number;
   clientName: string;
   freelancerId: number | null;
@@ -20,157 +23,87 @@ export type Order = {
   stage: OrderStage;
 };
 
-type OrderRow = {
-  id_j: number;
-  lable: string;
-  spacsalyty: string;
-  tipe: string;
-  description: string;
-  status: string;
-  price: number;
-  date: string | null;
-  created_at: string | null;
-  id_c: number;
-  client_name: string;
-  id_f: number | null;
-  freelancer_name: string | null;
-};
+export const orderSelect = {
+  id: true,
+  title: true,
+  specialty: true,
+  type: true,
+  description: true,
+  status: true,
+  price: true,
+  deadline: true,
+  createdAt: true,
+  clientId: true,
+  freelancerId: true,
+  client: { select: { name: true } },
+  freelancer: { select: { name: true } },
+} satisfies Prisma.JobSelect;
 
-const SELECT_ORDER = `
-  SELECT j.id_j, j.lable, j.spacsalyty, j.tipe, j.description, j.status, j.price, j.date, j.created_at,
-         j.id_c, c.name AS client_name, j.id_f, f.name AS freelancer_name
-    FROM job j
-    JOIN cliants_akks c ON c.id_c = j.id_c
-    LEFT JOIN freelanser_akks f ON f.id_f = j.id_f`;
+type OrderRow = Prisma.JobGetPayload<{ select: typeof orderSelect }>;
 
-function toOrder(row: OrderRow): Order {
+export function toOrder(row: OrderRow): Order {
   return {
-    id: row.id_j,
-    title: row.lable,
-    specialty: row.spacsalyty,
-    type: row.tipe,
+    id: row.id,
+    title: row.title,
+    specialty: row.specialty,
+    type: row.type,
     description: row.description,
     status: row.status,
-    price: Number(row.price),
-    deadline: row.date,
-    createdAt: row.created_at,
-    clientId: row.id_c,
-    clientName: row.client_name,
-    freelancerId: row.id_f,
-    freelancerName: row.freelancer_name,
-    stage: orderStage(row.status, row.id_f),
+    price: row.price.toNumber(),
+    deadline: row.deadline?.toISOString().slice(0, 10) ?? null,
+    createdAt: row.createdAt.toISOString(),
+    clientId: row.clientId,
+    clientName: row.client.name,
+    freelancerId: row.freelancerId,
+    freelancerName: row.freelancer?.name ?? null,
+    stage: orderStage(row.status),
   };
 }
 
 export async function getOrder(id: number) {
-  const row = await queryOne<OrderRow>(`${SELECT_ORDER} WHERE j.id_j = ?`, [id]);
+  if (!Number.isInteger(id) || id <= 0) return null;
+  const row = await prisma.job.findUnique({ where: { id }, select: orderSelect });
   return row ? toOrder(row) : null;
 }
 
+// ------------------------------------------------------------------ lists per role
+
 export const CLIENT_FILTERS = {
-  active: { label: "Активні", where: "j.status = 'S1'" },
-  free: { label: "Вільні", where: "j.status = 'S1' AND j.id_f IS NULL" },
-  in_progress: { label: "На виконанні", where: "j.status = 'S1' AND j.id_f IS NOT NULL" },
-  done: { label: "Очікують оплату", where: "j.status = 'S2'" },
-  inactive: { label: "Завершені", where: "j.status IN ('S3', 'S4')" },
-} as const;
+  active: { label: "Активні", where: { status: { in: ["OPEN", "IN_PROGRESS"] } } },
+  free: { label: "Вільні", where: { status: "OPEN" } },
+  in_progress: { label: "На виконанні", where: { status: "IN_PROGRESS" } },
+  done: { label: "Очікують оплату", where: { status: "DONE" } },
+  inactive: { label: "Завершені", where: { status: { in: ["PAID", "ARCHIVED"] } } },
+} as const satisfies Record<string, { label: string; where: Prisma.JobWhereInput }>;
 
 export type ClientFilter = keyof typeof CLIENT_FILTERS;
 
-export async function listClientOrders(clientId: number, filter: ClientFilter) {
-  const rows = await query<OrderRow>(
-    `${SELECT_ORDER} WHERE j.id_c = ? AND ${CLIENT_FILTERS[filter].where} ORDER BY j.id_j DESC`,
-    [clientId],
-  );
-  return rows.map(toOrder);
-}
-
-export async function clientOrderCounts(clientId: number) {
-  const entries = await Promise.all(
-    (Object.keys(CLIENT_FILTERS) as ClientFilter[]).map(async (key) => {
-      const row = await queryOne<{ n: number }>(
-        `SELECT COUNT(*) AS n FROM job j WHERE j.id_c = ? AND ${CLIENT_FILTERS[key].where}`,
-        [clientId],
-      );
-      return [key, Number(row?.n ?? 0)] as const;
-    }),
-  );
-  return Object.fromEntries(entries) as Record<ClientFilter, number>;
-}
-
 export const FREELANCER_FILTERS = {
-  in_progress: { label: "На виконанні", where: "j.status = 'S1'" },
-  done: { label: "Очікують оплату", where: "j.status = 'S2'" },
-  paid: { label: "Сплачені", where: "j.status IN ('S3', 'S4')" },
-} as const;
+  in_progress: { label: "На виконанні", where: { status: "IN_PROGRESS" } },
+  done: { label: "Очікують оплату", where: { status: "DONE" } },
+  paid: { label: "Сплачені", where: { status: { in: ["PAID", "ARCHIVED"] } } },
+} as const satisfies Record<string, { label: string; where: Prisma.JobWhereInput }>;
 
 export type FreelancerFilter = keyof typeof FREELANCER_FILTERS;
 
-export async function listFreelancerOrders(freelancerId: number, filter: FreelancerFilter) {
-  const rows = await query<OrderRow>(
-    `${SELECT_ORDER} WHERE j.id_f = ? AND ${FREELANCER_FILTERS[filter].where} ORDER BY j.id_j DESC`,
-    [freelancerId],
-  );
-  return rows.map(toOrder);
+/** Number of the client's jobs per status, computed with a single GROUP BY. */
+export async function clientOrderCounts(clientId: number): Promise<Record<ClientFilter, number>> {
+  const groups = await prisma.job.groupBy({ by: ["status"], where: { clientId }, _count: { _all: true } });
+  const n = (status: JobStatusCode) => groups.find((g) => g.status === status)?._count._all ?? 0;
+  return {
+    active: n("OPEN") + n("IN_PROGRESS"),
+    free: n("OPEN"),
+    in_progress: n("IN_PROGRESS"),
+    done: n("DONE"),
+    inactive: n("PAID") + n("ARCHIVED"),
+  };
 }
 
-export type CatalogFilters = {
-  q?: string;
-  type?: string;
-  specialty?: string;
-  deadlineFrom?: string;
-  priceFrom?: number;
-  priceTo?: number;
-  sort?: "new" | "price_desc" | "price_asc" | "deadline";
-};
-
-const CATALOG_SORT = {
-  new: "j.id_j DESC",
-  price_desc: "j.price DESC",
-  price_asc: "j.price ASC",
-  deadline: "j.date IS NULL, j.date ASC",
-} as const;
-
-/** Free orders that any freelancer can take. */
-export async function listCatalog(filters: CatalogFilters) {
-  const where = ["j.status = 'S1'", "j.id_f IS NULL"];
-  const params: (string | number)[] = [];
-
-  if (filters.q) {
-    where.push("(j.lable LIKE ? OR j.description LIKE ?)");
-    params.push(`%${filters.q}%`, `%${filters.q}%`);
-  }
-  if (filters.type) {
-    where.push("j.tipe = ?");
-    params.push(filters.type);
-  }
-  if (filters.specialty) {
-    where.push("j.spacsalyty = ?");
-    params.push(filters.specialty);
-  }
-  if (filters.deadlineFrom) {
-    where.push("j.date >= ?");
-    params.push(filters.deadlineFrom);
-  }
-  if (filters.priceFrom !== undefined) {
-    where.push("j.price >= ?");
-    params.push(filters.priceFrom);
-  }
-  if (filters.priceTo !== undefined) {
-    where.push("j.price <= ?");
-    params.push(filters.priceTo);
-  }
-
-  const rows = await query<OrderRow>(
-    `${SELECT_ORDER} WHERE ${where.join(" AND ")} ORDER BY ${CATALOG_SORT[filters.sort ?? "new"]} LIMIT 200`,
-    params,
-  );
-  return rows.map(toOrder);
-}
+// ------------------------------------------------------------------ access
 
 /**
  * Who may open an order: its client, its assigned freelancer, and — while the
- * order is still free — any freelancer browsing the catalog.
+ * order is still open — any freelancer browsing the catalog.
  */
 export function canView(session: Session, order: Order) {
   if (session.role === "client") return order.clientId === session.userId;
@@ -184,20 +117,31 @@ export function participantRole(session: Session, order: Order): Role | null {
   return null;
 }
 
+// ------------------------------------------------------------------ files
+
 export type OrderFile = {
   id: number;
   name: string;
   uploadedBy: Role | null;
-  uploadedAt: string | null;
+  uploadedAt: string;
 };
 
-export async function listOrderFiles(orderId: number) {
-  return query<OrderFile>(
-    `SELECT id_file AS id, file_name AS name, uploaded_by AS uploadedBy, uploaded_at AS uploadedAt
-       FROM files WHERE id_j = ? ORDER BY id_file`,
-    [orderId],
-  );
+/** Files attached to the order itself (chat attachments are listed with their messages). */
+export async function listOrderFiles(order: Pick<Order, "id" | "clientId">): Promise<OrderFile[]> {
+  const rows = await prisma.attachment.findMany({
+    where: { jobId: order.id, messageId: null },
+    orderBy: { id: "asc" },
+    select: { id: true, fileName: true, uploaderId: true, createdAt: true },
+  });
+  return rows.map((row) => ({
+    id: row.id,
+    name: row.fileName,
+    uploadedBy: row.uploaderId === null ? null : row.uploaderId === order.clientId ? "client" : "freelancer",
+    uploadedAt: row.createdAt.toISOString(),
+  }));
 }
+
+// ------------------------------------------------------------------ chat
 
 export type ChatMessage = {
   id: number;
@@ -207,43 +151,86 @@ export type ChatMessage = {
   file: { id: number; name: string } | null;
 };
 
-export async function listMessages(orderId: number, freelancerId: number, afterId = 0) {
-  const rows = await query<{
-    id: number;
-    sender: Role;
-    message: string;
-    createdAt: string;
-    fileId: number | null;
-    fileName: string | null;
-  }>(
-    `SELECT ch.id_chat AS id, ch.sender, ch.message, ch.created_at AS createdAt,
-            cf.id_chat_file AS fileId, cf.file_name AS fileName
-       FROM chat ch
-       LEFT JOIN chat_files cf ON cf.id_chat = ch.id_chat
-      WHERE ch.id_j = ? AND ch.id_f = ? AND ch.id_chat > ?
-      ORDER BY ch.id_chat ASC`,
-    [orderId, freelancerId, afterId],
-  );
+export async function listMessages(order: Pick<Order, "id" | "clientId">, freelancerId: number, afterId = 0) {
+  const rows = await prisma.message.findMany({
+    where: { jobId: order.id, freelancerId, id: { gt: afterId } },
+    orderBy: { id: "asc" },
+    select: {
+      id: true,
+      senderId: true,
+      body: true,
+      createdAt: true,
+      attachments: { select: { id: true, fileName: true }, take: 1 },
+    },
+  });
   return rows.map<ChatMessage>((row) => ({
     id: row.id,
-    sender: row.sender,
-    message: row.message,
-    createdAt: row.createdAt,
-    file: row.fileId ? { id: row.fileId, name: row.fileName ?? "file" } : null,
+    sender: row.senderId === order.clientId ? "client" : "freelancer",
+    message: row.body,
+    createdAt: row.createdAt.toISOString(),
+    file: row.attachments[0] ? { id: row.attachments[0].id, name: row.attachments[0].fileName } : null,
   }));
 }
 
 export type ChatThread = { freelancerId: number; freelancerName: string; count: number; lastAt: string };
 
-/** For the client: every freelancer who has written about this order. */
-export async function listThreads(orderId: number) {
-  return query<ChatThread>(
-    `SELECT ch.id_f AS freelancerId, f.name AS freelancerName, COUNT(*) AS count, MAX(ch.created_at) AS lastAt
-       FROM chat ch
-       JOIN freelanser_akks f ON f.id_f = ch.id_f
-      WHERE ch.id_j = ?
-      GROUP BY ch.id_f, f.name
-      ORDER BY lastAt DESC`,
-    [orderId],
-  );
+/** For the client: every freelancer who has written about this order, most recent first. */
+export async function listThreads(orderId: number): Promise<ChatThread[]> {
+  const groups = await prisma.message.groupBy({
+    by: ["freelancerId"],
+    where: { jobId: orderId },
+    _count: { _all: true },
+    _max: { createdAt: true },
+    orderBy: { _max: { createdAt: "desc" } },
+  });
+  const names = await prisma.user.findMany({
+    where: { id: { in: groups.map((g) => g.freelancerId) } },
+    select: { id: true, name: true },
+  });
+  return groups.map((g) => ({
+    freelancerId: g.freelancerId,
+    freelancerName: names.find((u) => u.id === g.freelancerId)?.name ?? "—",
+    count: g._count._all,
+    lastAt: g._max.createdAt?.toISOString() ?? "",
+  }));
+}
+
+// ------------------------------------------------------------------ reviews
+
+export type OrderReview = {
+  id: number;
+  authorRole: Role;
+  authorName: string;
+  rating: number;
+  comment: string | null;
+  createdAt: string;
+};
+
+export async function listReviews(order: Pick<Order, "id" | "clientId">): Promise<OrderReview[]> {
+  const rows = await prisma.review.findMany({
+    where: { jobId: order.id },
+    orderBy: { id: "asc" },
+    select: {
+      id: true,
+      authorId: true,
+      rating: true,
+      comment: true,
+      createdAt: true,
+      author: { select: { name: true } },
+    },
+  });
+  return rows.map((row) => ({
+    id: row.id,
+    authorRole: row.authorId === order.clientId ? "client" : "freelancer",
+    authorName: row.author.name,
+    rating: row.rating,
+    comment: row.comment,
+    createdAt: row.createdAt.toISOString(),
+  }));
+}
+
+/** Average rating a user received, e.g. 4.7 from 12 reviews. */
+export async function userRating(userId: number) {
+  const agg = await prisma.review.aggregate({ where: { targetId: userId }, _avg: { rating: true }, _count: true });
+  return { average: agg._avg.rating, count: agg._count };
 }

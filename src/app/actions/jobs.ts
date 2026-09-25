@@ -3,53 +3,26 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { JobStatus, JobType, Prisma } from "@/generated/prisma/client";
-import { SPECIALTIES } from "@/lib/constants";
-import { fromZodError, str, type FormState } from "@/lib/forms";
+import { Prisma } from "@/generated/prisma/client";
+import { MAX_FILE_SIZE, ORDER_FILE_EXTENSIONS } from "@/lib/constants";
+import { fail, fromZodError, str, type FormState } from "@/lib/forms";
+import {
+  CLIENT_FILTERS,
+  FREELANCER_FILTERS,
+  orderSelect,
+  toOrder,
+  type ClientFilter,
+  type FreelancerFilter,
+} from "@/lib/orders";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
-import { orderSchema } from "@/lib/validation";
-
-// Form values (type1…type3) → database enum
-const JOB_TYPE: Record<"type1" | "type2" | "type3", JobType> = {
-  type1: JobType.ONE_TIME,
-  type2: JobType.FIXED_PERIOD,
-  type3: JobType.LONG_TERM,
-};
-
-// Fields safe to send to the browser (no client e-mail/phone, no Decimal objects).
-const jobListSelect = {
-  id: true,
-  title: true,
-  specialty: true,
-  type: true,
-  description: true,
-  price: true,
-  deadline: true,
-  status: true,
-  createdAt: true,
-  client: { select: { id: true, name: true, avatar: true } },
-  freelancer: { select: { id: true, name: true } },
-} satisfies Prisma.JobSelect;
-
-type JobRow = Prisma.JobGetPayload<{ select: typeof jobListSelect }>;
-
-// Decimal and Date cannot cross the Server → Client Component boundary as-is.
-function serialize(job: JobRow) {
-  return {
-    ...job,
-    price: job.price.toNumber(),
-    deadline: job.deadline?.toISOString().slice(0, 10) ?? null,
-    createdAt: job.createdAt.toISOString(),
-  };
-}
-
-export type JobListItem = ReturnType<typeof serialize>;
+import { extensionOf, removeStored, safeDisplayName, saveUpload } from "@/lib/storage";
+import { orderSchema, specialtyCodes, typeCodes } from "@/lib/validation";
 
 // ------------------------------------------------------------------ create
 
 /**
- * Creates a job for the signed-in client.
+ * Creates a job (with optional attachments) for the signed-in client.
  * Usage in a Client Component: const [state, action] = useActionState(createJob, {});
  */
 export async function createJob(_prev: FormState, formData: FormData): Promise<FormState> {
@@ -65,30 +38,52 @@ export async function createJob(_prev: FormState, formData: FormData): Promise<F
   });
   if (!parsed.success) return fromZodError(parsed.error, formData);
 
+  const files = formData.getAll("files").filter((f): f is File => f instanceof File && f.size > 0);
+  for (const file of files) {
+    const problem =
+      file.size > MAX_FILE_SIZE
+        ? "Файл більший за 25 МБ"
+        : !ORDER_FILE_EXTENSIONS.includes(extensionOf(file.name))
+          ? `Тип файлу .${extensionOf(file.name) || "?"} не підтримується. Проєкти архівуйте в zip, rar або 7z`
+          : null;
+    if (problem) return { ...fail(problem, formData), fieldErrors: { files: problem } };
+  }
+
   const { title, type, specialty, deadline, price, description } = parsed.data;
 
+  // Files go to disk first; if the database write fails they are removed again.
+  const stored = await Promise.all(files.map((file) => saveUpload(file, "orders")));
   let jobId: number;
   try {
     const job = await prisma.job.create({
       data: {
         title,
-        type: JOB_TYPE[type],
+        type,
         specialty,
         description,
         price: new Prisma.Decimal(price),
         deadline: new Date(`${deadline}T00:00:00Z`),
         client: { connect: { id: session.userId } },
+        attachments: {
+          create: files.map((file, i) => ({
+            uploaderId: session.userId,
+            fileName: safeDisplayName(file.name),
+            filePath: stored[i],
+            size: file.size,
+          })),
+        },
       },
       select: { id: true },
     });
     jobId = job.id;
   } catch (error) {
+    await Promise.all(stored.map((path) => removeStored(path)));
     // P2025: the connected client row does not exist (stale session)
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
-      return { error: "Акаунт не знайдено. Увійдіть знову.", at: Date.now() };
+      return fail("Акаунт не знайдено. Увійдіть знову.");
     }
     console.error("createJob failed", error);
-    return { error: "Не вдалося зберегти замовлення. Спробуйте ще раз.", at: Date.now() };
+    return fail("Не вдалося зберегти замовлення. Спробуйте ще раз.", formData);
   }
 
   revalidatePath("/client");
@@ -96,19 +91,25 @@ export async function createJob(_prev: FormState, formData: FormData): Promise<F
   redirect(`/orders/${jobId}`); // outside try/catch: redirect() works by throwing
 }
 
-// ------------------------------------------------------------------ read
+// ------------------------------------------------------------------ catalog
 
+// Search params arrive as untrusted strings: anything invalid is simply ignored.
 const catalogSchema = z.object({
-  q: z.string().trim().max(100).optional(),
-  specialty: z.enum(Object.keys(SPECIALTIES) as [string, ...string[]]).optional(),
-  type: z.enum(JobType).optional(),
-  priceFrom: z.coerce.number().nonnegative().optional(),
-  priceTo: z.coerce.number().nonnegative().optional(),
-  sort: z.enum(["new", "price_desc", "price_asc", "deadline"]).default("new"),
-  page: z.coerce.number().int().min(1).default(1),
+  q: z.string().trim().max(100).optional().catch(undefined),
+  specialty: z.enum(specialtyCodes).optional().catch(undefined),
+  type: z.enum(typeCodes).optional().catch(undefined),
+  deadline: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional()
+    .catch(undefined),
+  priceFrom: z.coerce.number().nonnegative().optional().catch(undefined),
+  priceTo: z.coerce.number().nonnegative().optional().catch(undefined),
+  sort: z.enum(["new", "price_desc", "price_asc", "deadline"]).catch("new"),
+  page: z.coerce.number().int().min(1).catch(1),
 });
 
-export type CatalogQuery = z.input<typeof catalogSchema>;
+export type CatalogQuery = Record<string, string | string[] | undefined>;
 
 const PAGE_SIZE = 20;
 
@@ -121,17 +122,30 @@ const ORDER_BY: Record<z.infer<typeof catalogSchema>["sort"], Prisma.JobOrderByW
 
 /**
  * Open jobs for the freelancer catalog, with filters and pagination.
- * Callable from a Server Component (`await getJobs(searchParams)`) or from a
- * Client Component as a Server Action.
+ * Pass the page's searchParams straight in: `await getJobs(await searchParams)`.
  */
 export async function getJobs(query: CatalogQuery = {}) {
   await requireSession("freelancer");
-  const { q, specialty, type, priceFrom, priceTo, sort, page } = catalogSchema.parse(query);
+  const first = (key: string) => {
+    const value = query[key];
+    return (Array.isArray(value) ? value[0] : value) || undefined;
+  };
+  const { q, specialty, type, deadline, priceFrom, priceTo, sort, page } = catalogSchema.parse({
+    q: first("q"),
+    specialty: first("specialty"),
+    type: first("type"),
+    deadline: first("deadline"),
+    priceFrom: first("priceFrom"),
+    priceTo: first("priceTo"),
+    sort: first("sort"),
+    page: first("page"),
+  });
 
   const where: Prisma.JobWhereInput = {
-    status: JobStatus.OPEN,
+    status: "OPEN",
     specialty,
     type,
+    deadline: deadline ? { gte: new Date(`${deadline}T00:00:00Z`) } : undefined,
     price: priceFrom !== undefined || priceTo !== undefined ? { gte: priceFrom, lte: priceTo } : undefined,
     OR: q
       ? [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }]
@@ -142,7 +156,7 @@ export async function getJobs(query: CatalogQuery = {}) {
   const [rows, total] = await prisma.$transaction([
     prisma.job.findMany({
       where,
-      select: jobListSelect,
+      select: orderSelect,
       orderBy: ORDER_BY[sort],
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
@@ -150,19 +164,22 @@ export async function getJobs(query: CatalogQuery = {}) {
     prisma.job.count({ where }),
   ]);
 
-  return { jobs: rows.map(serialize), total, page, pageCount: Math.max(1, Math.ceil(total / PAGE_SIZE)) };
+  return { jobs: rows.map(toOrder), total, page, pageCount: Math.max(1, Math.ceil(total / PAGE_SIZE)) };
 }
 
+// ------------------------------------------------------------------ my jobs
+
 /** Jobs of the signed-in user: posted ones for a client, taken ones for a freelancer. */
-export async function getMyJobs(status?: JobStatus) {
+export async function getMyJobs(filter: ClientFilter | FreelancerFilter) {
   const session = await requireSession();
-  const rows = await prisma.job.findMany({
-    where: {
-      ...(session.role === "client" ? { clientId: session.userId } : { freelancerId: session.userId }),
-      status,
-    },
-    select: jobListSelect,
-    orderBy: { createdAt: "desc" },
-  });
-  return rows.map(serialize);
+  const where: Prisma.JobWhereInput =
+    session.role === "client"
+      ? { clientId: session.userId, ...(CLIENT_FILTERS[filter as ClientFilter]?.where ?? CLIENT_FILTERS.active.where) }
+      : {
+          freelancerId: session.userId,
+          ...(FREELANCER_FILTERS[filter as FreelancerFilter]?.where ?? FREELANCER_FILTERS.in_progress.where),
+        };
+
+  const rows = await prisma.job.findMany({ where, select: orderSelect, orderBy: { createdAt: "desc" } });
+  return rows.map(toOrder);
 }

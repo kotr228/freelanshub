@@ -1,14 +1,14 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { createOrder } from "@/app/actions/orders";
+import { createJob } from "@/app/actions/jobs";
 import { FormMessage, SubmitButton } from "@/components/form-controls";
 import { Field } from "@/components/ui";
 import { ORDER_TYPES, SPECIALTIES, splitPayment } from "@/lib/constants";
 import { formatPrice } from "@/lib/format";
 
 export function NewOrderForm() {
-  const [state, action] = useActionState(createOrder, {});
+  const [state, action] = useActionState(createJob, {});
   const [price, setPrice] = useState(state.values?.price ?? "");
   const [description, setDescription] = useState(state.values?.description ?? "");
   const errors = state.fieldErrors ?? {};

@@ -1,17 +1,18 @@
 import { OrderCard } from "@/components/order-card";
 import { Tabs } from "@/components/tabs";
 import { ButtonLink, EmptyState, PageHeader } from "@/components/ui";
-import { FREELANCER_FILTERS, listFreelancerOrders, type FreelancerFilter } from "@/lib/orders";
+import { getMyJobs } from "@/app/actions/jobs";
+import { FREELANCER_FILTERS, type FreelancerFilter } from "@/lib/orders";
 import { requireSession } from "@/lib/session";
 
 export const metadata = { title: "Мої замовлення" };
 
 export default async function FreelancerOrdersPage({ searchParams }: PageProps<"/freelancer/orders">) {
-  const session = await requireSession("freelancer");
+  await requireSession("freelancer");
   const requested = (await searchParams).filter;
   const filter: FreelancerFilter =
     typeof requested === "string" && requested in FREELANCER_FILTERS ? (requested as FreelancerFilter) : "in_progress";
-  const orders = await listFreelancerOrders(session.userId, filter);
+  const orders = await getMyJobs(filter);
 
   return (
     <>

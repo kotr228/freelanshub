@@ -3,7 +3,8 @@
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { execute } from "@/lib/db";
+import { Prisma } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import { fail, fromZodError, str, type FormState } from "@/lib/forms";
 import { createSession, destroySession, homeFor } from "@/lib/session";
 import { emailTaken, findUserByEmail } from "@/lib/users";
@@ -15,7 +16,7 @@ import {
   specialtySchema,
   telegramSchema,
 } from "@/lib/validation";
-import type { Role } from "@/lib/constants";
+import { DB_ROLE, type Role } from "@/lib/constants";
 
 function roleFrom(formData: FormData): Role {
   return str(formData, "role") === "freelancer" ? "freelancer" : "client";
@@ -29,8 +30,7 @@ export async function login(_prev: FormState, formData: FormData): Promise<FormS
   if (!parsed.success) return fromZodError(parsed.error, formData);
 
   const user = await findUserByEmail(role, parsed.data.email);
-  // Hashes created by PHP's password_hash() use the $2y$ prefix, which bcryptjs accepts.
-  const valid = user ? await bcrypt.compare(parsed.data.password, user.password) : false;
+  const valid = user ? await bcrypt.compare(parsed.data.password, user.passwordHash) : false;
   if (!user || !valid) return fail("Невірна пошта або пароль", formData);
 
   await createSession({ role, userId: user.id }, formData.get("remember") === "on");
@@ -76,21 +76,33 @@ export async function register(_prev: FormState, formData: FormData): Promise<Fo
   }
 
   const hash = await bcrypt.hash(password, 12);
-  const result =
-    role === "client"
-      ? await execute("INSERT INTO cliants_akks (name, email, password, telegram, phone) VALUES (?, ?, ?, ?, ?)", [
-          name,
-          email,
-          hash,
-          telegram,
-          phone,
-        ])
-      : await execute(
-          "INSERT INTO freelanser_akks (name, email, password, telegram, phone, spacialty) VALUES (?, ?, ?, ?, ?, ?)",
-          [name, email, hash, telegram, phone, specialty],
-        );
+  let userId: number;
+  try {
+    const user = await prisma.user.create({
+      data: {
+        role: DB_ROLE[role],
+        name,
+        email,
+        passwordHash: hash,
+        phone,
+        telegram,
+        specialty: role === "freelancer" ? specialty : null,
+      },
+      select: { id: true },
+    });
+    userId = user.id;
+  } catch (error) {
+    // P2002: unique (email, role) — someone registered the same e-mail in parallel
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      return {
+        ...fail("Користувач з такою поштою вже існує", formData),
+        fieldErrors: { email: "Пошта вже зареєстрована" },
+      };
+    }
+    throw error;
+  }
 
-  await createSession({ role, userId: result.insertId });
+  await createSession({ role, userId });
   redirect(homeFor(role));
 }
 

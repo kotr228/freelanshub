@@ -6,6 +6,7 @@ import {
   cancelOrder,
   completeOrder,
   deleteOrderFile,
+  leaveReview,
   payOrder,
   refuseOrder,
   takeOrder,
@@ -17,11 +18,12 @@ import { Deadline, StageBadge } from "@/components/order-card";
 import { Alert } from "@/components/ui";
 import { orderTypeLabel, specialtyLabel, splitPayment, type OrderStage } from "@/lib/constants";
 import { formatDate, formatDateTime, formatPrice } from "@/lib/format";
-import { canView, getOrder, listOrderFiles, listThreads, participantRole } from "@/lib/orders";
+import { canView, getOrder, listOrderFiles, listReviews, listThreads, participantRole, userRating } from "@/lib/orders";
 import { requireSession } from "@/lib/session";
 import { getUser } from "@/lib/users";
 import { Chat } from "./chat";
 import { FileUpload } from "./file-upload";
+import { ReviewForm } from "./review-form";
 
 export async function generateMetadata({ params }: PageProps<"/orders/[id]">) {
   const order = await getOrder(Number((await params).id) || 0);
@@ -43,7 +45,17 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
 
   const role = participantRole(session, order);
   const isClient = session.role === "client";
-  const [files, threads] = await Promise.all([listOrderFiles(order.id), isClient ? listThreads(order.id) : []]);
+  const [files, threads, reviews, clientRating, freelancerRating] = await Promise.all([
+    listOrderFiles(order),
+    isClient ? listThreads(order.id) : [],
+    listReviews(order),
+    userRating(order.clientId),
+    order.freelancerId ? userRating(order.freelancerId) : null,
+  ]);
+  const canReview =
+    role !== null &&
+    (order.stage === "paid" || order.stage === "archived") &&
+    !reviews.some((r) => r.authorRole === role);
 
   // The other side of the deal (contacts are shown once the order is assigned).
   const counterpart = isClient
@@ -161,6 +173,38 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
               </p>
             )}
           </section>
+
+          {/* Reviews */}
+          {(reviews.length > 0 || canReview) && (
+            <section className="card p-6">
+              <h2 className="font-bold">Відгуки</h2>
+              {reviews.length > 0 && (
+                <ul className="mt-4 space-y-3">
+                  {reviews.map((review) => (
+                    <li key={review.id} className="rounded-xl bg-ink p-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <p className="text-sm font-semibold">
+                          {review.authorName}{" "}
+                          <span className="font-normal text-muted">
+                            · {review.authorRole === "client" ? "замовник" : "виконавець"}
+                          </span>
+                        </p>
+                        <Stars value={review.rating} />
+                      </div>
+                      {review.comment && <p className="mt-2 text-sm whitespace-pre-line text-soft">{review.comment}</p>}
+                      <p className="mt-2 text-xs text-muted">{formatDate(review.createdAt)}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {canReview && (
+                <ReviewForm
+                  action={leaveReview.bind(null, order.id)}
+                  target={role === "client" ? "виконавця" : "замовника"}
+                />
+              )}
+            </section>
+          )}
         </div>
 
         <aside className="space-y-6">
@@ -169,12 +213,18 @@ export default async function OrderPage({ params, searchParams }: PageProps<"/or
 
           {/* People */}
           <section className="card space-y-4 p-6">
-            <Person label="Замовник" name={order.clientName} avatar={isClient ? null : (counterpart?.avatar ?? null)} />
+            <Person
+              label="Замовник"
+              name={order.clientName}
+              avatar={isClient ? null : (counterpart?.avatar ?? null)}
+              rating={clientRating}
+            />
             {order.freelancerId ? (
               <Person
                 label="Виконавець"
                 name={order.freelancerName ?? "—"}
                 avatar={isClient ? (counterpart?.avatar ?? null) : null}
+                rating={freelancerRating}
               />
             ) : (
               <p className="text-sm text-muted">Виконавця ще не обрано</p>
@@ -345,15 +395,39 @@ function OrderActions({
   );
 }
 
-function Person({ label, name, avatar }: { label: string; name: string; avatar: string | null }) {
+function Person({
+  label,
+  name,
+  avatar,
+  rating,
+}: {
+  label: string;
+  name: string;
+  avatar: string | null;
+  rating: { average: number | null; count: number } | null;
+}) {
   return (
     <div className="flex items-center gap-3">
       <Avatar name={name} src={avatar} className="size-10 text-sm" />
       <div className="min-w-0">
         <p className="text-xs text-muted">{label}</p>
         <p className="truncate font-semibold">{name}</p>
+        {rating && rating.count > 0 && rating.average !== null && (
+          <p className="text-xs text-muted">
+            <span className="text-brand">★ {rating.average.toFixed(1)}</span> · {rating.count} відг.
+          </p>
+        )}
       </div>
     </div>
+  );
+}
+
+function Stars({ value }: { value: number }) {
+  return (
+    <span className="text-sm tracking-wider" aria-label={`Оцінка ${value} з 5`}>
+      <span className="text-brand">{"★".repeat(value)}</span>
+      <span className="text-line-strong">{"★".repeat(5 - value)}</span>
+    </span>
   );
 }
 

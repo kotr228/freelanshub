@@ -34,8 +34,8 @@ function luhn(digits: string) {
   return sum % 10 === 0;
 }
 
-const typeCodes = Object.keys(ORDER_TYPES) as [keyof typeof ORDER_TYPES, ...(keyof typeof ORDER_TYPES)[]];
-const specialtyCodes = Object.keys(SPECIALTIES) as [keyof typeof SPECIALTIES, ...(keyof typeof SPECIALTIES)[]];
+export const typeCodes = Object.keys(ORDER_TYPES) as [keyof typeof ORDER_TYPES, ...(keyof typeof ORDER_TYPES)[]];
+export const specialtyCodes = Object.keys(SPECIALTIES) as [keyof typeof SPECIALTIES, ...(keyof typeof SPECIALTIES)[]];
 
 function today() {
   return new Date().toISOString().slice(0, 10);
@@ -52,6 +52,12 @@ export const orderSchema = z.object({
   price: z.coerce
     .number({ message: "Вкажіть ціну" })
     .positive("Ціна має бути більшою за 0")
-    .max(99_999_999, "Занадто велика сума"),
+    .max(99_999_999, "Занадто велика сума")
+    .transform((value) => Math.round(value * 100) / 100),
   description: z.string().trim().min(10, "Мінімум 10 символів").max(500, "Максимум 500 символів"),
+});
+
+export const reviewSchema = z.object({
+  rating: z.coerce.number().int().min(1, "Оберіть оцінку").max(5, "Оберіть оцінку"),
+  comment: z.string().trim().max(1000, "Максимум 1000 символів"),
 });

@@ -4,9 +4,9 @@ export function formatPrice(value: number) {
   return `${money.format(value)} ₴`;
 }
 
-/** Parses "YYYY-MM-DD HH:MM:SS" (as returned by MySQL with dateStrings) as local time. */
+/** Accepts ISO timestamps and date-only "YYYY-MM-DD" (read as local midnight, not UTC). */
 function parse(value: string) {
-  return new Date(value.replace(" ", "T"));
+  return new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value);
 }
 
 export function formatDate(value: string | null) {
@@ -21,6 +21,7 @@ export function formatDateTime(value: string) {
 export function daysLeft(value: string | null) {
   if (!value) return null;
   const end = parse(value);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) end.setHours(23, 59, 59); // a deadline lasts the whole day
   const now = new Date();
   return Math.ceil((end.getTime() - now.getTime()) / 86_400_000);
 }

@@ -1,7 +1,8 @@
 import { OrderCard } from "@/components/order-card";
 import { Tabs } from "@/components/tabs";
 import { ButtonLink, EmptyState, PageHeader } from "@/components/ui";
-import { CLIENT_FILTERS, clientOrderCounts, listClientOrders, type ClientFilter } from "@/lib/orders";
+import { getMyJobs } from "@/app/actions/jobs";
+import { CLIENT_FILTERS, clientOrderCounts, type ClientFilter } from "@/lib/orders";
 import { requireSession } from "@/lib/session";
 
 export const metadata = { title: "Мої замовлення" };
@@ -12,10 +13,7 @@ export default async function ClientOrdersPage({ searchParams }: PageProps<"/cli
   const filter: ClientFilter =
     typeof requested === "string" && requested in CLIENT_FILTERS ? (requested as ClientFilter) : "active";
 
-  const [orders, counts] = await Promise.all([
-    listClientOrders(session.userId, filter),
-    clientOrderCounts(session.userId),
-  ]);
+  const [orders, counts] = await Promise.all([getMyJobs(filter), clientOrderCounts(session.userId)]);
 
   return (
     <>
