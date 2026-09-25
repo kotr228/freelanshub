@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+.env
+.env*.local
+
+# User uploads (order files, chat files, avatars)
+storage/
+
+.DS_Store
+.idea/
+.vs/
+.vscode/

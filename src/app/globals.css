@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-ink: #0d0f14;
+  --color-surface: #151821;
+  --color-surface-2: #1c2030;
+  --color-line: #262b3a;
+  --color-line-strong: #353c50;
+  --color-muted: #8b93a7;
+  --color-soft: #c3c9d6;
+
+  --color-brand: #f0ad4e;
+  --color-brand-strong: #f5bd6a;
+  --color-brand-ink: #1a1206;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-ink text-zinc-100 antialiased;
+  }
+  ::selection {
+    @apply bg-brand/30 text-white;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+  }
+}
+
+@utility card {
+  @apply rounded-2xl border border-line bg-surface;
+}
+
+@utility input {
+  @apply block w-full rounded-xl border border-line bg-ink px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-muted/70
+    transition outline-none focus:border-brand/70 focus:ring-2 focus:ring-brand/20
+    disabled:opacity-60 aria-invalid:border-rose-500/70;
+}
+
+@utility label {
+  @apply mb-1.5 block text-sm font-medium text-soft;
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
