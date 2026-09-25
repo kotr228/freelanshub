@@ -29,6 +29,12 @@ npm run dev               # http://localhost:3000
 
 Продакшн: `npm run db:deploy && npm run build && npm run start`.
 
+### Якщо `npm run dev` показує «An unexpected Turbopack error occurred»
+
+1. Подивіться вивід у терміналі, де запущено `npm run dev`: там є справжня причина і шлях до `next-panic-*.log`.
+2. Після `git pull` виконайте `npm install` (генерує Prisma Client у `src/generated/prisma`), потім видаліть кеш: `rm -rf .next` (Windows PowerShell: `Remove-Item -Recurse -Force .next`).
+3. Запасний варіант без Turbopack: `npm run dev:webpack`.
+
 ### База даних
 
 - Схема — `prisma/schema.prisma`, міграції — `prisma/migrations`, клієнт — `src/lib/prisma.ts`.
